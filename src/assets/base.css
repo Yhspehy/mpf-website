@@ -1,0 +1,71 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --bg-color: #fff;
+  /* 分隔线 */
+  --divide-color: rgb(31, 34, 37);
+  --card-text-color: grey;
+  --tab-item-bg-color: #5366ff;
+  --tab-item-color: #f0f0ff;
+  --tab-item-hover-color: #dee1e6;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--color-text);
+  line-height: 1.6;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.touchable {
+  position: relative;
+}
+
+.touchable::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 200%;
+  height: 200%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               重置devExtemre的样式                              */
+/* -------------------------------------------------------------------------- */
+/** 和n-modal的冲突 */
+.dx-overlay-wrapper {
+  z-index: 2500 !important;
+}
+
+.dx-header-row {
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+}
+
+/* 浅色模式下的data grid 表头样式 */
+html:not(.dark) .dx-header-row {
+  background-color: #f6f7fb;
+  color: #666;
+}

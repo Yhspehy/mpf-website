@@ -1,0 +1,50 @@
+.layout-main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-container {
+  position: relative;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.dark .card-container {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+.card-title {
+  position: absolute;
+  left: 20px;
+  top: -10px;
+  color: var(--card-text-color);
+  font-size: 12px;
+}
+
+.grid-btn-blue {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.grid-btn-red {
+  color: #f53f3f;
+  cursor: pointer;
+}
+
+.grid-btn-disabled {
+  color: #86909c;
+  cursor: not-allowed;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.bg-transition {
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease-in-out;
+}
