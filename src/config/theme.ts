@@ -42,10 +42,8 @@ export const themeOverrides = {
     itemIconColor: '#d4ddea',
     arrowColor: '#aab9d0',
 
-    itemTextColorHoverHorizontal: '#fff',
-    itemIconColorHoverHorizontal: '#fff',
-
-    itemTextColorActiveHoverHorizontal: '#FFF',
-    itemIconColorActiveHoverHorizontal: '#FFF'
+    itemTextColorHoverHorizontal: 'red',
+    itemTextColorActiveHoverHorizontal: 'red',
+    itemTextColorActiveHorizontal: 'red'
   }
 };

@@ -1,9 +1,30 @@
 <script setup>
-import EmailLogin from './EmailLogin.vue'
-
 defineOptions({
   name: 'LoginView'
-})
+});
+
+const message = useMessage();
+const router = useRouter();
+const model = reactive({
+  email: '',
+  password: ''
+});
+
+function handleEmail(value) {
+  const upperValue = value.toUpperCase().trim();
+  model.email = upperValue;
+  model.password = '';
+}
+
+/** 登录 */
+async function handleSubmit() {
+  if (!model.email) {
+    return message.warning('Please fill email!');
+  }
+  if (!model.password) {
+    router.push('/register');
+  }
+}
 </script>
 
 <template>
@@ -20,26 +41,36 @@ defineOptions({
     "
   >
     <div
-      class="flex rounded-6px w-1000px overflow-x-hidden"
+      class="rounded-6px w-600px overflow-x-hidden"
       style="box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.3)"
     >
-      <div
-        class="flex-1"
-        style="
-          background-image: url(https://pic.imgdb.cn/item/653b5e89c458853aef23aa1d.jpg);
-          background-size: cover;
-        "
-      ></div>
-
-      <div class="w-45% py-30px bg-var px-40px box-border">
+      <div class="py-30px bg-var px-40px box-border">
         <header class="text-center">
           <n-gradient-text type="primary" :size="28">海丝论坛</n-gradient-text>
         </header>
         <main class="pt-24px">
-          <h3 class="text-18px transition-color font-medium">邮箱登录</h3>
+          <h3 class="text-18px transition-color font-medium">Login</h3>
           <div class="pt-24px">
             <transition name="fade-slide" mode="out-in" appear>
-              <email-login type="1" />
+              <n-form :model="model" size="large" :show-label="false">
+                <n-form-item path="userName">
+                  <n-input :value="model.userName" @update:value="handleEmail" />
+                </n-form-item>
+                <n-form-item path="password">
+                  <n-input v-model:value="model.password" type="password" />
+                </n-form-item>
+                <n-space :vertical="true" :size="24">
+                  <n-button
+                    type="primary"
+                    size="large"
+                    :block="true"
+                    :round="true"
+                    @click="handleSubmit"
+                  >
+                    登录/注册
+                  </n-button>
+                </n-space>
+              </n-form>
             </transition>
           </div>
         </main>

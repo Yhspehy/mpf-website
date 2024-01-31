@@ -1,16 +1,17 @@
-import { createRouter, createWebHistory } from 'vue-router';
-
-import { createRouterGuard } from './guard';
+import { createRouter, createWebHashHistory } from 'vue-router';
+// import { createRouterGuard } from './guard';
 
 const constantRoute = [
   {
     path: '/',
     name: 'root',
-    redirect: '/home/person'
+    component: () => import('@/views/index.vue')
+    // redirect: '/home/person'
   },
   {
     path: '/home',
     name: 'home',
+    redirect: '/home/person',
     component: () => import('@/layouts/index.vue'),
     children: [
       {
@@ -80,7 +81,7 @@ const constantRoute = [
 ];
 
 export const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: constantRoute
 });
 
