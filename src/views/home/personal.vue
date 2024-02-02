@@ -62,13 +62,13 @@ function handleValidateButtonClick(e) {
       require-mark-placement="right-hanging"
       :size="size"
     >
-      <n-form-item label="firstName" path="firstName">
-        <n-input v-model:value="model.firstName" />
+      <n-form-item label="First Name" path="firstName">
+        <n-input v-model:value="model.firstName" placeholder="" />
       </n-form-item>
-      <n-form-item label="lastName" path="lastName">
-        <n-input v-model:value="model.lastName" />
+      <n-form-item label="Last Name" path="lastName">
+        <n-input v-model:value="model.lastName" placeholder="" />
       </n-form-item>
-      <n-form-item label="Gender" path="gender">
+      <n-form-item label="Gender" path="gender" required>
         <n-radio-group v-model:value="model.gender" name="gender">
           <n-space>
             <n-radio value="male"> Male </n-radio>
@@ -76,7 +76,7 @@ function handleValidateButtonClick(e) {
           </n-space>
         </n-radio-group>
       </n-form-item>
-      <n-form-item label="Participation Method" path="participationMethod">
+      <n-form-item label="Participation Method" path="participationMethod" required>
         <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
           <n-space>
             <n-radio value="online"> Online </n-radio>
@@ -84,25 +84,25 @@ function handleValidateButtonClick(e) {
           </n-space>
         </n-radio-group>
       </n-form-item>
-      <n-form-item label="Passport Number" path="passportNumber">
-        <n-input v-model:value="model.passportNumber" />
+      <n-form-item label="Passport Number" path="passportNumber" required>
+        <n-input v-model:value="model.passportNumber" placeholder="" />
       </n-form-item>
-      <n-form-item label="Organization" path="organization">
-        <n-input v-model:value="model.organization" />
+      <n-form-item label="Organization" path="organization" required>
+        <n-input v-model:value="model.organization" placeholder="" />
       </n-form-item>
-      <n-form-item label="Position" path="position">
-        <n-input v-model:value="model.position" />
+      <n-form-item label="Position" path="position" required>
+        <n-input v-model:value="model.position" placeholder="" />
       </n-form-item>
-      <n-form-item label="Nationality" path="nationality">
-        <n-input v-model:value="model.nationality" />
+      <n-form-item label="Nationality" path="nationality" required>
+        <n-input v-model:value="model.nationality" placeholder="" />
       </n-form-item>
-      <n-form-item label="Email" path="email">
-        <n-input v-model:value="model.email" />
+      <n-form-item label="Email" path="email" required>
+        <n-input v-model:value="model.email" placeholder="" />
       </n-form-item>
-      <n-form-item label="Phone Number" path="phone">
-        <n-input v-model:value="model.phone" />
+      <n-form-item label="Phone Number" path="phone" required>
+        <n-input v-model:value="model.phone" placeholder="" />
       </n-form-item>
-      <n-form-item label="Contact person of Organization" path="isContact">
+      <n-form-item label="Contact person of Organization" path="isContact" required>
         <n-radio-group v-model:value="model.isContact" name="isContact">
           <n-space>
             <n-radio value="Radio 1"> Y </n-radio>

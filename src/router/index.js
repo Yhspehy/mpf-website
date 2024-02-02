@@ -55,6 +55,14 @@ const constantRoute = [
     component: () => import('@/views/home/sign-up.vue')
   },
   {
+    path: '/verify',
+    name: 'verify',
+    component: () => import('../views/login/verify.vue'),
+    meta: {
+      title: '登录'
+    }
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('../views/login/index.vue'),

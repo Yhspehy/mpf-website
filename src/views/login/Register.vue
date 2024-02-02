@@ -28,65 +28,42 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div
-    class="relative flex-center wh-full"
-    style="
-      background-image: linear-gradient(
-        45deg,
-        #0c3483 0%,
-        #a2b6df 100%,
-        #6b8cce 100%,
-        #a2b6df 100%
-      );
-    "
-  >
-    <div
-      class="rounded-6px w-600px overflow-x-hidden"
-      style="box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.3)"
-    >
+  <div class="relative flex-center wh-full">
+    <div class="rounded-6px w-600px overflow-x-hidden">
       <div class="py-30px bg-var px-40px box-border">
-        <header class="text-center">
-          <n-gradient-text type="primary" :size="28">海丝论坛</n-gradient-text>
+        <header class="text-center text-32px">
+          Maritime Silk Road Por International Cooperation Forum
         </header>
         <main class="pt-24px">
-          <h3 class="text-18px transition-color font-medium">Register</h3>
-          <div class="pt-24px">
-            <transition name="fade-slide" mode="out-in" appear>
-              <n-form :model="model" size="large" :show-label="false">
-                <n-form-item path="userName">
-                  <n-input
-                    :value="model.userName"
-                    @update:value="handleEmail"
-                    placeholder="Create a profile with your email*"
-                  />
-                </n-form-item>
-                <n-form-item path="password">
-                  <n-input
-                    v-model:value="model.password"
-                    type="password"
-                    placeholder="Create Password*"
-                  />
-                </n-form-item>
-                <n-form-item path="password">
-                  <n-input
-                    v-model:value="model.password"
-                    type="password"
-                    placeholder="Confirm Password*"
-                  />
-                </n-form-item>
-                <n-space :vertical="true" :size="24">
-                  <n-button
-                    type="primary"
-                    size="large"
-                    :block="true"
-                    :round="true"
-                    @click="handleSubmit"
-                  >
-                    注册
-                  </n-button>
-                </n-space>
-              </n-form>
-            </transition>
+          <div class="pt-24px w-80% mx-auto">
+            <n-form :model="model" size="large" label-placement="left" label-width="150">
+              <n-form-item path="userName">
+                <n-input
+                  :value="model.userName"
+                  @update:value="handleEmail"
+                  placeholder="Create a profile with your email*"
+                />
+              </n-form-item>
+              <n-form-item path="password">
+                <n-input
+                  v-model:value="model.password"
+                  type="password"
+                  placeholder="Create Password*"
+                />
+              </n-form-item>
+              <n-form-item path="password">
+                <n-input
+                  v-model:value="model.password"
+                  type="password"
+                  placeholder="Confirm Password*"
+                />
+              </n-form-item>
+              <n-space :vertical="true" :size="24">
+                <n-button type="primary" size="large" :block="true" @click="handleSubmit">
+                  Register Now
+                </n-button>
+              </n-space>
+            </n-form>
           </div>
         </main>
       </div>

@@ -22,6 +22,7 @@ defineOptions({
     </n-card>
 
     <n-card title="My Hotel" class="mb-20px">
+      <div>Price</div>
       <div>My Hotel</div>
       <div>Room Type</div>
       <div>Payment Method</div>

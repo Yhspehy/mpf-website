@@ -3,6 +3,9 @@ defineOptions({
   name: 'SignUp'
 });
 
+const router = useRouter();
+const dialog = useDialog();
+
 const model = ref({
   firstName: null,
   lastName: null,
@@ -65,11 +68,17 @@ const paymentOptions = [
     value: 3
   }
 ];
+
+function dialogSuccess() {
+  dialog.info({
+    title: 'Please confirm in your E-mail.'
+  });
+}
 </script>
 
 <template>
   <div class="mx-auto max-w-640px py-30px">
-    <n-card title="Personal Details" class="mb-20px">
+    <n-card title="Please Put In Your Personal Details" class="mb-20px">
       <n-form
         :model="model"
         :rules="rules"
@@ -78,13 +87,13 @@ const paymentOptions = [
         require-mark-placement="right-hanging"
         size="medium"
       >
-        <n-form-item label="firstName" path="firstName">
+        <n-form-item label="First Name" path="firstName">
           <n-input v-model:value="model.firstName" />
         </n-form-item>
-        <n-form-item label="lastName" path="lastName">
+        <n-form-item label="Last Name" path="lastName">
           <n-input v-model:value="model.lastName" />
         </n-form-item>
-        <n-form-item label="Gender" path="gender">
+        <n-form-item label="Gender" path="gender" required>
           <n-radio-group v-model:value="model.gender" name="gender">
             <n-space>
               <n-radio value="male"> Male </n-radio>
@@ -92,7 +101,7 @@ const paymentOptions = [
             </n-space>
           </n-radio-group>
         </n-form-item>
-        <n-form-item label="Participation Method" path="participationMethod">
+        <n-form-item label="Participation Method" path="participationMethod" required>
           <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
             <n-space>
               <n-radio value="online"> Online </n-radio>
@@ -100,25 +109,25 @@ const paymentOptions = [
             </n-space>
           </n-radio-group>
         </n-form-item>
-        <n-form-item label="Passport Number" path="passportNumber">
+        <n-form-item label="Passport Number" path="passportNumber" required>
           <n-input v-model:value="model.passportNumber" />
         </n-form-item>
-        <n-form-item label="Organization" path="organization">
+        <n-form-item label="Organization" path="organization" required>
           <n-input v-model:value="model.organization" />
         </n-form-item>
-        <n-form-item label="Position" path="position">
+        <n-form-item label="Position" path="position" required>
           <n-input v-model:value="model.position" />
         </n-form-item>
-        <n-form-item label="Nationality" path="nationality">
+        <n-form-item label="Nationality" path="nationality" required>
           <n-input v-model:value="model.nationality" />
         </n-form-item>
-        <n-form-item label="Email" path="email">
+        <n-form-item label="Email" path="email" required>
           <n-input v-model:value="model.email" />
         </n-form-item>
-        <n-form-item label="Phone Number" path="phone">
+        <n-form-item label="Phone Number" path="phone" required>
           <n-input v-model:value="model.phone" />
         </n-form-item>
-        <n-form-item label="Contact person of Organization" path="isContact">
+        <n-form-item label="Contact person of Organization" path="isContact" required>
           <n-radio-group v-model:value="model.isContact" name="isContact">
             <n-space>
               <n-radio value="Radio 1"> Y </n-radio>
@@ -129,7 +138,7 @@ const paymentOptions = [
       </n-form>
     </n-card>
 
-    <n-card title="Agenda">
+    <n-card title="Choose Your Agenda">
       <n-collapse default-expanded-names="['1', '2']">
         <n-collapse-item title="2024 MPF Main Forum" name="1">
           <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
@@ -154,18 +163,22 @@ const paymentOptions = [
             class="flex-col"
           >
             <n-radio value="3">
+              <div>Forum Name</div>
               <div>date</div>
               <div>location</div>
             </n-radio>
             <n-radio value="4">
+              <div>Forum Name</div>
               <div>date</div>
               <div>location</div>
             </n-radio>
             <n-radio value="5">
+              <div>Forum Name</div>
               <div>date</div>
               <div>location</div>
             </n-radio>
             <n-radio value="6">
+              <div>Forum Name</div>
               <div>date</div>
               <div>location</div>
             </n-radio>
@@ -178,10 +191,12 @@ const paymentOptions = [
             class="flex-col"
           >
             <n-radio value="7">
+              <div>Forum Name</div>
               <div>date</div>
               <div>location</div>
             </n-radio>
             <n-radio value="8">
+              <div>Forum Name</div>
               <div>date</div>
               <div>location</div>
             </n-radio>
@@ -194,7 +209,6 @@ const paymentOptions = [
       <h3>Inbound Journey</h3>
       <n-form
         :model="model"
-        :rules="rules"
         label-placement="left"
         label-width="auto"
         require-mark-placement="right-hanging"
@@ -228,7 +242,6 @@ const paymentOptions = [
       <h3>Back Journey</h3>
       <n-form
         :model="model"
-        :rules="rules"
         label-placement="left"
         label-width="auto"
         require-mark-placement="right-hanging"
@@ -262,7 +275,6 @@ const paymentOptions = [
       <h3>Choose my Hotel</h3>
       <n-form
         :model="model"
-        :rules="rules"
         label-placement="left"
         label-width="auto"
         require-mark-placement="right-hanging"
@@ -275,6 +287,10 @@ const paymentOptions = [
           <n-select v-model:value="model.firstName" :options="paymentOptions" />
         </n-form-item>
       </n-form>
+
+      <div class="text-center">
+        <n-button type="info" @click="dialogSuccess">Submit</n-button>
+      </div>
     </n-card>
   </div>
 </template>

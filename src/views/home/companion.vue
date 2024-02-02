@@ -7,7 +7,7 @@ defineOptions({
 <template>
   <div class="mx-auto max-w-640px">
     <h2 class="text-center">My Companion</h2>
-    <n-card title="Inbound Journey" class="mb-20px">
+    <n-card class="mb-20px">
       <div>Name</div>
       <div>Gender</div>
       <div>Organization</div>

@@ -7,8 +7,8 @@ const menuOptions = [
     url: '/home/person'
   },
   {
-    label: 'MPF ORCODE',
-    key: 'MPF ORCODE',
+    label: 'MPF QRCODE',
+    key: 'MPF QRCODE',
     url: '/home/qrcode'
   },
   {

@@ -37,10 +37,6 @@ async function handleSubmit() {
           <n-form-item path="userName">
             <n-input :value="model.userName" @update:value="handleEmail" />
           </n-form-item>
-
-          <n-form-item path="password">
-            <n-input :value="model.password" />
-          </n-form-item>
         </n-form>
 
         <n-button
