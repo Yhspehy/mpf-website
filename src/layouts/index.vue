@@ -7,13 +7,13 @@ const menuOptions = [
     url: '/home/person'
   },
   {
-    label: 'MPF QRCODE',
-    key: 'MPF QRCODE',
+    label: 'QR CODE',
+    key: 'QR CODE',
     url: '/home/qrcode'
   },
   {
-    label: 'AGENDA',
-    key: 'AGENDA',
+    label: 'MY AGENDA',
+    key: 'MY AGENDA',
     url: '/home/forum'
   },
   {
@@ -22,8 +22,8 @@ const menuOptions = [
     url: '/home/service'
   },
   {
-    label: 'ASSISTANT',
-    key: 'ASSISTANT',
+    label: 'MY ASSISTANT',
+    key: 'MY ASSISTANT',
     url: '/home/assistant'
   },
   {

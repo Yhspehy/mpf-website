@@ -29,7 +29,7 @@ async function handleSubmit() {
 
 <template>
   <div class="relative flex-center wh-full">
-    <div class="rounded-6px w-600px overflow-x-hidden">
+    <div class="rounded-6px w-600px overflow-x-hidden flex-space-center">
       <div class="py-30px bg-var px-40px box-border">
         <header class="text-center text-32px">
           Maritime Silk Road Por International Cooperation Forum

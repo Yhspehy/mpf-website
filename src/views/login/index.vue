@@ -28,7 +28,7 @@ async function handleSubmit() {
 
 <template>
   <div class="relative flex-col-center wh-full">
-    <header class="w-600px text-center text-32px">
+    <header class="w-600px text-center text-32px mobile:text-22px">
       Maritime Silk Road Por natfonal Cooperation Forum
     </header>
     <div class="py-30px bg-var w-480px px-40px box-border">

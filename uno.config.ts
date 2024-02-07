@@ -1,5 +1,5 @@
-import { defineConfig } from 'unocss/vite'
-import presetUno from 'unocss/preset-uno'
+import { defineConfig } from 'unocss/vite';
+import presetUno from 'unocss/preset-uno';
 
 export default defineConfig({
   content: {
@@ -18,6 +18,15 @@ export default defineConfig({
     }
   },
   presets: [presetUno()],
+  variants: [
+    (matcher) => {
+      if (!matcher.startsWith('mobile:')) return matcher;
+      return {
+        matcher: matcher.slice(7),
+        selector: (s) => `.mobile ${s}`
+      };
+    }
+  ],
   rules: [
     [
       'bg-var',
@@ -64,4 +73,4 @@ export default defineConfig({
     'ellipsis-text': 'nowrap-hidden text-ellipsis',
     'transition-base': 'transition-all duration-300 ease-in-out'
   }
-})
+});
