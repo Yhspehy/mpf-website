@@ -5,8 +5,8 @@ defineOptions({
 </script>
 
 <template>
-  <div class="mx-auto max-w-640px">
-    <h2 class="text-center">My Companion</h2>
+  <div class="mx-auto max-w-640px pt-70px">
+    <div class="text-50px font-bold text-center">My Companion</div>
     <n-card class="mb-20px">
       <div>Name</div>
       <div>Gender</div>

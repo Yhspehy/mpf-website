@@ -1,43 +1,56 @@
 <script setup>
+import { verify } from '@/service/api/auth';
 defineOptions({
-  name: 'LoginView'
+  name: 'VerifyView'
 });
 
 const router = useRouter();
 const model = reactive({
-  email: '',
-  password: ''
+  email: '670395851@qq.com'
 });
-
-function handleEmail(value) {
-  const upperValue = value.toUpperCase().trim();
-  model.email = upperValue;
-  model.password = '';
-}
 
 /** 登录 */
 async function handleSubmit() {
-  // if (!model.email) {
-  //   return message.warning('Please fill email!');
-  // }
-  if (!model.password) {
-    router.push('/register');
+  if (!model.email || model.email.trim() === '') {
+    return message.warning('Please fill email!');
   }
+  verify(model.email).then((res) => {
+    if (res) {
+      router.push('/login?email=' + model.email);
+    } else {
+      router.push('/register?email=' + model.email);
+    }
+  });
 }
 </script>
 
 <template>
-  <div class="relative flex-col-center wh-full">
-    <header class="w-600px text-center text-32px">
-      Maritime Silk Road Por natfonal Cooperation Forum
-    </header>
-    <div class="py-30px bg-var w-480px px-40px box-border">
+  <div class="wh-full bg">
+    <nav-bar />
+    <div
+      class="mx-auto mt-100px py-30px bg-var w-850px h-640px py-80px px-170px box-border border-rd-20px"
+    >
+      <div class="text-108px color-#0040FF line-height-110px">MPF 2024</div>
+      <div class="text-22px color-#0040FF text-center">
+        The 8th Maritime Silk Road Port International Cooperation Forum
+      </div>
       <main class="pt-24px">
         <n-form :model="model" size="large" label-placement="left" label-width="100">
-          <n-form-item path="userName">
-            <n-input :value="model.userName" @update:value="handleEmail" />
+          <n-form-item path="email">
+            <n-input
+              class="h-68px line-height-68px"
+              v-model:value="model.email"
+              placeholder="E-mail"
+            />
           </n-form-item>
         </n-form>
+
+        <div
+          class="color-#ABABAC text-18px mb-110px cursor-pointer"
+          @click="router.push('/register')"
+        >
+          * Create a profile with your email.
+        </div>
 
         <n-button
           class="w-200px"
@@ -53,3 +66,9 @@ async function handleSubmit() {
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.bg {
+  background-image: url('/images/mpf-login-bg.png');
+}
+</style>

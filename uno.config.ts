@@ -25,6 +25,13 @@ export default defineConfig({
         matcher: matcher.slice(7),
         selector: (s) => `.mobile ${s}`
       };
+    },
+    (matcher) => {
+      if (!matcher.startsWith('<sm:')) return matcher;
+      return {
+        matcher: matcher.slice(4),
+        selector: (s) => `.mobile ${s}`
+      };
     }
   ],
   rules: [

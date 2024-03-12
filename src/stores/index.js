@@ -5,3 +5,5 @@ export function setupStore(app) {
 
   app.use(store);
 }
+
+export * from './app';

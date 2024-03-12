@@ -25,12 +25,12 @@ const menuOptions = [
     label: 'MY ASSISTANT',
     key: 'MY ASSISTANT',
     url: '/home/assistant'
-  },
-  {
-    label: 'MY COMPANION',
-    key: 'MY COMPANION',
-    url: '/home/companion'
   }
+  // {
+  //   label: 'MY COMPANION',
+  //   key: 'MY COMPANION',
+  //   url: '/home/companion'
+  // }
 ];
 
 const activeKey = ref(null);
@@ -41,7 +41,7 @@ function handleUpdateMenu(_key, item) {
 </script>
 
 <template>
-  <div>
+  <div class="h-full">
     <n-menu
       class="flex-center bg-#16284e h-80px"
       mode="horizontal"
@@ -49,8 +49,12 @@ function handleUpdateMenu(_key, item) {
       :options="menuOptions"
       @update:value="handleUpdateMenu"
     />
+    <!-- <div class="nav-bar">
+      <nav-bar />
+    </div> -->
+
     <section class="section">
-      <div class="main">
+      <n-scrollbar>
         <router-view v-slot="{ Component, route }">
           <component
             :is="Component"
@@ -58,7 +62,19 @@ function handleUpdateMenu(_key, item) {
             class="transition duration-300 ease-in-out layout-content"
           />
         </router-view>
-      </div>
+      </n-scrollbar>
     </section>
   </div>
 </template>
+
+<style scoped lang="scss">
+.nav-bar {
+  background-image: url('/public/images/nav-top-bg.png');
+  widows: 1920px;
+  height: 120px;
+}
+
+.section {
+  height: calc(100% - 80px);
+}
+</style>

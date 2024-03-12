@@ -1,8 +1,8 @@
 /** 覆盖的Naive UI */
 export const themeOverrides = {
   common: {
-    primaryColor: '#244883',
-    primaryColorSuppl: '#244883',
+    primaryColor: '#0040FF',
+    primaryColorSuppl: '#0040FF',
     primaryColorHover: '#125191',
     primaryColorPressed: '#125191',
     primaryColorActive: '#2448831a',
@@ -35,15 +35,19 @@ export const themeOverrides = {
     inputColorDisabled: 'rgba(0, 0, 0, 0.12)',
     placeholderColorDisabled: 'rgba(0, 0, 0, 0.18)'
   },
-  LoadingBar: { colorLoading: '#244883' },
+  LoadingBar: { colorLoading: '#0052ff' },
+  Input: {
+    borderHover: '1px solid #8FEBE8',
+    borderFocus: '1px solid #8FEBE8'
+  },
   Menu: {
     color: 'transparent',
     itemTextColor: '#d4ddea',
     itemIconColor: '#d4ddea',
     arrowColor: '#aab9d0',
 
-    itemTextColorHoverHorizontal: 'red',
-    itemTextColorActiveHoverHorizontal: 'red',
-    itemTextColorActiveHorizontal: 'red'
+    itemTextColorHoverHorizontal: '#e96d08',
+    itemTextColorActiveHoverHorizontal: '#e96d08',
+    itemTextColorActiveHorizontal: '#e96d08'
   }
 };

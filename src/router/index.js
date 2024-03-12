@@ -15,6 +15,11 @@ const constantRoute = [
     component: () => import('@/layouts/index.vue'),
     children: [
       {
+        path: '/signup',
+        name: 'signup',
+        component: () => import('@/views/home/sign-up.vue')
+      },
+      {
         path: '/home/person',
         name: 'person',
         component: () => import('@/views/home/personal.vue')
@@ -49,11 +54,7 @@ const constantRoute = [
       title: '首页'
     }
   },
-  {
-    path: '/signup',
-    name: 'signup',
-    component: () => import('@/views/home/sign-up.vue')
-  },
+
   {
     path: '/verify',
     name: 'verify',

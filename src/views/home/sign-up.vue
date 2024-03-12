@@ -1,30 +1,44 @@
 <script setup>
+import { debounce } from 'lodash-es';
+
+import { useAppStore } from '@/stores';
+import { localStg } from '@/utils/storage';
+
+import { registerEmail } from '@/service/api/auth';
+import {
+  getStatic,
+  getUnit,
+  updateMember,
+  updateMemberInSign,
+  updateMemberInfo
+} from '@/service/api/mpf';
+
 defineOptions({
   name: 'SignUp'
 });
 
 const router = useRouter();
-const dialog = useDialog();
+const message = useMessage();
+const route = useRoute();
 
 const model = ref({
-  firstName: null,
-  lastName: null,
-  textareaValue: null,
-  gnder: null,
-  multipleSelectValue: null,
-  datetimeValue: null,
-  nestedValue: {
-    path1: null,
-    path2: null
+  id: null,
+  firstName: 'fn',
+  lastName: 'neil',
+  nameEn: '',
+  cardType: '1',
+  card: '111',
+  sex: '1',
+  country: 'china',
+  unit: {
+    nameEn: ''
   },
-  switchValue: false,
-  checkboxGroupValue: null,
-  radioGroupValue: null,
-  radioButtonGroupValue: null,
-  inputNumberValue: null,
-  timePickerValue: null,
-  sliderValue: 0,
-  transferValue: null
+  unitId: '',
+  jobEn: '11',
+  tel: '111',
+  email: '670395851@qq.com',
+  isForeign: 1,
+  isContact: '0'
 });
 const rules = {
   firstName: {
@@ -39,258 +53,152 @@ const rules = {
   }
 };
 
-const roomOptions = [
-  {
-    label: 'Single Room ¥500',
-    value: 1
-  },
-  {
-    label: 'Double Room ¥600',
-    value: 2
-  },
-  {
-    label: 'Executive Suite ¥1200',
-    value: 3
-  }
-];
+const unitList = ref([]);
+const selectLoading = ref(false);
 
-const paymentOptions = [
-  {
-    label: 'Self- Paying',
-    value: 1
-  },
-  {
-    label: 'Public Expense',
-    value: 2
-  },
-  {
-    label: 'Make up the difference',
-    value: 3
-  }
-];
+/** 下拉框-异步的时候搜索函数-节流，300毫秒执行一次 */
+const handleSelectSearch = debounce((query) => {
+  handleSearch(query);
+}, 300);
 
-function dialogSuccess() {
-  dialog.info({
-    title: 'Please confirm in your E-mail.'
+function handleSearch(name) {
+  selectLoading.value = true;
+  getUnit(name).then((res) => {
+    selectLoading.value = false;
+    unitList.value = res.data || [];
   });
 }
+
+watchEffect(() => {
+  model.value.nameEn = model.value.firstName + ' ' + model.value.lastName;
+});
+
+function submit() {
+  updateMember(model.value, route.query.sign, route.query.timestamp, route.query.email).then(
+    (resp) => {
+      if (resp.code !== '0') return;
+      // registerEmail(
+      //   model.value.email,
+      //   model.value.tel,
+      //   route.query.sign,
+      //   route.query.timestamp
+      // ).then((auth) => {
+      //   localStg.set('token', auth.message.token);
+      const appStore = useAppStore();
+      appStore.mpfId = resp.data.id;
+      updateMemberInfo({
+        id: resp.data.id,
+        memberForumTemp: {
+          id: null,
+          memberId: resp.data.id,
+          forumId: forumId,
+          isContact: model.value.isContact,
+          isDelete: 0
+        }
+      }).then((result) => {
+        if (result.code === '0') {
+          message.success('SignIn success!');
+          router.push('/home/person');
+        }
+      });
+      // });
+    }
+  );
+}
+
+/** 获取主论坛id */
+let forumId = 11;
+// getStatic().then((res) => {
+//   if (res.data && res.data.forum) {
+//     forumId = res.data.forum.find((e) => e.type === 0).id;
+//   }
+// });
+
+model.value.email = route.query.email || '';
 </script>
 
 <template>
-  <div class="mx-auto max-w-640px py-30px">
-    <n-card title="Please Put In Your Personal Details" class="mb-20px">
-      <n-form
-        :model="model"
-        :rules="rules"
-        label-placement="left"
-        label-width="auto"
-        require-mark-placement="right-hanging"
-        size="medium"
-      >
-        <n-form-item label="First Name" path="firstName">
-          <n-input v-model:value="model.firstName" />
-        </n-form-item>
-        <n-form-item label="Last Name" path="lastName">
-          <n-input v-model:value="model.lastName" />
-        </n-form-item>
-        <n-form-item label="Gender" path="gender" required>
-          <n-radio-group v-model:value="model.gender" name="gender">
-            <n-space>
-              <n-radio value="male"> Male </n-radio>
-              <n-radio value="female"> Female </n-radio>
-            </n-space>
-          </n-radio-group>
-        </n-form-item>
-        <n-form-item label="Participation Method" path="participationMethod" required>
-          <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
-            <n-space>
-              <n-radio value="online"> Online </n-radio>
-              <n-radio value="offline"> Offline </n-radio>
-            </n-space>
-          </n-radio-group>
-        </n-form-item>
-        <n-form-item label="Passport Number" path="passportNumber" required>
-          <n-input v-model:value="model.passportNumber" />
-        </n-form-item>
-        <n-form-item label="Organization" path="organization" required>
-          <n-input v-model:value="model.organization" />
-        </n-form-item>
-        <n-form-item label="Position" path="position" required>
-          <n-input v-model:value="model.position" />
-        </n-form-item>
-        <n-form-item label="Nationality" path="nationality" required>
-          <n-input v-model:value="model.nationality" />
-        </n-form-item>
-        <n-form-item label="Email" path="email" required>
-          <n-input v-model:value="model.email" />
-        </n-form-item>
-        <n-form-item label="Phone Number" path="phone" required>
-          <n-input v-model:value="model.phone" />
-        </n-form-item>
-        <n-form-item label="Contact person of Organization" path="isContact" required>
-          <n-radio-group v-model:value="model.isContact" name="isContact">
-            <n-space>
-              <n-radio value="Radio 1"> Y </n-radio>
-              <n-radio value="Radio 2"> N </n-radio>
-            </n-space>
-          </n-radio-group>
-        </n-form-item>
-      </n-form>
-    </n-card>
+  <div class="mx-auto max-w-1055px py-30px">
+    <div class="text-50px font-bold text-center">Sign In</div>
 
-    <n-card title="Choose Your Agenda">
-      <n-collapse default-expanded-names="['1', '2']">
-        <n-collapse-item title="2024 MPF Main Forum" name="1">
-          <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
-            <n-radio value="1">
-              <div>date</div>
-              <div>location</div>
-            </n-radio>
-          </n-radio-group>
-        </n-collapse-item>
-        <n-collapse-item title="MPF High-level Roundtable Meeting" name="2">
-          <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
-            <n-radio value="2">
-              <div>date</div>
-              <div>location</div>
-            </n-radio>
-          </n-radio-group>
-        </n-collapse-item>
-        <n-collapse-item title="MPF Thematic forum" name="3">
-          <n-radio-group
-            v-model:value="model.participationMethod"
-            name="participationMethod"
-            class="flex-col"
-          >
-            <n-radio value="3">
-              <div>Forum Name</div>
-              <div>date</div>
-              <div>location</div>
-            </n-radio>
-            <n-radio value="4">
-              <div>Forum Name</div>
-              <div>date</div>
-              <div>location</div>
-            </n-radio>
-            <n-radio value="5">
-              <div>Forum Name</div>
-              <div>date</div>
-              <div>location</div>
-            </n-radio>
-            <n-radio value="6">
-              <div>Forum Name</div>
-              <div>date</div>
-              <div>location</div>
-            </n-radio>
-          </n-radio-group>
-        </n-collapse-item>
-        <n-collapse-item title="Linkage Activities" name="3">
-          <n-radio-group
-            v-model:value="model.participationMethod"
-            name="participationMethod"
-            class="flex-col"
-          >
-            <n-radio value="7">
-              <div>Forum Name</div>
-              <div>date</div>
-              <div>location</div>
-            </n-radio>
-            <n-radio value="8">
-              <div>Forum Name</div>
-              <div>date</div>
-              <div>location</div>
-            </n-radio>
-          </n-radio-group>
-        </n-collapse-item>
-      </n-collapse>
-    </n-card>
+    <div class="color-#0040FF text-22px mb-30px font-bold" style="border-bottom: 1px solid #eee">
+      Please Put In Your Personal Details
+    </div>
+    <n-form
+      class="w-1055px mt-20px"
+      :model="model"
+      :rules="rules"
+      label-placement="left"
+      label-width="420"
+      label-align="left"
+      require-mark-placement="left"
+      size="medium"
+    >
+      <n-form-item label="First Name" path="firstName">
+        <n-input v-model:value="model.firstName" placeholder="" />
+      </n-form-item>
+      <n-form-item label="Last Name" path="lastName">
+        <n-input v-model:value="model.lastName" placeholder="" />
+      </n-form-item>
+      <n-form-item label="Gender" path="sex" required>
+        <n-radio-group v-model:value="model.sex" name="gender">
+          <n-space>
+            <n-radio value="1"> Male </n-radio>
+            <n-radio value="0"> Female </n-radio>
+          </n-space>
+        </n-radio-group>
+      </n-form-item>
+      <!-- <n-form-item label="Participation Method" path="participationMethod" required>
+        <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
+          <n-space>
+            <n-radio value="offline"> Offline </n-radio>
+            <n-radio value="online"> Online </n-radio>
+          </n-space>
+        </n-radio-group>
+      </n-form-item> -->
+      <n-form-item label="Passport Number" path="card" required>
+        <n-input v-model:value="model.card" placeholder="" />
+      </n-form-item>
+      <n-form-item label="Organization" path="unitId" required>
+        <n-select
+          v-model:value="model.unitId"
+          filterable
+          clearable
+          label-field="nameCn"
+          value-field="id"
+          :fallback-option="false"
+          :options="unitList"
+          :remote="true"
+          :loading="selectLoading"
+          @search="handleSelectSearch"
+        />
+      </n-form-item>
+      <n-form-item label="Position" path="jobEn" required>
+        <n-input v-model:value="model.jobEn" placeholder="" />
+      </n-form-item>
+      <n-form-item label="Nationality" path="country" required>
+        <n-input v-model:value="model.country" placeholder="" />
+      </n-form-item>
+      <n-form-item label="Email" path="email" required>
+        <n-input v-model:value="model.email" placeholder="" />
+      </n-form-item>
+      <n-form-item label="Phone Number" path="tel" required>
+        <n-input v-model:value="model.tel" placeholder="" />
+      </n-form-item>
+      <n-form-item label="Contact person of Organization" path="isContact" required>
+        <n-radio-group v-model:value="model.isContact" name="isContact">
+          <n-space>
+            <n-radio value="0"> Yes </n-radio>
+            <n-radio value="1"> No </n-radio>
+          </n-space>
+        </n-radio-group>
+      </n-form-item>
+    </n-form>
 
-    <n-card title="Traffic Service" class="mb-20px">
-      <h3>Inbound Journey</h3>
-      <n-form
-        :model="model"
-        label-placement="left"
-        label-width="auto"
-        require-mark-placement="right-hanging"
-        size="medium"
-      >
-        <n-form-item label="Travel Method" path="gender">
-          <n-radio-group v-model:value="model.gender" name="gender">
-            <n-space>
-              <n-radio value="Plane"> Plane </n-radio>
-              <n-radio value="High-Speed Railway"> High-Speed Railway </n-radio>
-            </n-space>
-          </n-radio-group>
-        </n-form-item>
-
-        <n-form-item label="Flight/Class" path="firstName">
-          <n-input v-model:value="model.firstName" />
-        </n-form-item>
-        <n-form-item label="Arrival Time" path="firstName">
-          <n-date-picker
-            v-model:value="model.timestamp2"
-            type="datetime"
-            format="yyyy/MM/dd - HH:mm"
-            clearable
-          />
-        </n-form-item>
-        <n-form-item label="Location" path="lastName">
-          <n-input v-model:value="model.lastName" />
-        </n-form-item>
-      </n-form>
-
-      <h3>Back Journey</h3>
-      <n-form
-        :model="model"
-        label-placement="left"
-        label-width="auto"
-        require-mark-placement="right-hanging"
-        size="medium"
-      >
-        <n-form-item label="Travel Method" path="gender">
-          <n-radio-group v-model:value="model.gender" name="gender">
-            <n-space>
-              <n-radio value="Plane"> Plane </n-radio>
-              <n-radio value="High-Speed Railway"> High-Speed Railway </n-radio>
-            </n-space>
-          </n-radio-group>
-        </n-form-item>
-
-        <n-form-item label="Flight/Class" path="firstName">
-          <n-input v-model:value="model.firstName" />
-        </n-form-item>
-        <n-form-item label="Departure Time" path="firstName">
-          <n-date-picker
-            v-model:value="model.timestamp2"
-            type="datetime"
-            format="yyyy/MM/dd - HH:mm"
-            clearable
-          />
-        </n-form-item>
-        <n-form-item label="Location" path="lastName">
-          <n-input v-model:value="model.lastName" />
-        </n-form-item>
-      </n-form>
-
-      <h3>Choose my Hotel</h3>
-      <n-form
-        :model="model"
-        label-placement="left"
-        label-width="auto"
-        require-mark-placement="right-hanging"
-        size="medium"
-      >
-        <n-form-item label="Room Type" path="firstName">
-          <n-select v-model:value="model.firstName" :options="roomOptions" />
-        </n-form-item>
-        <n-form-item label="Payment Method" path="firstName">
-          <n-select v-model:value="model.firstName" :options="paymentOptions" />
-        </n-form-item>
-      </n-form>
-
-      <div class="text-center">
-        <n-button type="info" @click="dialogSuccess">Submit</n-button>
-      </div>
-    </n-card>
+    <div class="text-right mt-110px">
+      <n-button color="#0040FF" class="w-190px h-56px border-rd-28px" @click="submit">
+        Submit
+      </n-button>
+    </div>
   </div>
 </template>

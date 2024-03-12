@@ -21,6 +21,8 @@ import { dateZhCN } from 'naive-ui';
 import { themeOverrides } from '@/config/theme';
 import { isMobile } from '@/utils/common';
 
+import { getStatic } from '@/service/api/mpf';
+
 // 挂载naive组件的方法至window, 以便在路由钩子函数和请求函数里面调用
 function registerNaiveTools() {
   window.$loadingBar = useLoadingBar();
@@ -45,8 +47,13 @@ window.$appLoading = (value) => (loading.value = value);
 let reseizeId = null;
 
 onMounted(() => {
+  const docEle = document.documentElement;
   if (isMobile()) {
     document.querySelector('#app').classList.add('mobile');
+    docEle.style.fontSize = 100 / 75 + 'vw';
+  } else {
+    document.querySelector('#app').classList.remove('mobile');
+    docEle.style.fontSize = 100 / 192 + 'vw';
   }
   /**
    * 监听移动端pc的reseize事件
@@ -59,14 +66,18 @@ onMounted(() => {
     reseizeId = setTimeout(() => {
       if (isMobile()) {
         document.querySelector('#app').classList.add('mobile');
+        docEle.style.fontSize = 100 / 75 + 'vw';
       } else {
         document.querySelector('#app').classList.remove('mobile');
+        docEle.style.fontSize = 100 / 192 + 'vw';
       }
     }, 100);
   };
 });
 
 onUnmounted(() => clearTimeout(reseizeId));
+
+// getStatic();
 </script>
 
 <style scoped>
