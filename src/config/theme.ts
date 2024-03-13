@@ -39,6 +39,8 @@ export const themeOverrides = {
   Input: {
     borderHover: '1px solid #8FEBE8',
     borderFocus: '1px solid #8FEBE8'
+    // border: 'none',
+    // boxShadowFocus: 'none'
   },
   Menu: {
     color: 'transparent',
@@ -46,6 +48,9 @@ export const themeOverrides = {
     itemIconColor: '#d4ddea',
     arrowColor: '#aab9d0',
 
+    itemTextColorHover: '#e96d08',
+    itemTextColorActiveHover: '#e96d08',
+    itemTextColorActive: '#e96d08',
     itemTextColorHoverHorizontal: '#e96d08',
     itemTextColorActiveHoverHorizontal: '#e96d08',
     itemTextColorActiveHorizontal: '#e96d08'

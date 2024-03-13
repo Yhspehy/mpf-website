@@ -18,7 +18,7 @@ const handleAxiosError = (error) => {
       window.$message?.error('Unauthorized');
       localStg.remove('token');
     } else {
-      window.$message?.error(data);
+      window.$message?.error(data || error.message);
     }
   } else {
     window.$message?.error(error.message);

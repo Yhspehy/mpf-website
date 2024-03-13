@@ -1,43 +1,76 @@
 <script setup>
+import { useAppStore } from '@/stores';
+
 defineOptions({
   name: 'NavBar'
 });
 
-const router = useRouter();
+const app = useAppStore();
 
 const navList = [
   {
-    name: 'HOME'
+    label: 'HOME',
+    key: 'HOME'
   },
   {
-    name: 'ABOUT'
+    label: 'ABOUT',
+    key: 'ABOUT'
   },
   {
-    name: 'GUIDE'
+    label: 'GUIDE',
+    key: 'GUIDE'
   },
   {
-    name: 'MEDIA'
+    label: 'MEDIA',
+    key: 'MEDIA'
   },
   {
-    name: 'MY MPF'
+    label: 'MY MPF',
+    key: 'MY MPF'
   },
   {
-    name: 'MANAGEMENT'
+    label: 'MANAGEMENT',
+    key: 'MANAGEMENT'
   },
   {
-    name: 'CONTACT'
+    label: 'CONTACT',
+    key: 'CONTACT'
   }
 ];
+
+function handleUpdateMenu(_key, item) {
+  window.location.href = 'http://mpforum.nbse.net.cn/homepage/index';
+}
+
+const drawerShow = ref(false);
+
+function toMpforum() {
+  window.location.href = 'http://mpforum.nbse.net.cn/homepage/index';
+}
 </script>
 
 <template>
-  <div class="w-full color-#fff flex-y-center h-120px pl-170px">
+  <div v-if="!app.isMobile" class="w-full color-#fff flex-y-center h-120px pl-170px absolute-lt">
     <img src="/images/nav-top-logo.png" class="w-160px h-82px" />
     <div class="nav-list">
-      <div v-for="item in navList" :key="item.name" class="cursor-pointer">
-        {{ item.name }}
+      <div v-for="item in navList" :key="item.key" class="cursor-pointer" @click="toMpforum">
+        {{ item.label }}
       </div>
     </div>
+  </div>
+  <div v-else class="nav-bar absolute-lt">
+    <img
+      src="/images/mpf-top-nav@2x.png"
+      class="w-3.6rem h-3.6rem"
+      @click="drawerShow = !drawerShow"
+    />
+    <img src="/images/nav-top-logo.png" class="w-16rem h-8.2rem" @click="toMpforum" />
+
+    <n-drawer v-model:show="drawerShow" width="35rem" placement="left">
+      <n-drawer-content title="MPF 2024" class="bg-#16284e" header-class="color-#fff!">
+        <n-menu value="MY MPF" :options="navList" :indent="0" @update:value="handleUpdateMenu" />
+      </n-drawer-content>
+    </n-drawer>
   </div>
 </template>
 
@@ -50,5 +83,14 @@ const navList = [
   height: 80px;
   border-left: 1px solid #fff;
   font-size: 18px;
+}
+
+.nav-bar {
+  @include flex-space-between;
+  background-image: url('/images/mpf-top-bg@2x.png');
+  background-size: 100%;
+  width: 100%;
+  height: 10.5rem;
+  padding: 0 3rem;
 }
 </style>

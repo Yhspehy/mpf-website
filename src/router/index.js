@@ -6,7 +6,6 @@ const constantRoute = [
     path: '/',
     name: 'root',
     component: () => import('@/views/index.vue')
-    // redirect: '/home/person'
   },
   {
     path: '/home',

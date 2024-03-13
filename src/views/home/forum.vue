@@ -19,9 +19,10 @@ let memberForumTemp = {};
 let memberForumTemps = [];
 let memberPlayForumTemp = [];
 
-const { mpfId } = useAppStore();
+const app = useAppStore();
 
 const expandedNames = ref([0, 1]);
+window.$appLoading(true);
 getStatic().then((res) => {
   const list = [
     {
@@ -89,7 +90,7 @@ getStatic().then((res) => {
     });
   });
 
-  getMemberInfo(mpfId).then((res) => {
+  getMemberInfo(app.mpfId).then((res) => {
     // 总论坛信息，默认参与
     memberForumTemp = res.data.memberForumTemp || {};
     // 子论坛信息
@@ -177,7 +178,7 @@ function submit() {
     });
   });
   const data = {
-    id: mpfId,
+    id: app.mpfId,
     memberForumTemp: memberForumTemp
   };
 
@@ -189,7 +190,7 @@ function submit() {
         item.isDelete = 0;
       } else {
         memberForumTemps.push({
-          memberId: mpfId,
+          memberId: app.mpfId,
           forumId: e,
           isDelete: 0
         });
@@ -225,10 +226,14 @@ function submit() {
 
 <template>
   <div class="w-full py-7rem">
-    <div class="text-5rem font-bold text-center mb-10rem">My Agenda</div>
+    <div class="text-5rem font-bold text-center mb-10rem">
+      {{ app.isMobile ? 'Choose Your Agenda' : 'My Agenda' }}
+    </div>
 
-    <div v-if="isEdit" class="px-45rem">
-      <div class="text-2.2rem color-#0040FF font-bold mb-5rem">Choose Your Agenda</div>
+    <div v-if="isEdit" class="px-45rem <sm:px-4rem">
+      <div v-if="!app.isMobile" class="text-2.2rem color-#0040FF font-bold mb-5rem">
+        Choose Your Agenda
+      </div>
       <n-collapse v-model:expanded-names="expandedNames">
         <n-collapse-item
           v-for="(item, index) in forumList"
@@ -262,7 +267,7 @@ function submit() {
       v-else
       v-for="(item, index) in forumSignList"
       :key="index"
-      class="flex py-4rem px-45rem"
+      class="flex py-4rem px-45rem <sm:px-4rem"
       :style="{
         backgroundColor: index % 2 ? '#F8F8F8' : '#F1F1F1'
       }"
@@ -289,8 +294,12 @@ function submit() {
       </div>
     </div>
 
-    <div class="text-right mt-11rem mx-45rem">
-      <n-button color="#0040FF" class="w-190px h-56px border-rd-28px" @click="submit">
+    <div class="text-right mt-11rem pr-45rem <sm:text-center <sm:pr-0">
+      <n-button
+        color="#0040FF"
+        class="text-2rem w-19rem h-5.6rem border-rd-2.8rem <sm:w-70rem <sm:h-7rem <sm:border-rd-3.5rem <sm:text-3.2rem"
+        @click="submit"
+      >
         {{ isEdit ? 'Save' : 'Edit' }}
       </n-button>
     </div>
@@ -305,5 +314,10 @@ function submit() {
   .n-collapse-item-arrow {
     color: #0040ff !important;
   }
+}
+
+.mobile .n-collapse-item__header-main {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 </style>

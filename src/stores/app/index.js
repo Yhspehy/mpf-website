@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
+import { localStg } from '@/utils/storage';
 
 export const useAppStore = defineStore('app-store', {
   state: () => ({
-    mpfId: 7926
-  }),
-  actions: {}
+    mpfId: localStg.get('mpfId'),
+    isMobile: false
+  })
 });

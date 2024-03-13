@@ -21,6 +21,8 @@ import { dateZhCN } from 'naive-ui';
 import { themeOverrides } from '@/config/theme';
 import { isMobile } from '@/utils/common';
 
+import { useAppStore } from '@/stores';
+
 import { getStatic } from '@/service/api/mpf';
 
 // 挂载naive组件的方法至window, 以便在路由钩子函数和请求函数里面调用
@@ -46,12 +48,17 @@ window.$appLoading = (value) => (loading.value = value);
 
 let reseizeId = null;
 
+const appStore = useAppStore();
+
 onMounted(() => {
   const docEle = document.documentElement;
+
   if (isMobile()) {
+    appStore.isMobile = true;
     document.querySelector('#app').classList.add('mobile');
     docEle.style.fontSize = 100 / 75 + 'vw';
   } else {
+    appStore.isMobile = false;
     document.querySelector('#app').classList.remove('mobile');
     docEle.style.fontSize = 100 / 192 + 'vw';
   }
@@ -65,9 +72,11 @@ onMounted(() => {
     }
     reseizeId = setTimeout(() => {
       if (isMobile()) {
+        appStore.isMobile = true;
         document.querySelector('#app').classList.add('mobile');
         docEle.style.fontSize = 100 / 75 + 'vw';
       } else {
+        appStore.isMobile = false;
         document.querySelector('#app').classList.remove('mobile');
         docEle.style.fontSize = 100 / 192 + 'vw';
       }

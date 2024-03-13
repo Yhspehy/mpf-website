@@ -41,6 +41,18 @@ export default defineConfig({
         background: 'var(--bg-color)',
         transition: 'background-color 0.3s ease-in-out'
       }
+    ],
+    [
+      'border-b',
+      {
+        'border-bottom': '1px solid #eee'
+      }
+    ],
+    [
+      'border-t',
+      {
+        'border-top': '1px solid #eee'
+      }
     ]
   ],
   shortcuts: {

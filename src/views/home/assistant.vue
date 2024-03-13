@@ -1,5 +1,5 @@
 <script setup>
-import { useAppStore } from '~/src/stores';
+import { useAppStore } from '@/stores';
 import { getMemberInfo } from '@/service/api/mpf';
 
 defineOptions({
@@ -8,31 +8,60 @@ defineOptions({
 
 const { mpfId } = useAppStore();
 
-getMemberInfo(mpfId);
+const assistant = ref({});
+
+getMemberInfo(mpfId).then((res) => {
+  if (res.data.volunteerForumTemp) {
+    assistant.value = res.data.volunteerForumTemp.find((e) => e.type === 1);
+  }
+});
 </script>
 
 <template>
-  <div class="ml-450px max-w-1050px pt-70px">
-    <div class="text-5rem font-bold text-center mb-100px">My Assistant</div>
+  <div class="mx-auto w-105rem pt-7rem <sm:w-70rem">
+    <div class="text-5rem font-bold text-center mb-10rem">My Assistant</div>
 
-    <div class="flex-y-center" style="border-top: 1px solid #eee">
-      <img src="/images/assistant-icon-name@2x.png" alt="" class="w-3.5rem h-3.5rem mr-2rem" />
-      <div class="w-240px text-30px font-bold mr-110px">Name</div>
-      <div class="text-24px color-#595757 flex-1 py-4rem" style="border-bottom: 1px solid #eee">
-        Wash
+    <div class="card">
+      <div class="flex-y-center border-t <sm:border-none">
+        <img
+          src="/images/assistant-icon-name@2x.png"
+          alt=""
+          class="w-3.5rem h-3.5rem mr-2rem <sm:self-start <sm:top-4.5rem <sm:relative"
+        />
+        <div class="flex-y-center flex-1 <sm:flex-col <sm:items-start">
+          <div class="w-24rem text-3rem font-bold mr-11rem <sm:py-4rem <sm:w-full <sm:border-b">
+            Name
+          </div>
+          <div class="text-2.4rem color-#595757 flex-1 py-4rem border-b <sm:w-full">
+            {{ assistant.name || '' }}
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="flex-y-center" style="border-bottom: 1px solid #eee">
-      <img
-        src="/images/assistant-icon-telephone@2x.png"
-        alt=""
-        class="w-35px h-35px mr-20px <sm:w-98px <sm:h-98px"
-      />
-      <div class="w-240px text-30px font-bold mr-110px">Contact Number</div>
-      <div class="text-24px color-#595757 flex-1 py-4rem" style="border-bottom: 1px solid #eee">
-        +77 6688 9990
+      <div class="flex-y-center border-b <sm:border-none">
+        <img
+          src="/images/assistant-icon-name@2x.png"
+          alt=""
+          class="w-3.5rem h-3.5rem mr-2rem <sm:self-start <sm:top-4.5rem <sm:relative"
+        />
+        <div class="flex-y-center flex-1 <sm:flex-col <sm:items-start">
+          <div class="w-24rem text-3rem font-bold mr-11rem <sm:py-4rem <sm:w-full <sm:border-b">
+            Contact Number
+          </div>
+          <div class="text-2.4rem color-#595757 flex-1 py-4rem <sm:w-full">
+            {{ assistant.tel || '' }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.mobile .card {
+  border: 1px solid #eee;
+  padding: 0 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem 0 #eee;
+}
+</style>

@@ -7,13 +7,13 @@ const text = ref('text');
 </script>
 
 <template>
-  <div class="bg-#E6FCFB pt-70px" style="height: calc(100vh - 80px)">
-    <div class="mx-auto max-w-640px text-center">
-      <div class="text-50px font-bold mb-200px">My MPF QR Code</div>
+  <div class="bg-#E6FCFB w-full pt-7rem" style="height: calc(100vh - 8rem)">
+    <div class="mx-auto w-64rem text-center">
+      <div class="text-5rem font-bold mb-20rem">My MPF QR Code</div>
 
-      <n-qr-code :value="text" size="200" />
+      <n-qr-code :value="text" :size="200" />
 
-      <div class="text-20px color-#989898 mt-30px">
+      <div class="text-2rem color-#989898 mt-3rem">
         Please Use this QR Code for Venue and Meal Check-in.
       </div>
     </div>

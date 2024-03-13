@@ -5,13 +5,7 @@ import { useAppStore } from '@/stores';
 import { localStg } from '@/utils/storage';
 
 import { registerEmail } from '@/service/api/auth';
-import {
-  getStatic,
-  getUnit,
-  updateMember,
-  updateMemberInSign,
-  updateMemberInfo
-} from '@/service/api/mpf';
+import { getStaticInSign, getUnit, updateMemberInSign, updateMemberInfo } from '@/service/api/mpf';
 
 defineOptions({
   name: 'SignUp'
@@ -73,63 +67,64 @@ watchEffect(() => {
   model.value.nameEn = model.value.firstName + ' ' + model.value.lastName;
 });
 
+const app = useAppStore();
 function submit() {
-  updateMember(model.value, route.query.sign, route.query.timestamp, route.query.email).then(
+  updateMemberInSign(model.value, route.query.sign, route.query.timestamp, route.query.email).then(
     (resp) => {
       if (resp.code !== '0') return;
-      // registerEmail(
-      //   model.value.email,
-      //   model.value.tel,
-      //   route.query.sign,
-      //   route.query.timestamp
-      // ).then((auth) => {
-      //   localStg.set('token', auth.message.token);
-      const appStore = useAppStore();
-      appStore.mpfId = resp.data.id;
-      updateMemberInfo({
-        id: resp.data.id,
-        memberForumTemp: {
-          id: null,
-          memberId: resp.data.id,
-          forumId: forumId,
-          isContact: model.value.isContact,
-          isDelete: 0
-        }
-      }).then((result) => {
-        if (result.code === '0') {
-          message.success('SignIn success!');
-          router.push('/home/person');
-        }
+      registerEmail(
+        model.value.email,
+        model.value.tel,
+        route.query.sign,
+        route.query.timestamp
+      ).then((auth) => {
+        localStg.set('token', auth.token);
+        app.mpfId = resp.data.id;
+        updateMemberInfo({
+          id: resp.data.id,
+          memberForumTemp: {
+            id: null,
+            memberId: resp.data.id,
+            forumId: forumId,
+            isContact: model.value.isContact,
+            isDelete: 0
+          }
+        }).then((result) => {
+          if (result.code === '0') {
+            message.success('SignIn success!');
+            router.push('/home/person');
+          }
+        });
       });
-      // });
     }
   );
 }
 
 /** 获取主论坛id */
 let forumId = 11;
-// getStatic().then((res) => {
-//   if (res.data && res.data.forum) {
-//     forumId = res.data.forum.find((e) => e.type === 0).id;
-//   }
-// });
+getStaticInSign(route.query.sign, route.query.timestamp, route.query.email).then((res) => {
+  if (res.data && res.data.forum) {
+    forumId = res.data.forum.find((e) => e.type === 0).id;
+  }
+});
 
 model.value.email = route.query.email || '';
 </script>
 
 <template>
-  <div class="mx-auto max-w-1055px py-30px">
-    <div class="text-50px font-bold text-center">Sign In</div>
+  <div class="mx-auto w-105rem py-3rem <sm:w-70rem">
+    <div class="text-5rem font-bold text-center mb-10rem">Sign In</div>
 
-    <div class="color-#0040FF text-22px mb-30px font-bold" style="border-bottom: 1px solid #eee">
+    <div class="color-#0040FF text-2.2rem mb-3rem font-bold border-b pb-2rem">
       Please Put In Your Personal Details
     </div>
+
     <n-form
-      class="w-1055px mt-20px"
+      class="w-full mt-2rem"
       :model="model"
       :rules="rules"
-      label-placement="left"
-      label-width="420"
+      :label-placement="app.isMobile ? 'top' : 'left'"
+      label-width="42rem"
       label-align="left"
       require-mark-placement="left"
       size="medium"
@@ -195,8 +190,12 @@ model.value.email = route.query.email || '';
       </n-form-item>
     </n-form>
 
-    <div class="text-right mt-110px">
-      <n-button color="#0040FF" class="w-190px h-56px border-rd-28px" @click="submit">
+    <div class="text-right mt-11rem <sm:text-center">
+      <n-button
+        color="#0040FF"
+        class="text-2rem w-19rem h-5.6rem border-rd-2.8rem <sm:w-70rem <sm:h-7rem <sm:border-rd-3.5rem <sm:text-3.2rem"
+        @click="submit"
+      >
         Submit
       </n-button>
     </div>

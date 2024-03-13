@@ -1,4 +1,6 @@
 <script setup>
+import { useAppStore } from '@/stores';
+
 import { register } from '@/service/api/auth';
 
 defineOptions({
@@ -20,18 +22,18 @@ function handleEmail() {
   model.confirmPassword = '';
 }
 
+const app = useAppStore();
+
 /** 登录 */
 async function handleSubmit() {
   if (!model.email || model.email.trim() === '') {
     return message.warning('Please fill email!');
   }
   if (model.password !== model.confirmPassword) {
-    return message.warning('Password is not same withconfirmPassword!');
+    return message.warning('Password is not same with confirmPassword!');
   }
-  register(model.email, model.password).then((res) => {
-    if (res.statusCode === '0000') {
-      message.success('Send email success!');
-    }
+  register(model.email, model.password).then(() => {
+    message.success('Send email success!');
   });
 }
 
@@ -41,20 +43,34 @@ if (route.query.email) {
 </script>
 
 <template>
-  <div class="wh-full bg">
+  <div class="wh-full bg flex-col-center">
     <nav-bar />
     <div
-      class="mx-auto mt-100px py-30px bg-var w-850px h-740px py-80px px-170px box-border border-rd-20px"
+      class="mx-auto mt-10rem bg-#F1F1F1 w-85rem h-74rem py-8rem px-17rem box-border border-rd-2rem <sm:w-70rem <sm:px-6rem <sm:h-80rem"
     >
-      <div class="text-108px color-#0040FF line-height-110px">MPF 2024</div>
-      <div class="text-22px color-#0040FF text-center">
+      <div class="text-center text-10.8rem color-#0040FF line-height-11rem mb-2rem <sm:text-12rem">
+        MPF 2024
+      </div>
+      <div class="text-2.6rem color-#0040FF text-center line-height-2.7rem">
         The 8th Maritime Silk Road Port International Cooperation Forum
       </div>
       <main class="pt-24px">
-        <n-form :model="model" size="large" label-placement="left" label-width="100">
+        <div
+          v-if="app.isMobile"
+          class="text-2.6rem color-#BCBDBE line-height-2.6rem mt-2rem mb-1rem"
+        >
+          Create a profile with your email.
+        </div>
+        <n-form
+          :model="model"
+          size="large"
+          label-placement="left"
+          label-width="100"
+          :show-feedback="false"
+        >
           <n-form-item path="userName">
             <n-input
-              class="h-68px line-height-68px"
+              class="h-7rem line-height-7rem mb-2rem <sm:h-8rem <sm:line-height-8rem"
               v-model:value="model.email"
               placeholder="Create a profile with your email *"
               @update:value="handleEmail"
@@ -63,7 +79,7 @@ if (route.query.email) {
 
           <n-form-item path="password">
             <n-input
-              class="h-68px line-height-68px"
+              class="h-7rem line-height-7rem mb-2rem <sm:h-8rem <sm:line-height-8rem"
               v-model:value="model.password"
               placeholder="Create Password *"
             />
@@ -71,7 +87,7 @@ if (route.query.email) {
 
           <n-form-item path="password">
             <n-input
-              class="h-68px line-height-68px"
+              class="h-7rem line-height-7rem mb-2rem <sm:h-8rem <sm:line-height-8rem"
               v-model:value="model.confirmPassword"
               placeholder="Confirm Password *"
             />
@@ -79,14 +95,14 @@ if (route.query.email) {
         </n-form>
 
         <n-button
-          class="w-200px mt-80px"
+          class="w-20rem mt-6rem"
           type="primary"
           size="large"
           :block="true"
           :round="true"
           @click="handleSubmit"
         >
-          CONTINUE
+          Register Now
         </n-button>
       </main>
     </div>
