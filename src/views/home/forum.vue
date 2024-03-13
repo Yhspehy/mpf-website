@@ -272,20 +272,16 @@ function submit() {
         backgroundColor: index % 2 ? '#F8F8F8' : '#F1F1F1'
       }"
     >
-      <img src="/public/images/agenda-icon-title@2x.png" class="w-6.3rem h-5.6rem" alt="" />
+      <img src="/images/agenda-icon-title@2x.png" class="w-6.3rem h-5.6rem" alt="" />
       <div class="ml-3.4rem">
         <div class="text-3rem color-#0040FF font-bold">{{ item.title }}</div>
         <div class="text-2.2rem color-#303030 flex-y-center">
-          <img
-            src="/public/images/agenda-icon-time@2x.png"
-            class="w-2.2rem h-2.2rem mr-0.8rem"
-            alt=""
-          />
+          <img src="/images/agenda-icon-time@2x.png" class="w-2.2rem h-2.2rem mr-0.8rem" alt="" />
           {{ item.time }}
         </div>
         <div class="text-2.2rem color-#989898 flex-y-center">
           <img
-            src="/public/images/agenda-icon-position@2x.png"
+            src="/images/agenda-icon-position@2x.png"
             class="w-1.8rem h-2.5rem mr-1.2rem"
             alt=""
           />

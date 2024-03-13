@@ -150,7 +150,7 @@ function submit() {
     <div v-if="isEdit">
       <div class="px-3.4rem flex w-full pt-2rem pb-5rem border-b <sm:border-t">
         <img
-          src="/public/images/service-icon-trip@2x(1).png"
+          src="/images/service-icon-trip@2x(1).png"
           class="w-4rem h-3.7rem <sm:mt-0.5rem"
           alt=""
         />
@@ -188,11 +188,7 @@ function submit() {
       </div>
 
       <div class="px-3.4rem flex w-full pt-2rem pb-5rem border-b">
-        <img
-          src="/public/images/service-icon-trip@2x.png"
-          class="w-4rem h-3.7rem <sm:mt-0.5rem"
-          alt=""
-        />
+        <img src="/images/service-icon-trip@2x.png" class="w-4rem h-3.7rem <sm:mt-0.5rem" alt="" />
         <div class="ml-2rem flex-1">
           <div class="text-2.2rem color-#0040FF font-bold <sm:text-3rem">Back Journey</div>
 
@@ -228,7 +224,7 @@ function submit() {
 
       <div class="px-3.4rem flex w-full pt-2rem pb-5rem border-b">
         <img
-          src="/public/images/service-icon-hotel@2x.png"
+          src="/images/service-icon-hotel@2x.png"
           class="w-3.4rem h-3.6rem <sm:mt-0.5rem"
           alt=""
         />
@@ -274,7 +270,7 @@ function submit() {
     <div v-else class="py-4rem">
       <div class="px-3.4rem flex w-full py-3rem border-b <sm:border-t text-2rem">
         <img
-          src="/public/images/service-icon-trip@2x(1).png"
+          src="/images/service-icon-trip@2x(1).png"
           class="w-4rem h-3.7rem <sm:mt-0.5rem"
           alt=""
         />
@@ -306,11 +302,7 @@ function submit() {
       </div>
 
       <div class="px-3.4rem flex w-full pt-3rem pb-5rem border-b text-2rem">
-        <img
-          src="/public/images/service-icon-trip@2x.png"
-          class="w-4rem h-3.7rem <sm:mt-0.5rem"
-          alt=""
-        />
+        <img src="/images/service-icon-trip@2x.png" class="w-4rem h-3.7rem <sm:mt-0.5rem" alt="" />
         <div class="ml-2rem flex-1">
           <div class="text-2.2rem color-#0040FF font-bold <sm:text-3rem pb-1rem">Back Journey</div>
           <div class="flex-y-center <sm:flex-col <sm:items-start <sm:mt-2rem">
@@ -337,11 +329,7 @@ function submit() {
       </div>
 
       <div class="px-3.4rem flex w-full pt-3rem pb-5rem border-b text-2rem">
-        <img
-          src="/public/images/service-icon-trip@2x.png"
-          class="w-4rem h-3.7rem <sm:mt-0.5rem"
-          alt=""
-        />
+        <img src="/images/service-icon-trip@2x.png" class="w-4rem h-3.7rem <sm:mt-0.5rem" alt="" />
         <div class="ml-2rem flex-1">
           <div class="text-2.2rem color-#0040FF font-bold <sm:text-3rem pb-1rem">Hotel</div>
           <div class="flex-y-center <sm:flex-col <sm:items-start <sm:mt-2rem">
