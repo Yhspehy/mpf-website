@@ -193,10 +193,10 @@ getStatic().then((res) => {
       require-mark-placement="left"
       size="medium"
     >
-      <n-form-item label="First Name" path="firstName">
+      <n-form-item label="First Name" path="firstName" required>
         <n-input v-model:value="model.firstName" placeholder="" />
       </n-form-item>
-      <n-form-item label="Last Name" path="lastName">
+      <n-form-item label="Last Name" path="lastName" required>
         <n-input v-model:value="model.lastName" placeholder="" />
       </n-form-item>
       <n-form-item label="Gender" path="sex" required>
@@ -265,14 +265,20 @@ getStatic().then((res) => {
       require-mark-placement="left"
       size="medium"
     >
-      <n-form-item label="First Name" path="firstName">
-        <div class="border-b w-full py-0.7rem">{{ model.firstName }}</div>
+      <n-form-item label="First Name" path="firstName" required>
+        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+          {{ model.firstName }}
+        </div>
       </n-form-item>
-      <n-form-item label="Last Name" path="lastName">
-        <div class="border-b w-full py-0.7rem">{{ model.lastName }}</div>
+      <n-form-item label="Last Name" path="lastName" required>
+        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+          {{ model.lastName }}
+        </div>
       </n-form-item>
       <n-form-item label="Gender" path="sex" required>
-        <div class="border-b w-full py-0.7rem">{{ model.sex === 1 ? 'Male' : 'Female' }}</div>
+        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+          {{ model.sex === 1 ? 'Male' : 'Female' }}
+        </div>
       </n-form-item>
       <!-- <n-form-item label="Participation Method" path="participationMethod" required>
         <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
@@ -283,25 +289,29 @@ getStatic().then((res) => {
         </n-radio-group>
       </n-form-item> -->
       <n-form-item label="Passport Number" path="card" required>
-        <div class="border-b w-full py-0.7rem">{{ model.card }}</div>
+        <div class="border-b w-full py-0.7rem <sm:text-2.8rem">{{ model.card }}</div>
       </n-form-item>
       <n-form-item label="Organization" path="unitId" required>
-        <div class="border-b w-full py-0.7rem">{{ model.unit.nameEn }}</div>
+        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+          {{ model.unit.nameEn }}
+        </div>
       </n-form-item>
       <n-form-item label="Position" path="jobEn" required>
-        <div class="border-b w-full py-0.7rem">{{ model.jobEn }}</div>
+        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">{{ model.jobEn }}</div>
       </n-form-item>
       <n-form-item label="Nationality" path="country" required>
-        <div class="border-b w-full py-0.7rem">{{ model.country }}</div>
+        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">{{ model.country }}</div>
       </n-form-item>
       <n-form-item label="Email" path="email" required>
-        <div class="border-b w-full py-0.7rem">{{ model.email }}</div>
+        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">{{ model.email }}</div>
       </n-form-item>
       <n-form-item label="Phone Number" path="tel" required>
-        <div class="border-b w-full py-0.7rem">{{ model.tel }}</div>
+        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">{{ model.tel }}</div>
       </n-form-item>
       <n-form-item label="Contact person of Organization" path="isContact" required>
-        <div class="border-b w-full py-0.7rem">{{ model.isContact === '0' ? 'Yes' : 'No' }}</div>
+        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+          {{ model.isContact === '0' ? 'Yes' : 'No' }}
+        </div>
       </n-form-item>
     </n-form>
 

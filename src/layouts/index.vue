@@ -42,6 +42,9 @@ const menuOptions = [
 const activeKey = ref(null);
 
 function handleUpdateMenu(_key, item) {
+  if (app.isMobile) {
+    drawerShow.value = false;
+  }
   router.push(item.url);
 }
 
