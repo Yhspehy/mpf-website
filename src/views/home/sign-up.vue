@@ -15,35 +15,63 @@ const router = useRouter();
 const message = useMessage();
 const route = useRoute();
 
+const formIns = ref(null);
 const model = ref({
   id: null,
-  firstName: 'fn',
-  lastName: 'neil',
+  firstName: '',
+  lastName: '',
   nameEn: '',
   cardType: '1',
-  card: '111',
+  card: '',
   sex: '1',
-  country: 'china',
+  country: '',
   unit: {
     nameEn: ''
   },
   unitId: '',
-  jobEn: '11',
-  tel: '111',
-  email: '670395851@qq.com',
+  jobEn: '',
+  tel: '',
+  email: '',
   isForeign: 1,
   isContact: '0'
 });
 const rules = {
   firstName: {
     required: true,
-    trigger: ['blur', 'input'],
-    message: 'Please input firstName'
+    trigger: ['blur', 'input']
   },
   lastName: {
     required: true,
+    trigger: ['blur', 'input']
+  },
+  card: {
+    required: true,
+    trigger: ['blur', 'input']
+  },
+  country: {
+    required: true,
     trigger: ['blur', 'input'],
-    message: 'Please input lastName'
+    message: 'nationality is required'
+  },
+  unit: {
+    nameEn: {
+      required: true,
+      trigger: ['blur', 'input'],
+      message: 'organization is required'
+    }
+  },
+  jobEn: {
+    required: true,
+    trigger: ['blur', 'input'],
+    message: 'position is required'
+  },
+  tel: {
+    required: true,
+    trigger: ['blur', 'input']
+  },
+  email: {
+    required: true,
+    trigger: ['blur', 'input']
   }
 };
 
@@ -63,41 +91,57 @@ function handleSearch(name) {
   });
 }
 
+function updateUnit(value, option) {
+  if (!value) {
+    model.value.unit.nameEn = '';
+  } else {
+    model.value.unit.nameEn = option.nameEn;
+  }
+}
+
 watchEffect(() => {
   model.value.nameEn = model.value.firstName + ' ' + model.value.lastName;
 });
 
 const app = useAppStore();
 function submit() {
-  updateMemberInSign(model.value, route.query.sign, route.query.timestamp, route.query.email).then(
-    (resp) => {
-      if (resp.code !== '0') return;
-      registerEmail(
-        model.value.email,
-        model.value.tel,
+  formIns.value?.validate((errors) => {
+    if (!errors) {
+      updateMemberInSign(
+        model.value,
         route.query.sign,
-        route.query.timestamp
-      ).then((auth) => {
-        localStg.set('token', auth.token);
-        app.mpfId = resp.data.id;
-        updateMemberInfo({
-          id: resp.data.id,
-          memberForumTemp: {
-            id: null,
-            memberId: resp.data.id,
-            forumId: forumId,
-            isContact: model.value.isContact,
-            isDelete: 0
-          }
-        }).then((result) => {
-          if (result.code === '0') {
-            message.success('SignIn success!');
-            router.push('/home/person');
-          }
+        route.query.timestamp,
+        route.query.email
+      ).then((resp) => {
+        if (resp.code !== '0') return;
+        registerEmail(
+          model.value.email,
+          model.value.tel,
+          route.query.sign,
+          route.query.timestamp
+        ).then((auth) => {
+          localStg.set('email', model.value.email);
+          localStg.set('token', auth.token);
+          app.mpfId = resp.data.id;
+          updateMemberInfo({
+            id: resp.data.id,
+            memberForumTemp: {
+              id: null,
+              memberId: resp.data.id,
+              forumId: forumId,
+              isContact: model.value.isContact,
+              isDelete: 0
+            }
+          }).then((result) => {
+            if (result.code === '0') {
+              message.success('SignIn success!');
+              router.push('/home/person');
+            }
+          });
         });
       });
     }
-  );
+  });
 }
 
 /** 获取主论坛id */
@@ -159,12 +203,14 @@ model.value.email = route.query.email || '';
           v-model:value="model.unitId"
           filterable
           clearable
-          label-field="nameCn"
+          label-field="nameEn"
           value-field="id"
           :fallback-option="false"
           :options="unitList"
           :remote="true"
           :loading="selectLoading"
+          @update:value="updateUnit"
+          @blur="() => handleSelectSearch(model.unit.nameEn)"
           @search="handleSelectSearch"
         />
       </n-form-item>

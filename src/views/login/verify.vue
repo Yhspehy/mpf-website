@@ -7,7 +7,7 @@ defineOptions({
 
 const router = useRouter();
 const model = reactive({
-  email: '670395851@qq.com'
+  email: ''
 });
 
 const app = useAppStore();
@@ -28,10 +28,10 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div class="wh-full bg flex-col-center">
+  <div class="wh-full bg flex-col-center login-page">
     <nav-bar />
     <div
-      class="mx-auto mt-10rem bg-#F1F1F1 w-85rem h-64rem py-8rem px-17rem box-border border-rd-2rem <sm:w-70rem <sm:px-6rem <sm:h-80rem"
+      class="mx-auto mt-10rem bg-#F1F1F1 w-85rem py-8rem px-17rem box-border border-rd-2rem <sm:w-70rem <sm:px-6rem"
     >
       <div class="text-center text-10.8rem color-#0040FF line-height-11rem mb-2rem <sm:text-12rem">
         MPF 2024
@@ -87,5 +87,14 @@ async function handleSubmit() {
 <style scoped lang="scss">
 .bg {
   background-image: url('/images/mpf-login-bg.png');
+}
+</style>
+
+<style lang="scss">
+.login-page .n-input__input-el {
+  height: 7rem !important;
+}
+.mobile .login-page .n-input__input-el {
+  height: 8rem !important;
 }
 </style>

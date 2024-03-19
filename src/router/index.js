@@ -5,7 +5,7 @@ const constantRoute = [
   {
     path: '/',
     name: 'root',
-    redirect: '/login'
+    redirect: '/verify'
   },
   {
     path: '/home',

@@ -23,6 +23,8 @@ const handleAxiosError = (error) => {
   } else {
     window.$message?.error(error.message);
   }
+  window.$appLoading?.(false);
+  window.$loading?.(false);
   return Promise.reject(error);
 };
 

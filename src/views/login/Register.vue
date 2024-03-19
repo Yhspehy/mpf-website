@@ -33,7 +33,7 @@ async function handleSubmit() {
     return message.warning('Password is not same with confirmPassword!');
   }
   register(model.email, model.password).then(() => {
-    message.success('Send email success!');
+    message.success('Please go to your email to verify!');
   });
 }
 
@@ -43,7 +43,7 @@ if (route.query.email) {
 </script>
 
 <template>
-  <div class="wh-full bg flex-col-center">
+  <div class="wh-full bg flex-col-center login-page">
     <nav-bar />
     <div
       class="mx-auto mt-10rem bg-#F1F1F1 w-85rem h-74rem py-8rem px-17rem box-border border-rd-2rem <sm:w-70rem <sm:px-6rem <sm:h-80rem"
@@ -112,5 +112,14 @@ if (route.query.email) {
 <style scoped lang="scss">
 .bg {
   background-image: url('/images/mpf-login-bg.png');
+}
+</style>
+
+<style lang="scss">
+.login-page .n-input__input-el {
+  height: 7rem !important;
+}
+.mobile .login-page .n-input__input-el {
+  height: 8rem !important;
 }
 </style>

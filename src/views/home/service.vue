@@ -36,71 +36,73 @@ const hotel = ref({
 });
 
 let memberInfo = {};
-window.$appLoading(true);
-getStatic().then((res) => {
-  let hotelMap = {};
-  res.data.forumHotel.forEach((e) => {
-    if (hotelMap[e.hotel]) {
-      hotelMap[e.hotel].rooms.push({
-        ...e,
-        apartment: e.apartment + ' ¥' + e.price,
-        idx: hotelMap[e.hotel].rooms.length
-      });
-    } else {
-      hotelMap[e.hotel] = {
-        name: e.hotel,
-        rooms: [
-          {
-            ...e,
-            apartment: e.apartment + ' ¥' + e.price,
-            idx: 0
-          }
-        ]
-      };
-    }
-    hotelList.value = Object.keys(hotelMap).map((e, idx) => ({
-      ...hotelMap[e],
-      idx
-    }));
-    console.log(hotelList.value);
-  });
-  getMemberInfo(app.mpfId).then((res) => {
-    memberInfo = res.data;
-    if (res.data.travelTemp) {
-      travel.value = {
-        welType: res.data.travelTemp.welType,
-        welClasses: res.data.travelTemp.welClasses,
-        welTime: res.data.travelTemp.welTime
-          ? new Date(res.data.travelTemp.welTime).getTime()
-          : null,
-        delType: res.data.travelTemp.delType,
-        delClasses: res.data.travelTemp.delClasses,
-        delTime: res.data.travelTemp.delTime
-          ? new Date(res.data.travelTemp.delTime).getTime()
-          : null
-      };
-    }
 
-    if (res.data.forumMemberHotelTemp) {
-      const time = res.data.forumMemberHotelTemp.time.split('～');
-      const hotelIdx = hotelList.value.findIndex(
-        (e) => e.name === res.data.forumMemberHotelTemp.forumHotel.hotelDo.name
-      );
-      const roomIdx = hotelList.value[hotelIdx].rooms.findIndex(
-        (e) => e.hotelId === res.data.forumMemberHotelTemp.forumHotel.hotelDo.id
-      );
-      hotel.value = {
-        hotelIdx: hotelIdx,
-        roomIdx: roomIdx,
-        timeRange: [new Date(time[0]).getTime(), new Date(time[1]).getTime()],
-        name: res.data.forumMemberHotelTemp.forumHotel.hotelDo.name,
-        room: res.data.forumMemberHotelTemp.forumHotel.hotelDo.apartment,
-        prize: res.data.forumMemberHotelTemp.forumHotel.price,
-        time: res.data.forumMemberHotelTemp.time
-      };
-    }
+function getList() {
+  window.$appLoading(true);
+  getStatic().then((res) => {
+    let hotelMap = {};
+    res.data.forumHotel.forEach((e) => {
+      if (hotelMap[e.hotel]) {
+        hotelMap[e.hotel].rooms.push({
+          ...e,
+          apartment: e.apartment + ' ¥' + e.price,
+          idx: hotelMap[e.hotel].rooms.length
+        });
+      } else {
+        hotelMap[e.hotel] = {
+          name: e.hotel,
+          rooms: [
+            {
+              ...e,
+              apartment: e.apartment + ' ¥' + e.price,
+              idx: 0
+            }
+          ]
+        };
+      }
+      hotelList.value = Object.keys(hotelMap).map((e, idx) => ({
+        ...hotelMap[e],
+        idx
+      }));
+    });
+    getMemberInfo(app.mpfId).then((res) => {
+      memberInfo = res.data;
+      if (res.data.travelTemp) {
+        travel.value = {
+          welType: res.data.travelTemp.welType,
+          welClasses: res.data.travelTemp.welClasses,
+          welTime: res.data.travelTemp.welTime
+            ? new Date(res.data.travelTemp.welTime).getTime()
+            : null,
+          delType: res.data.travelTemp.delType,
+          delClasses: res.data.travelTemp.delClasses,
+          delTime: res.data.travelTemp.delTime
+            ? new Date(res.data.travelTemp.delTime).getTime()
+            : null
+        };
+      }
+
+      if (res.data.forumMemberHotelTemp) {
+        const time = res.data.forumMemberHotelTemp.time.split('～');
+        const hotelIdx = hotelList.value.findIndex(
+          (e) => e.name === res.data.forumMemberHotelTemp.forumHotel.hotelDo.name
+        );
+        const roomIdx = hotelList.value[hotelIdx].rooms.findIndex(
+          (e) => e.hotelId === res.data.forumMemberHotelTemp.forumHotel.hotelDo.id
+        );
+        hotel.value = {
+          hotelIdx: hotelIdx,
+          roomIdx: roomIdx,
+          timeRange: [new Date(time[0]).getTime(), new Date(time[1]).getTime()],
+          name: res.data.forumMemberHotelTemp.forumHotel.hotelDo.name,
+          room: res.data.forumMemberHotelTemp.forumHotel.hotelDo.apartment,
+          prize: res.data.forumMemberHotelTemp.forumHotel.price,
+          time: res.data.forumMemberHotelTemp.time
+        };
+      }
+    });
   });
-});
+}
 
 const rooms = computed(() => {
   if (hotelList.value) {
@@ -137,10 +139,21 @@ function submit() {
     }
   }).then((res) => {
     if (res.code === '0') {
+      isEdit.value = false;
       message.success('Save success!');
+      getList();
     }
   });
 }
+
+const start = 1718985600000;
+const end = 1719676800000;
+function dateDisabled(ts) {
+  const date = new Date(ts).getTime();
+  return date < start || date > end;
+}
+
+getList();
 </script>
 
 <template>
@@ -181,6 +194,8 @@ function submit() {
                 type="datetime"
                 clearable
                 class="w-full"
+                input-readonly
+                format="yyyy-MM-dd HH:mm"
               />
             </n-form-item>
           </n-form>
@@ -216,6 +231,8 @@ function submit() {
                 type="datetime"
                 clearable
                 class="w-full"
+                input-readonly
+                format="yyyy-MM-dd HH:mm"
               />
             </n-form-item>
           </n-form>
@@ -260,6 +277,11 @@ function submit() {
                 type="daterange"
                 clearable
                 class="w-full"
+                input-readonly
+                :bind-calendar-months="true"
+                :default-calendar-start-time="start"
+                :default-calendar-end-time="end"
+                :is-date-disabled="dateDisabled"
               />
             </n-form-item>
           </n-form>
@@ -368,8 +390,13 @@ function submit() {
   </div>
 </template>
 
-<style lang="scss" scoped>
-.border-b {
-  border-bottom: 1px solid #ebebeb;
+<style lang="scss">
+.n-date-panel-actions__suffix .n-button {
+  padding: 1.5em 2em !important;
+  font-size: 1.6rem;
+}
+
+.n-date-panel-calendar--end {
+  display: none !important;
 }
 </style>

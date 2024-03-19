@@ -19,6 +19,9 @@ defineOptions({
 
 const message = useMessage();
 
+const isEdit = ref(false);
+
+const formIns = ref(null);
 const model = ref({
   id: null,
   firstName: '',
@@ -38,16 +41,44 @@ const model = ref({
   isForeign: 1,
   isContact: '0'
 });
+
 const rules = {
   firstName: {
     required: true,
-    trigger: ['blur', 'input'],
-    message: 'Please input firstName'
+    trigger: ['blur', 'input']
   },
   lastName: {
     required: true,
+    trigger: ['blur', 'input']
+  },
+  card: {
+    required: true,
+    trigger: ['blur', 'input']
+  },
+  country: {
+    required: true,
     trigger: ['blur', 'input'],
-    message: 'Please input lastName'
+    message: 'nationality is required'
+  },
+  unit: {
+    nameEn: {
+      required: true,
+      trigger: ['blur', 'input'],
+      message: 'organization is required'
+    }
+  },
+  jobEn: {
+    required: true,
+    trigger: ['blur', 'input'],
+    message: 'position is required'
+  },
+  tel: {
+    required: true,
+    trigger: ['blur', 'input']
+  },
+  email: {
+    required: true,
+    trigger: ['blur', 'input']
   }
 };
 
@@ -67,8 +98,12 @@ function handleSearch(name) {
   });
 }
 
-function updateUnit(_value, option) {
-  model.unit.nameCn = option.nameCn;
+function updateUnit(value, option) {
+  if (!value) {
+    model.value.unit.nameEn = '';
+  } else {
+    model.value.unit.nameEn = option.nameEn;
+  }
 }
 
 watchEffect(() => {
@@ -78,24 +113,34 @@ watchEffect(() => {
 const app = useAppStore();
 
 function submit() {
-  updateMember(model.value).then((resp) => {
-    if (resp.code !== '0') return;
-    app.mpfId = model.value.id;
-    // 默认参与总论坛
-    updateMemberInfo({
-      id: model.value.id,
-      memberForumTemp: {
-        id: memberForumTemp?.id || null,
-        memberId: model.value.id,
-        forumId: forumId,
-        isContact: model.value.isContact,
-        isDelete: 0
-      }
-    }).then((result) => {
-      if (result.code === '0') {
-        message.success('Save success!');
-      }
-    });
+  if (!isEdit.value) {
+    isEdit.value = true;
+    return;
+  }
+
+  formIns.value?.validate((errors) => {
+    if (!errors) {
+      updateMember(model.value).then((resp) => {
+        if (resp.code !== '0') return;
+        app.mpfId = model.value.id;
+        // 默认参与总论坛
+        updateMemberInfo({
+          id: model.value.id,
+          memberForumTemp: {
+            id: memberForumTemp?.id || null,
+            memberId: model.value.id,
+            forumId: forumId,
+            isContact: model.value.isContact,
+            isDelete: 0
+          }
+        }).then((result) => {
+          if (result.code === '0') {
+            message.success('Save success!');
+            isEdit.value = false;
+          }
+        });
+      });
+    }
   });
 }
 
@@ -135,7 +180,10 @@ getStatic().then((res) => {
     <div v-if="!app.isMobile" class="color-#0040FF text-2.2rem mb-3rem font-bold border-b pb-2rem">
       Your Personal Details
     </div>
+
     <n-form
+      v-if="isEdit"
+      ref="formIns"
       class="w-full mt-2rem"
       :model="model"
       :rules="rules"
@@ -170,19 +218,19 @@ getStatic().then((res) => {
       <n-form-item label="Passport Number" path="card" required>
         <n-input v-model:value="model.card" placeholder="" />
       </n-form-item>
-      <n-form-item label="Organization" path="unitId" required>
+      <n-form-item label="Organization" path="unit.nameEn" required>
         <n-select
           v-model:value="model.unitId"
           filterable
           clearable
-          label-field="nameCn"
+          label-field="nameEn"
           value-field="id"
           :fallback-option="false"
           :options="unitList"
           :remote="true"
           :loading="selectLoading"
           @update:value="updateUnit"
-          @blur="() => handleSelectSearch(model.unit.nameCn)"
+          @blur="() => handleSelectSearch(model.unit.nameEn)"
           @search="handleSelectSearch"
         />
       </n-form-item>
@@ -208,13 +256,62 @@ getStatic().then((res) => {
       </n-form-item>
     </n-form>
 
+    <n-form
+      v-else
+      class="w-full mt-2rem"
+      :label-placement="app.isMobile ? 'top' : 'left'"
+      label-width="42rem"
+      label-align="left"
+      require-mark-placement="left"
+      size="medium"
+    >
+      <n-form-item label="First Name" path="firstName">
+        <div class="border-b w-full py-0.7rem">{{ model.firstName }}</div>
+      </n-form-item>
+      <n-form-item label="Last Name" path="lastName">
+        <div class="border-b w-full py-0.7rem">{{ model.lastName }}</div>
+      </n-form-item>
+      <n-form-item label="Gender" path="sex" required>
+        <div class="border-b w-full py-0.7rem">{{ model.sex === 1 ? 'Male' : 'Female' }}</div>
+      </n-form-item>
+      <!-- <n-form-item label="Participation Method" path="participationMethod" required>
+        <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
+          <n-space>
+            <n-radio value="offline"> Offline </n-radio>
+            <n-radio value="online"> Online </n-radio>
+          </n-space>
+        </n-radio-group>
+      </n-form-item> -->
+      <n-form-item label="Passport Number" path="card" required>
+        <div class="border-b w-full py-0.7rem">{{ model.card }}</div>
+      </n-form-item>
+      <n-form-item label="Organization" path="unitId" required>
+        <div class="border-b w-full py-0.7rem">{{ model.unit.nameEn }}</div>
+      </n-form-item>
+      <n-form-item label="Position" path="jobEn" required>
+        <div class="border-b w-full py-0.7rem">{{ model.jobEn }}</div>
+      </n-form-item>
+      <n-form-item label="Nationality" path="country" required>
+        <div class="border-b w-full py-0.7rem">{{ model.country }}</div>
+      </n-form-item>
+      <n-form-item label="Email" path="email" required>
+        <div class="border-b w-full py-0.7rem">{{ model.email }}</div>
+      </n-form-item>
+      <n-form-item label="Phone Number" path="tel" required>
+        <div class="border-b w-full py-0.7rem">{{ model.tel }}</div>
+      </n-form-item>
+      <n-form-item label="Contact person of Organization" path="isContact" required>
+        <div class="border-b w-full py-0.7rem">{{ model.isContact === '0' ? 'Yes' : 'No' }}</div>
+      </n-form-item>
+    </n-form>
+
     <div class="text-right mt-11rem <sm:text-center">
       <n-button
         color="#0040FF"
         class="text-2rem w-19rem h-5.6rem border-rd-2.8rem <sm:w-70rem <sm:h-7rem <sm:border-rd-3.5rem <sm:text-3.2rem"
         @click="submit"
       >
-        Save
+        {{ isEdit ? 'Save' : 'Edit' }}
       </n-button>
     </div>
   </div>

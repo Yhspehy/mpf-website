@@ -22,122 +22,126 @@ let memberPlayForumTemp = [];
 const app = useAppStore();
 
 const expandedNames = ref([0, 1]);
-window.$appLoading(true);
-getStatic().then((res) => {
-  const list = [
-    {
-      listName: '2024 MPF Main Forum',
-      collapse: true,
-      value: [],
-      activity: []
-    },
-    {
-      listName: 'MPF High-level Roundtable Meeting',
-      collapse: true,
-      disabled: true,
-      value: [],
-      activity: []
-    },
-    {
-      listName: 'MPF Thematic Forum',
-      collapse: false,
-      value: [],
-      type: 1,
-      activity: []
-    },
-    {
-      listName: 'Linkage Activities',
-      collapse: false,
-      value: [],
-      type: 1,
-      activity: []
-    }
-  ];
 
-  res.data.forum.forEach((e) => {
-    if (e.id === 12) {
-      list[0].activity.push({
-        type: 'forum',
-        date: e.startTime?.slice(0, -3) || '',
-        place: e.place,
-        value: e.id
-      });
-    } else if (e.id === 13) {
-      list[1].activity.push({
-        type: 'forum',
-        date: e.startTime?.slice(0, -3) || '',
-        place: e.place,
-        value: e.id
-      });
-    } else if (e.id !== 11) {
-      list[2].activity.push({
-        type: 'forum',
+function getList() {
+  forumSignList.value = [];
+  window.$appLoading(true);
+  getStatic().then((res) => {
+    const list = [
+      {
+        listName: '2024 MPF Main Forum',
+        collapse: true,
+        value: [],
+        activity: []
+      },
+      {
+        listName: 'MPF High-level Roundtable Meeting',
+        collapse: true,
+        disabled: true,
+        value: [],
+        activity: []
+      },
+      {
+        listName: 'MPF Thematic Forum',
+        collapse: false,
+        value: [],
+        type: 1,
+        activity: []
+      },
+      {
+        listName: 'Linkage Activities',
+        collapse: false,
+        value: [],
+        type: 1,
+        activity: []
+      }
+    ];
+
+    res.data.forum.forEach((e) => {
+      if (e.id === 12) {
+        list[0].activity.push({
+          type: 'forum',
+          date: e.startTime?.slice(0, -3) || '',
+          place: e.place,
+          value: e.id
+        });
+      } else if (e.id === 13) {
+        list[1].activity.push({
+          type: 'forum',
+          date: e.startTime?.slice(0, -3) || '',
+          place: e.place,
+          value: e.id
+        });
+      } else if (e.id !== 11) {
+        list[2].activity.push({
+          type: 'forum',
+          name: e.name,
+          date: e.startTime?.slice(0, -3) || '',
+          place: e.place,
+          value: e.id
+        });
+      }
+    });
+
+    res.data.memberPlay.forEach((e) => {
+      list[3].activity.push({
+        type: 'play',
         name: e.name,
-        date: e.startTime?.slice(0, -3) || '',
+        date: e.time?.slice(0, -3) || '',
         place: e.place,
         value: e.id
       });
-    }
-  });
+    });
 
-  res.data.memberPlay.forEach((e) => {
-    list[3].activity.push({
-      type: 'play',
-      name: e.name,
-      date: e.time?.slice(0, -3) || '',
-      place: e.place,
-      value: e.id
+    getMemberInfo(app.mpfId).then((res) => {
+      // 总论坛信息，默认参与
+      memberForumTemp = res.data.memberForumTemp || {};
+      // 子论坛信息
+      memberForumTemps = res.data.memberForumTemps || [];
+      if (memberForumTemps.length > 0) {
+        memberForumTemps.forEach((e) => {
+          forumSignList.value.push({
+            title: e.forum.name,
+            time: e.forum.startTime,
+            location: e.forum.place
+          });
+          if (e.forumId === 12) {
+            list[0].value.push(e.forumId);
+          } else if (e.forumId === 13) {
+            list[1].value.push(e.forumId);
+          } else {
+            const item = list[2].activity.find((el) => el.value === e.forumId);
+            if (item) {
+              if (!expandedNames.value.includes(2)) {
+                expandedNames.value.push(2);
+              }
+              list[2].value.push(e.forumId);
+            }
+          }
+        });
+      }
+      // 联名活动
+      memberPlayForumTemp = res.data.memberPlayForumTemp || [];
+      if (memberPlayForumTemp.length > 0) {
+        memberPlayForumTemp.forEach((e) => {
+          forumSignList.value.push({
+            title: e.memberPlay.name,
+            time: e.memberPlay.time,
+            location: e.memberPlay.place
+          });
+          const item = list[3].activity.find((el) => el.value === e.mpId);
+          if (item) {
+            if (!expandedNames.value.includes(3)) {
+              expandedNames.value.push(3);
+            }
+            list[3].value.push(e.mpId);
+          }
+        });
+      }
+      forumList.value = list;
     });
   });
-
-  getMemberInfo(app.mpfId).then((res) => {
-    // 总论坛信息，默认参与
-    memberForumTemp = res.data.memberForumTemp || {};
-    // 子论坛信息
-    memberForumTemps = res.data.memberForumTemps || [];
-    if (memberForumTemps.length > 0) {
-      memberForumTemps.forEach((e) => {
-        forumSignList.value.push({
-          title: e.forum.name,
-          time: e.forum.startTime,
-          location: e.forum.place
-        });
-        if (e.forumId === 12) {
-          list[0].value.push(e.forumId);
-        } else if (e.forumId === 13) {
-          list[1].value.push(e.forumId);
-        } else {
-          const item = list[2].activity.find((el) => el.value === e.forumId);
-          if (item) {
-            if (!expandedNames.value.includes(2)) {
-              expandedNames.value.push(2);
-            }
-            list[2].value.push(e.forumId);
-          }
-        }
-      });
-    }
-    // 联名活动
-    memberPlayForumTemp = res.data.memberPlayForumTemp || [];
-    if (memberPlayForumTemp.length > 0) {
-      memberPlayForumTemp.forEach((e) => {
-        forumSignList.value.push({
-          title: e.memberPlay.name,
-          time: e.memberPlay.time,
-          location: e.memberPlay.place
-        });
-        const item = list[3].activity.find((el) => el.value === e.mpId);
-        if (item) {
-          if (!expandedNames.value.includes(3)) {
-            expandedNames.value.push(3);
-          }
-          list[3].value.push(e.mpId);
-        }
-      });
-    }
-    forumList.value = list;
-  });
-});
+}
 
 function handleChange(index, value, meta, disabled) {
   if (meta.actionType === 'check') {
@@ -218,10 +222,14 @@ function submit() {
 
   updateMemberInfo(data).then((result) => {
     if (result.code === '0') {
+      isEdit.value = false;
       message.success('Save success!');
+      getList();
     }
   });
 }
+
+getList();
 </script>
 
 <template>
