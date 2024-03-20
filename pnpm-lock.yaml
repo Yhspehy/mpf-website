@@ -44,8 +44,8 @@ devDependencies:
     specifier: ^4.17.21
     version: 4.17.21
   naive-ui:
-    specifier: ^2.37.3
-    version: 2.37.3(vue@3.4.15)
+    specifier: ^2.38.1
+    version: 2.38.1(vue@3.4.15)
   postcss-px-to-viewport:
     specifier: ^1.1.1
     version: 1.1.1
@@ -2497,8 +2497,8 @@ packages:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
     dev: true
 
-  /naive-ui@2.37.3(vue@3.4.15):
-    resolution: {integrity: sha512-aUkHFXVIluSi8Me+npbcsdv1NYhVMj5t9YaruoCESlqmfqspj+R2QHEVXkTtUI1kQwVrABMCtAGq/wountqjZA==}
+  /naive-ui@2.38.1(vue@3.4.15):
+    resolution: {integrity: sha512-AnU1FQ7K/CbhguAX++V4kCFjk7h7RvWt4nvZPRjORMpq+fUIlzD+EcQ5Cv1VqDloNF8+eMv4Akc2Ogacc9S+5A==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:

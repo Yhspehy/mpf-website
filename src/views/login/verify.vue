@@ -37,7 +37,7 @@ async function handleSubmit() {
         MPF 2024
       </div>
       <div class="text-2.6rem color-#0040FF text-center line-height-2.7rem">
-        The 8th Maritime Silk Road Port International Cooperation Forum
+        2024 Maritime Silk Road Port InternationaCooperation Forum
       </div>
       <main class="pt-2.4rem">
         <div

@@ -23,7 +23,7 @@
     "dayjs": "^1.11.10",
     "eslint": "^8.56.0",
     "lodash-es": "^4.17.21",
-    "naive-ui": "^2.37.3",
+    "naive-ui": "^2.38.1",
     "postcss-px-to-viewport": "^1.1.1",
     "prettier": "^3.2.4",
     "qs": "^6.12.0",

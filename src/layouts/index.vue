@@ -1,12 +1,16 @@
 <script setup>
 import { useAppStore } from '../stores';
+import { localStg } from '@/utils/storage';
+
+import { getMemberInfo } from '@/service/api/mpf';
+
 const router = useRouter();
 
 const route = useRoute();
 
 const app = useAppStore();
 
-const menuOptions = [
+const menuOptions = ref([
   {
     label: 'PERSONAL DETAIL',
     key: 'person',
@@ -26,18 +30,8 @@ const menuOptions = [
     label: 'MPF SERVICE',
     key: 'service',
     url: '/home/service'
-  },
-  {
-    label: 'MY ASSISTANT',
-    key: 'assistant',
-    url: '/home/assistant'
   }
-  // {
-  //   label: 'MY COMPANION',
-  //   key: 'MY COMPANION',
-  //   url: '/home/companion'
-  // }
-];
+]);
 
 const activeKey = ref(null);
 
@@ -60,6 +54,22 @@ const drawerShow = ref(false);
 
 function toMpforum() {
   window.location.href = 'http://mpforum.nbse.net.cn/homepage/index';
+}
+
+const mpfId = localStg.get('mpfId');
+if (mpfId) {
+  getMemberInfo(mpfId).then((r) => {
+    if (r.data.volunteerForumTemp) {
+      const item = r.data.volunteerForumTemp.find((e) => e.type == 1);
+      if (item) {
+        menuOptions.value.push({
+          label: 'MY ASSISTANT',
+          key: 'assistant',
+          url: '/home/assistant'
+        });
+      }
+    }
+  });
 }
 </script>
 

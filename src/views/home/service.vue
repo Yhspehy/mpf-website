@@ -42,19 +42,19 @@ function getList() {
   getStatic().then((res) => {
     let hotelMap = {};
     res.data.forumHotel.forEach((e) => {
-      if (hotelMap[e.hotel]) {
-        hotelMap[e.hotel].rooms.push({
+      if (hotelMap[e.hotelEn]) {
+        hotelMap[e.hotelEn].rooms.push({
           ...e,
-          apartment: e.apartment + ' ¥' + e.price,
-          idx: hotelMap[e.hotel].rooms.length
+          apartment: e.apartmentEn + ' ¥' + e.price,
+          idx: hotelMap[e.hotelEn].rooms.length
         });
       } else {
-        hotelMap[e.hotel] = {
-          name: e.hotel,
+        hotelMap[e.hotelEn] = {
+          name: e.hotelEn,
           rooms: [
             {
               ...e,
-              apartment: e.apartment + ' ¥' + e.price,
+              apartment: e.apartmentEn + ' ¥' + e.price,
               idx: 0
             }
           ]
@@ -83,9 +83,8 @@ function getList() {
       }
 
       if (res.data.forumMemberHotelTemp) {
-        const time = res.data.forumMemberHotelTemp.time.split('～');
         const hotelIdx = hotelList.value.findIndex(
-          (e) => e.name === res.data.forumMemberHotelTemp.forumHotel.hotelDo.name
+          (e) => e.name === res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn
         );
         const roomIdx = hotelList.value[hotelIdx].rooms.findIndex(
           (e) => e.hotelId === res.data.forumMemberHotelTemp.forumHotel.hotelDo.id
@@ -93,9 +92,12 @@ function getList() {
         hotel.value = {
           hotelIdx: hotelIdx,
           roomIdx: roomIdx,
-          timeRange: [new Date(time[0]).getTime(), new Date(time[1]).getTime()],
-          name: res.data.forumMemberHotelTemp.forumHotel.hotelDo.name,
-          room: res.data.forumMemberHotelTemp.forumHotel.hotelDo.apartment,
+          timeRange: [
+            new Date(res.data.forumMemberHotelTemp.startTime).getTime(),
+            new Date(res.data.forumMemberHotelTemp.endTime).getTime()
+          ],
+          name: res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn,
+          room: res.data.forumMemberHotelTemp.forumHotel.hotelDo.apartmentEn,
           prize: res.data.forumMemberHotelTemp.forumHotel.price,
           time: res.data.forumMemberHotelTemp.time
         };
@@ -123,6 +125,8 @@ function submit() {
     memberForumTemp: memberInfo.memberForumTemp,
     travelTemp: {
       ...travel.value,
+      isWelcome: travel.value.welTime ? 1 : 0,
+      isDelivery: travel.value.delTime ? 1 : 0,
       mfId: memberInfo.memberForumTemp.id,
       welTime: dayjs(travel.value.welTime).format('YYYY-MM-DD HH:mm:ss'),
       delTime: dayjs(travel.value.delTime).format('YYYY-MM-DD HH:mm:ss'),
@@ -131,10 +135,8 @@ function submit() {
     forumMemberHotelTemp: {
       mhId: room.id,
       mfId: memberInfo.memberForumTemp.id,
-      time:
-        dayjs(hotel.value.timeRange[0]).format('YYYY-MM-DD HH:mm:ss') +
-        '～' +
-        dayjs(hotel.value.timeRange[1]).format('YYYY-MM-DD HH:mm:ss'),
+      startTime: dayjs(hotel.value.timeRange[0]).format('YYYY-MM-DD HH:mm:ss'),
+      endTime: dayjs(hotel.value.timeRange[1]).format('YYYY-MM-DD HH:mm:ss'),
       isDelete: 0
     }
   }).then((res) => {
@@ -177,7 +179,7 @@ getList();
             label-align="left"
             require-mark-placement="left"
           >
-            <n-form-item label="Travel Method" path="welType" required>
+            <n-form-item label="Travel Method" path="welType">
               <n-radio-group v-model:value="travel.welType" name="gender">
                 <n-space>
                   <n-radio :value="1"> Plane </n-radio>
@@ -185,10 +187,10 @@ getList();
                 </n-space>
               </n-radio-group>
             </n-form-item>
-            <n-form-item label="Flight / Class" path="welClasses" required>
+            <n-form-item label="Flight / Class" path="welClasses">
               <n-input v-model:value="travel.welClasses" />
             </n-form-item>
-            <n-form-item label="Arrival Time" path="welTime" required>
+            <n-form-item label="Arrival Time" path="welTime">
               <n-date-picker
                 v-model:value="travel.welTime"
                 type="datetime"
@@ -196,6 +198,9 @@ getList();
                 class="w-full"
                 input-readonly
                 format="yyyy-MM-dd HH:mm"
+                :time-picker-props="{
+                  format: 'HH:mm'
+                }"
               />
             </n-form-item>
           </n-form>
@@ -214,7 +219,7 @@ getList();
             label-align="left"
             require-mark-placement="left"
           >
-            <n-form-item label="Travel Method" path="delType" required>
+            <n-form-item label="Travel Method" path="delType">
               <n-radio-group v-model:value="travel.delType" name="gender">
                 <n-space>
                   <n-radio :value="1"> Plane </n-radio>
@@ -222,10 +227,10 @@ getList();
                 </n-space>
               </n-radio-group>
             </n-form-item>
-            <n-form-item label="Flight / Class" path="delClasses" required>
+            <n-form-item label="Flight / Class" path="delClasses">
               <n-input v-model:value="travel.delClasses" />
             </n-form-item>
-            <n-form-item label="Arrival Time" path="delTime" required>
+            <n-form-item label="Arrival Time" path="delTime">
               <n-date-picker
                 v-model:value="travel.delTime"
                 type="datetime"
@@ -233,6 +238,9 @@ getList();
                 class="w-full"
                 input-readonly
                 format="yyyy-MM-dd HH:mm"
+                :time-picker-props="{
+                  format: 'HH:mm'
+                }"
               />
             </n-form-item>
           </n-form>
@@ -255,7 +263,7 @@ getList();
             label-align="left"
             require-mark-placement="left"
           >
-            <n-form-item label="Travel Method" path="delType" required>
+            <n-form-item label="Travel Method" path="delType">
               <n-select
                 v-model:value="hotel.hotelIdx"
                 :options="hotelList"
@@ -263,7 +271,7 @@ getList();
                 value-field="idx"
               />
             </n-form-item>
-            <n-form-item label="Flight / Class" path="delClasses" required>
+            <n-form-item label="Flight / Class" path="delClasses">
               <n-select
                 v-model:value="hotel.roomIdx"
                 :options="rooms"
@@ -271,7 +279,7 @@ getList();
                 value-field="idx"
               />
             </n-form-item>
-            <n-form-item label="Arrival Time" path="delTime" required>
+            <n-form-item label="Arrival Time" path="delTime">
               <n-date-picker
                 v-model:value="hotel.timeRange"
                 type="daterange"

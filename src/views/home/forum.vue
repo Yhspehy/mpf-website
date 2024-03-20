@@ -62,22 +62,22 @@ function getList() {
         list[0].activity.push({
           type: 'forum',
           date: e.startTime?.slice(0, -3) || '',
-          place: e.place,
+          place: e.placeEn,
           value: e.id
         });
       } else if (e.id === 13) {
         list[1].activity.push({
           type: 'forum',
           date: e.startTime?.slice(0, -3) || '',
-          place: e.place,
+          place: e.placeEn,
           value: e.id
         });
       } else if (e.id !== 11) {
         list[2].activity.push({
           type: 'forum',
-          name: e.name,
+          name: e.nameEn,
           date: e.startTime?.slice(0, -3) || '',
-          place: e.place,
+          place: e.placeEn,
           value: e.id
         });
       }
@@ -86,9 +86,9 @@ function getList() {
     res.data.memberPlay.forEach((e) => {
       list[3].activity.push({
         type: 'play',
-        name: e.name,
+        name: e.nameEn,
         date: e.time?.slice(0, -3) || '',
-        place: e.place,
+        place: e.placeEn,
         value: e.id
       });
     });
@@ -101,9 +101,9 @@ function getList() {
       if (memberForumTemps.length > 0) {
         memberForumTemps.forEach((e) => {
           forumSignList.value.push({
-            title: e.forum.name,
+            title: e.forum.nameEn,
             time: e.forum.startTime,
-            location: e.forum.place
+            location: e.forum.placeEn
           });
           if (e.forumId === 12) {
             list[0].value.push(e.forumId);
@@ -125,9 +125,9 @@ function getList() {
       if (memberPlayForumTemp.length > 0) {
         memberPlayForumTemp.forEach((e) => {
           forumSignList.value.push({
-            title: e.memberPlay.name,
+            title: e.memberPlay.nameEn,
             time: e.memberPlay.time,
-            location: e.memberPlay.place
+            location: e.memberPlay.placeEn
           });
           const item = list[3].activity.find((el) => el.value === e.mpId);
           if (item) {

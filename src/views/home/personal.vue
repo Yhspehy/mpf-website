@@ -266,17 +266,17 @@ getStatic().then((res) => {
       size="medium"
     >
       <n-form-item label="First Name" path="firstName" required>
-        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+        <div class="border-b info-value">
           {{ model.firstName }}
         </div>
       </n-form-item>
       <n-form-item label="Last Name" path="lastName" required>
-        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+        <div class="border-b info-value">
           {{ model.lastName }}
         </div>
       </n-form-item>
       <n-form-item label="Gender" path="sex" required>
-        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+        <div class="border-b info-value">
           {{ model.sex === 1 ? 'Male' : 'Female' }}
         </div>
       </n-form-item>
@@ -289,27 +289,27 @@ getStatic().then((res) => {
         </n-radio-group>
       </n-form-item> -->
       <n-form-item label="Passport Number" path="card" required>
-        <div class="border-b w-full py-0.7rem <sm:text-2.8rem">{{ model.card }}</div>
+        <div class="border-binfo-value">{{ model.card }}</div>
       </n-form-item>
       <n-form-item label="Organization" path="unitId" required>
-        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+        <div class="border-b info-value">
           {{ model.unit.nameEn }}
         </div>
       </n-form-item>
       <n-form-item label="Position" path="jobEn" required>
-        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">{{ model.jobEn }}</div>
+        <div class="border-b info-value">{{ model.jobEn }}</div>
       </n-form-item>
       <n-form-item label="Nationality" path="country" required>
-        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">{{ model.country }}</div>
+        <div class="border-b info-value">{{ model.country }}</div>
       </n-form-item>
       <n-form-item label="Email" path="email" required>
-        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">{{ model.email }}</div>
+        <div class="border-b info-value">{{ model.email }}</div>
       </n-form-item>
       <n-form-item label="Phone Number" path="tel" required>
-        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">{{ model.tel }}</div>
+        <div class="border-b info-value">{{ model.tel }}</div>
       </n-form-item>
       <n-form-item label="Contact person of Organization" path="isContact" required>
-        <div class="border-b w-full py-0.7rem text-1.4rem <sm:text-2.8rem">
+        <div class="border-b info-value">
           {{ model.isContact === '0' ? 'Yes' : 'No' }}
         </div>
       </n-form-item>
@@ -326,3 +326,11 @@ getStatic().then((res) => {
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.info-value {
+  width: 100%;
+  padding: 0.7rem 0;
+  font-size: var(--n-label-font-size);
+}
+</style>
