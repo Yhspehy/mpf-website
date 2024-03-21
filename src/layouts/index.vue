@@ -57,7 +57,9 @@ function toMpforum() {
 }
 
 const mpfId = localStg.get('mpfId');
-if (mpfId) {
+const token = localStg.get('token');
+
+if (mpfId && token) {
   getMemberInfo(mpfId).then((r) => {
     if (r.data.volunteerForumTemp) {
       const item = r.data.volunteerForumTemp.find((e) => e.type == 1);

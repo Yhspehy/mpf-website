@@ -33,7 +33,8 @@ const model = ref({
   tel: '',
   email: '',
   isForeign: 1,
-  isContact: '0'
+  isContact: '0',
+  inviteType: 0
 });
 const rules = {
   firstName: {
@@ -131,6 +132,11 @@ function submit() {
               forumId: forumId,
               isContact: model.value.isContact,
               isDelete: 0
+            },
+            memberInviteTemp: {
+              inviteType: model.value.inviteType,
+              status: 1,
+              idDelete: 0
             }
           }).then((result) => {
             if (result.code === '0') {
@@ -165,6 +171,7 @@ model.value.email = route.query.email || '';
 
     <n-form
       class="w-full mt-2rem"
+      ref="formIns"
       :model="model"
       :rules="rules"
       :label-placement="app.isMobile ? 'top' : 'left'"
@@ -187,14 +194,14 @@ model.value.email = route.query.email || '';
           </n-space>
         </n-radio-group>
       </n-form-item>
-      <!-- <n-form-item label="Participation Method" path="participationMethod" required>
-        <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
+      <n-form-item label="Participation Method" path="participationMethod" required>
+        <n-radio-group v-model:value="model.inviteType" name="participationMethod">
           <n-space>
-            <n-radio value="offline"> Offline </n-radio>
-            <n-radio value="online"> Online </n-radio>
+            <n-radio :value="0"> Offline </n-radio>
+            <n-radio :value="1"> Online </n-radio>
           </n-space>
         </n-radio-group>
-      </n-form-item> -->
+      </n-form-item>
       <n-form-item label="Passport Number" path="card" required>
         <n-input v-model:value="model.card" placeholder="" />
       </n-form-item>

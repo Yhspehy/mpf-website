@@ -33,7 +33,7 @@ getMemberInfo(mpfId).then((res) => {
             Name
           </div>
           <div class="text-2.4rem color-#595757 flex-1 py-4rem border-b <sm:w-full">
-            {{ assistant.name || '' }}
+            {{ assistant.nameEn || '' }}
           </div>
         </div>
       </div>

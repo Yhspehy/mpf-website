@@ -39,7 +39,8 @@ const model = ref({
   tel: '',
   email: '',
   isForeign: 1,
-  isContact: '0'
+  isContact: '0',
+  inviteType: 0
 });
 
 const rules = {
@@ -132,6 +133,13 @@ function submit() {
             forumId: forumId,
             isContact: model.value.isContact,
             isDelete: 0
+          },
+          memberInviteTemp: {
+            id: memberInviteTemp?.id || null,
+            mfId: memberForumTemp?.id || null,
+            inviteType: model.value.inviteType,
+            status: 1,
+            idDelete: 0
           }
         }).then((result) => {
           if (result.code === '0') {
@@ -146,6 +154,7 @@ function submit() {
 
 const email = localStg.get('email');
 let memberForumTemp = {};
+let memberInviteTemp = {};
 getMember(email).then((res) => {
   model.value = res.data;
   const nameList = res.data.nameEn.split(' ');
@@ -160,6 +169,10 @@ getMember(email).then((res) => {
       memberForumTemp = r.data.memberForumTemp || {};
       model.value.isContact =
         r.data.memberForumTemp.isContact !== null ? r.data.memberForumTemp.isContact + '' : '1';
+    }
+    if (r.data.memberInviteTemp) {
+      memberInviteTemp = r.data.memberInviteTemp || {};
+      model.value.inviteType = r.data.memberInviteTemp.inviteType || 0;
     }
   });
 });
@@ -207,14 +220,14 @@ getStatic().then((res) => {
           </n-space>
         </n-radio-group>
       </n-form-item>
-      <!-- <n-form-item label="Participation Method" path="participationMethod" required>
-        <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
+      <n-form-item label="Participation Method" path="participationMethod" required>
+        <n-radio-group v-model:value="model.inviteType" name="participationMethod">
           <n-space>
-            <n-radio value="offline"> Offline </n-radio>
-            <n-radio value="online"> Online </n-radio>
+            <n-radio :value="0"> Offline </n-radio>
+            <n-radio :value="1"> Online </n-radio>
           </n-space>
         </n-radio-group>
-      </n-form-item> -->
+      </n-form-item>
       <n-form-item label="Passport Number" path="card" required>
         <n-input v-model:value="model.card" placeholder="" />
       </n-form-item>
@@ -280,16 +293,14 @@ getStatic().then((res) => {
           {{ model.sex === 1 ? 'Male' : 'Female' }}
         </div>
       </n-form-item>
-      <!-- <n-form-item label="Participation Method" path="participationMethod" required>
-        <n-radio-group v-model:value="model.participationMethod" name="participationMethod">
-          <n-space>
-            <n-radio value="offline"> Offline </n-radio>
-            <n-radio value="online"> Online </n-radio>
-          </n-space>
-        </n-radio-group>
-      </n-form-item> -->
+      <n-form-item label="Participation Method" path="inviteType" required>
+        <div class="border-b info-value">
+          {{ model.inviteType === 1 ? 'Online' : 'Offline' }}
+        </div>
+      </n-form-item>
+
       <n-form-item label="Passport Number" path="card" required>
-        <div class="border-binfo-value">{{ model.card }}</div>
+        <div class="border-b info-value">{{ model.card }}</div>
       </n-form-item>
       <n-form-item label="Organization" path="unitId" required>
         <div class="border-b info-value">
