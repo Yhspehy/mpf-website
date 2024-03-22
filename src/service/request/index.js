@@ -14,16 +14,16 @@ const handleAxiosError = (error) => {
   if (error.response) {
     const data = error.response.data;
     if (error.response.status === 403) {
-      window.$message?.error(data.message);
+      window.$message?.error(data.message, { duration: 10000 });
     } else if (error.response.status === 401) {
-      window.$message?.error('Unauthorized');
+      window.$message?.error('Unauthorized', { duration: 10000 });
       localStg.remove('token');
       router.push('/login');
     } else {
-      window.$message?.error(data || error.message);
+      window.$message?.error(data || error.message, { duration: 10000 });
     }
   } else {
-    window.$message?.error(error.message);
+    window.$message?.error(error.message, { duration: 10000 });
   }
   window.$appLoading?.(false);
   window.$loading?.(false);
@@ -58,7 +58,13 @@ service.interceptors.response.use((response) => {
     }
   }
   if (response.config.isMpf && response.data.code !== '0') {
-    window.$message?.error(response.data.message || '未知异常');
+    // window.$notification.error({
+    //   content: 'Error',
+    //   meta: response.data.message || '未知异常',
+    //   duration: 10000,
+    //   keepAliveOnHover: true
+    // });
+    window.$message?.error(response.data.message || '未知异常', { duration: 10000 });
   }
   return response.data;
 }, handleAxiosError);

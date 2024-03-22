@@ -37,11 +37,6 @@ const constantRoute = [
         path: '/home/assistant',
         name: 'assistant',
         component: () => import('@/views/home/assistant.vue')
-      },
-      {
-        path: '/home/companion',
-        name: 'companion',
-        component: () => import('@/views/home/companion.vue')
       }
     ],
     meta: {

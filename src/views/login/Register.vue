@@ -33,7 +33,7 @@ async function handleSubmit() {
     return message.warning('Password is not same with confirmPassword!');
   }
   register(model.email, model.password).then(() => {
-    message.success('Please go to your email to verify!');
+    message.success('Please go to your email to Sign In!', { duration: 10000 });
   });
 }
 

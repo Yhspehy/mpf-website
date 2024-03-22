@@ -305,6 +305,8 @@ getList();
                 clearable
                 class="w-full"
                 input-readonly
+                start-placeholder="Check In"
+                end-placeholder="Check Out"
                 :bind-calendar-months="true"
                 :default-calendar-start-time="start"
                 :default-calendar-end-time="end"

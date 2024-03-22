@@ -82,7 +82,7 @@ function handleSearch(name) {
   selectLoading.value = true;
   getUnit(name).then((res) => {
     selectLoading.value = false;
-    unitList.value = res.data || [];
+    unitList.value = res.data ? res.data.filter((e) => e.nameEn) : [];
   });
 }
 
