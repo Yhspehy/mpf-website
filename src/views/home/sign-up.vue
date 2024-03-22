@@ -24,7 +24,6 @@ const model = ref({
   cardType: '1',
   card: '',
   sex: '1',
-  country: '',
   unit: {
     nameEn: ''
   },
@@ -48,11 +47,6 @@ const rules = {
   card: {
     required: true,
     trigger: ['blur', 'input']
-  },
-  country: {
-    required: true,
-    trigger: ['blur', 'input'],
-    message: 'nationality is required'
   },
   unit: {
     nameEn: {
@@ -142,8 +136,7 @@ function submit() {
             }
           }).then((result) => {
             if (result.code === '0') {
-              message.success('SignIn success!');
-              router.push('/home/person');
+              router.push('/signup/forum');
             } else {
               message.error(result.message);
             }
@@ -228,9 +221,6 @@ model.value.email = route.query.email || '';
       <n-form-item label="Position" path="jobEn" required>
         <n-input v-model:value="model.jobEn" placeholder="" />
       </n-form-item>
-      <n-form-item label="Nationality" path="country" required>
-        <n-input v-model:value="model.country" placeholder="" />
-      </n-form-item>
       <n-form-item label="Email" path="email" required>
         <n-input v-model:value="model.email" placeholder="" />
       </n-form-item>
@@ -253,7 +243,7 @@ model.value.email = route.query.email || '';
         class="text-2rem w-19rem h-5.6rem border-rd-2.8rem <sm:w-70rem <sm:h-7rem <sm:border-rd-3.5rem <sm:text-3.2rem"
         @click="submit"
       >
-        Submit
+        CONTINUE
       </n-button>
     </div>
   </div>

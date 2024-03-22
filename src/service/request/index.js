@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { localStg } from '@/utils/storage';
+import { router } from '@/router';
 
 /** 创建实例 */
 const service = axios.create({
@@ -17,6 +18,7 @@ const handleAxiosError = (error) => {
     } else if (error.response.status === 401) {
       window.$message?.error('Unauthorized');
       localStg.remove('token');
+      router.push('/login');
     } else {
       window.$message?.error(data || error.message);
     }

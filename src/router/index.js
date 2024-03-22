@@ -14,11 +14,6 @@ const constantRoute = [
     component: () => import('@/layouts/index.vue'),
     children: [
       {
-        path: '/signup',
-        name: 'signup',
-        component: () => import('@/views/home/sign-up.vue')
-      },
-      {
         path: '/home/person',
         name: 'person',
         component: () => import('@/views/home/personal.vue')
@@ -50,16 +45,31 @@ const constantRoute = [
       }
     ],
     meta: {
-      title: '首页'
+      title: 'Home'
     }
   },
-
+  {
+    path: '/signup',
+    name: 'signup',
+    component: () => import('@/views/home/sign-up.vue'),
+    meta: {
+      title: 'SignUp'
+    }
+  },
+  {
+    path: '/signup/forum',
+    name: 'signupForum',
+    component: () => import('@/views/home/sign-up-forum.vue'),
+    meta: {
+      title: 'SignUpForum'
+    }
+  },
   {
     path: '/verify',
     name: 'verify',
     component: () => import('../views/login/verify.vue'),
     meta: {
-      title: '登录'
+      title: 'Verify'
     }
   },
   {
@@ -67,7 +77,7 @@ const constantRoute = [
     name: 'login',
     component: () => import('../views/login/index.vue'),
     meta: {
-      title: '登录'
+      title: 'Login'
     }
   },
   {
@@ -75,7 +85,7 @@ const constantRoute = [
     name: 'register',
     component: () => import('../views/login/Register.vue'),
     meta: {
-      title: '注册'
+      title: 'Register'
     }
   },
   {

@@ -16,6 +16,9 @@ const text = ref('text');
       <div class="text-2rem color-#989898 mt-3rem">
         Please Use this QR Code for Venue and Meal Check-in.
       </div>
+      <div class="text-2rem color-#989898 mt-3rem">
+        Please long press this QR Code to save it to your album.
+      </div>
     </div>
   </div>
 </template>

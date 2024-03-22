@@ -30,7 +30,6 @@ const model = ref({
   cardType: '1',
   card: '',
   sex: 1,
-  country: '',
   unit: {
     nameEn: ''
   },
@@ -55,11 +54,6 @@ const rules = {
   card: {
     required: true,
     trigger: ['blur', 'input']
-  },
-  country: {
-    required: true,
-    trigger: ['blur', 'input'],
-    message: 'nationality is required'
   },
   unit: {
     nameEn: {
@@ -250,9 +244,6 @@ getStatic().then((res) => {
       <n-form-item label="Position" path="jobEn" required>
         <n-input v-model:value="model.jobEn" placeholder="" />
       </n-form-item>
-      <n-form-item label="Nationality" path="country" required>
-        <n-input v-model:value="model.country" placeholder="" />
-      </n-form-item>
       <n-form-item label="Email" path="email" required>
         <n-input v-model:value="model.email" placeholder="" />
       </n-form-item>
@@ -309,9 +300,6 @@ getStatic().then((res) => {
       </n-form-item>
       <n-form-item label="Position" path="jobEn" required>
         <div class="border-b info-value">{{ model.jobEn }}</div>
-      </n-form-item>
-      <n-form-item label="Nationality" path="country" required>
-        <div class="border-b info-value">{{ model.country }}</div>
       </n-form-item>
       <n-form-item label="Email" path="email" required>
         <div class="border-b info-value">{{ model.email }}</div>
