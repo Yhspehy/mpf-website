@@ -118,9 +118,7 @@ function submit() {
     isEdit.value = true;
     return;
   }
-
-  const room = hotelList.value[hotel.value.hotelIdx].rooms[hotel.value.roomIdx];
-  updateMemberInfo({
+  const data = {
     id: app.mpfId,
     memberForumTemp: memberInfo.memberForumTemp,
     travelTemp: {
@@ -131,15 +129,24 @@ function submit() {
       welTime: dayjs(travel.value.welTime).format('YYYY-MM-DD HH:mm:ss'),
       delTime: dayjs(travel.value.delTime).format('YYYY-MM-DD HH:mm:ss'),
       isDelete: 0
-    },
-    forumMemberHotelTemp: {
+    }
+  };
+  if (
+    hotel.value.hotelIdx !== null &&
+    hotel.value.roomIdx !== null &&
+    timeRange &&
+    timeRange.length > 1
+  ) {
+    const room = hotelList.value[hotel.value.hotelIdx].rooms[hotel.value.roomIdx];
+    data.forumMemberHotelTemp = {
       mhId: room.id,
       mfId: memberInfo.memberForumTemp.id,
       startTime: dayjs(hotel.value.timeRange[0]).format('YYYY-MM-DD HH:mm:ss'),
       endTime: dayjs(hotel.value.timeRange[1]).format('YYYY-MM-DD HH:mm:ss'),
       isDelete: 0
-    }
-  }).then((res) => {
+    };
+  }
+  updateMemberInfo(data).then((res) => {
     if (res.code === '0') {
       isEdit.value = false;
       message.success('Save success!');
@@ -263,7 +270,7 @@ getList();
             label-align="left"
             require-mark-placement="left"
           >
-            <n-form-item label="Travel Method" path="delType">
+            <n-form-item label="My Hotel" path="delType">
               <n-select
                 v-model:value="hotel.hotelIdx"
                 :options="hotelList"
@@ -271,7 +278,7 @@ getList();
                 value-field="idx"
               />
             </n-form-item>
-            <n-form-item label="Flight / Class" path="delClasses">
+            <n-form-item label="Room Type" path="delClasses">
               <n-select
                 v-model:value="hotel.roomIdx"
                 :options="rooms"
@@ -279,7 +286,7 @@ getList();
                 value-field="idx"
               />
             </n-form-item>
-            <n-form-item label="Arrival Time" path="delTime">
+            <n-form-item label="Time" path="delTime">
               <n-date-picker
                 v-model:value="hotel.timeRange"
                 type="daterange"

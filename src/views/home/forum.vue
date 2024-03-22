@@ -157,7 +157,7 @@ function handleChange(index, value, meta, disabled) {
     });
     const item = forumList.value[index].activity.find((e) => e.value === meta.value);
     if (item && timeList.includes(item.date)) {
-      return message.error('已经报了同一时间段的论坛');
+      return message.error('Time Conflict!');
     }
     forumList.value[index].value = value;
   } else if (meta.actionType === 'uncheck') {

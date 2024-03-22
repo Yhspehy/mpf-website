@@ -114,7 +114,9 @@ function submit() {
         route.query.timestamp,
         route.query.email
       ).then((resp) => {
-        if (resp.code !== '0') return;
+        if (resp.code !== '0') {
+          return message.error(resp.message);
+        }
         registerEmail(
           model.value.email,
           model.value.tel,
@@ -142,6 +144,8 @@ function submit() {
             if (result.code === '0') {
               message.success('SignIn success!');
               router.push('/home/person');
+            } else {
+              message.error(result.message);
             }
           });
         });
