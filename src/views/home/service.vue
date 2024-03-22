@@ -42,6 +42,8 @@ function getList() {
   getStatic().then((res) => {
     let hotelMap = {};
     res.data.forumHotel.forEach((e) => {
+      // 只放希尔顿酒店
+      if (e.hotelEn !== 'Hilton Ningbo Dongqian Lake') return;
       if (hotelMap[e.hotelEn]) {
         hotelMap[e.hotelEn].rooms.push({
           ...e,
@@ -66,7 +68,7 @@ function getList() {
       }));
     });
     getMemberInfo(app.mpfId).then((res) => {
-      memberInfo = res.data;
+      memberInfo = res.data || {};
       if (res.data.travelTemp) {
         travel.value = {
           welType: res.data.travelTemp.welType,
@@ -86,11 +88,15 @@ function getList() {
         const hotelIdx = hotelList.value.findIndex(
           (e) => e.name === res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn
         );
-        const roomIdx = hotelList.value[hotelIdx].rooms.findIndex(
-          (e) => e.hotelId === res.data.forumMemberHotelTemp.forumHotel.hotelDo.id
-        );
+        let roomIdx = null;
+        if (hotelIdx > -1) {
+          roomIdx = hotelList.value[hotelIdx].rooms.findIndex(
+            (e) => e.hotelId === res.data.forumMemberHotelTemp.forumHotel.hotelDo.id
+          );
+        }
+
         hotel.value = {
-          hotelIdx: hotelIdx,
+          hotelIdx: hotelIdx > -1 ? hotelIdx : null,
           roomIdx: roomIdx,
           timeRange: [
             new Date(res.data.forumMemberHotelTemp.startTime).getTime(),
@@ -108,7 +114,9 @@ function getList() {
 
 const rooms = computed(() => {
   if (hotelList.value) {
-    return hotel.value.hotelIdx !== null ? hotelList.value[hotel.value.hotelIdx].rooms : [];
+    return hotel.value.hotelIdx !== null && hotel.value.hotelIdx !== -1
+      ? hotelList.value[hotel.value.hotelIdx].rooms
+      : [];
   }
   return [];
 });
@@ -125,7 +133,7 @@ function submit() {
       ...travel.value,
       isWelcome: travel.value.welTime ? 1 : 0,
       isDelivery: travel.value.delTime ? 1 : 0,
-      mfId: memberInfo.memberForumTemp.id,
+      mfId: memberInfo.memberForumTemp?.id,
       welTime: dayjs(travel.value.welTime).format('YYYY-MM-DD HH:mm:ss'),
       delTime: dayjs(travel.value.delTime).format('YYYY-MM-DD HH:mm:ss'),
       isDelete: 0
@@ -134,13 +142,13 @@ function submit() {
   if (
     hotel.value.hotelIdx !== null &&
     hotel.value.roomIdx !== null &&
-    timeRange &&
-    timeRange.length > 1
+    hotel.value.timeRange &&
+    hotel.value.timeRange.length > 1
   ) {
     const room = hotelList.value[hotel.value.hotelIdx].rooms[hotel.value.roomIdx];
     data.forumMemberHotelTemp = {
       mhId: room.id,
-      mfId: memberInfo.memberForumTemp.id,
+      mfId: memberInfo.memberForumTemp?.id,
       startTime: dayjs(hotel.value.timeRange[0]).format('YYYY-MM-DD HH:mm:ss'),
       endTime: dayjs(hotel.value.timeRange[1]).format('YYYY-MM-DD HH:mm:ss'),
       isDelete: 0

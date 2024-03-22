@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme-overrides="themeOverrides" :date-locale="dateZhCN" class="h-full">
+  <n-config-provider :theme-overrides="themeOverrides" class="h-full">
     <n-loading-bar-provider>
       <n-dialog-provider>
         <n-notification-provider>
@@ -17,7 +17,6 @@
 
 <script setup>
 import { RouterView } from 'vue-router';
-import { dateZhCN } from 'naive-ui';
 import { themeOverrides } from '@/config/theme';
 import { isMobile } from '@/utils/common';
 

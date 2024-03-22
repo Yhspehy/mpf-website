@@ -1,4 +1,5 @@
 <script setup>
+import dayjs from 'dayjs';
 import { getStatic, getMemberInfo, updateMemberInfo } from '@/service/api/mpf';
 
 import { useAppStore } from '@/stores';
@@ -102,7 +103,10 @@ function getList() {
         memberForumTemps.forEach((e) => {
           forumSignList.value.push({
             title: e.forum.nameEn,
-            time: e.forum.startTime,
+            time:
+              dayjs(e.forum.startTime).format('DD.MM. YYYY            HH:mm') +
+              ' - ' +
+              dayjs(e.forum.endTime).format('HH:mm'),
             location: e.forum.placeEn
           });
           if (e.forumId === 12) {
@@ -283,7 +287,7 @@ getList();
       <img src="/images/agenda-icon-title@2x.png" class="w-6.3rem h-5.6rem" alt="" />
       <div class="ml-3.4rem">
         <div class="text-3rem color-#0040FF font-bold">{{ item.title }}</div>
-        <div class="text-2.2rem color-#303030 flex-y-center">
+        <div class="text-2.2rem color-#303030 flex-y-center" style="white-space: pre">
           <img src="/images/agenda-icon-time@2x.png" class="w-2.2rem h-2.2rem mr-0.8rem" alt="" />
           {{ item.time }}
         </div>
