@@ -108,9 +108,8 @@ function submit() {
         route.query.timestamp,
         route.query.email
       ).then((resp) => {
-        if (resp.code !== '0') {
-          return message.error(resp.message);
-        }
+        if (resp.code !== '0') return;
+        localStg.set('mpfId', resp.data.id);
         registerEmail(
           model.value.email,
           model.value.tel,

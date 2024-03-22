@@ -7,6 +7,7 @@ export function getMember(email) {
     method: 'post',
     showLoading: true,
     appLoading: true,
+    isMpf: true,
     data: qs.stringify({
       email
     })
@@ -19,6 +20,7 @@ export function updateMember(data) {
     method: 'post',
     showLoading: true,
     appLoading: true,
+    isMpf: true,
     data
   });
 }
@@ -29,6 +31,7 @@ export function updateMemberInSign(data, Sign, Timestamp, Email) {
     method: 'post',
     showLoading: true,
     appLoading: true,
+    isMpf: true,
     headers: {
       Sign,
       Timestamp,
@@ -44,6 +47,7 @@ export function getMemberInfo(id) {
     method: 'post',
     showLoading: true,
     appLoading: true,
+    isMpf: true,
     data: qs.stringify({
       id
     })
@@ -56,6 +60,7 @@ export function updateMemberInfo(data) {
     method: 'post',
     showLoading: true,
     appLoading: true,
+    isMpf: true,
     data
   });
 }
@@ -64,6 +69,7 @@ export function getUnit(name) {
   return request({
     url: '/maritimeSilk/proxy/getUnit',
     method: 'post',
+    isMpf: true,
     data: qs.stringify({
       name
     })
@@ -73,6 +79,7 @@ export function getUnit(name) {
 export function getStatic() {
   return request({
     url: '/maritimeSilk/proxy/getStatic',
+    isMpf: true,
     method: 'post'
   });
 }
@@ -81,6 +88,7 @@ export function getStaticInSign(Sign, Timestamp, Email) {
   return request({
     url: '/maritimeSilk/web/proxy/getStatic',
     method: 'post',
+    isMpf: true,
     headers: {
       Sign,
       Timestamp,

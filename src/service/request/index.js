@@ -57,38 +57,10 @@ service.interceptors.response.use((response) => {
       window.$loading?.(false);
     }
   }
-
+  if (response.config.isMpf && response.data.code !== '0') {
+    window.$message?.error(response.data.message || '未知异常');
+  }
   return response.data;
-
-  // if (response.data.code !== 200) {
-  //   /** 401: token过期，1003:没有token */
-  //   if (response.data.code === 401 || response.data.code === 1003) {
-  //     if (!loginDialog) {
-  //       loginDialog = true;
-  //       authStore.clearAuth();
-  //       window.$dialog?.error({
-  //         title: '登录已过期',
-  //         content: '很抱歉，登录已过期，请重新登录',
-  //         positiveText: '重新登录',
-  //         onPositiveClick: () => {
-  //           authStore.logout(true);
-  //           loginDialog = false;
-  //         },
-  //         onClose: () => {
-  //           loginDialog = false;
-  //         }
-  //       });
-  //       return response.data;
-  //     }
-  //   } else {
-  //     if (response.request.responseType !== 'blob') {
-  //       window.$message?.error(response.data.message || '未知异常');
-  //     }
-  //     return response.data;
-  //   }
-  // } else {
-  //   return response.data;
-  // }
 }, handleAxiosError);
 
 /**

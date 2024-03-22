@@ -150,6 +150,7 @@ const email = localStg.get('email');
 let memberForumTemp = {};
 let memberInviteTemp = {};
 getMember(email).then((res) => {
+  if (res.code !== '0') return;
   model.value = res.data;
   const nameList = res.data.nameEn.split(' ');
   model.value.firstName = nameList[0];

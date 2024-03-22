@@ -40,75 +40,79 @@ let memberInfo = {};
 function getList() {
   window.$appLoading(true);
   getStatic().then((res) => {
-    let hotelMap = {};
-    res.data.forumHotel.forEach((e) => {
-      // 只放希尔顿酒店
-      if (e.hotelEn !== 'Hilton Ningbo Dongqian Lake') return;
-      if (hotelMap[e.hotelEn]) {
-        hotelMap[e.hotelEn].rooms.push({
-          ...e,
-          apartment: e.apartmentEn + ' ¥' + e.price,
-          idx: hotelMap[e.hotelEn].rooms.length
-        });
-      } else {
-        hotelMap[e.hotelEn] = {
-          name: e.hotelEn,
-          rooms: [
-            {
-              ...e,
-              apartment: e.apartmentEn + ' ¥' + e.price,
-              idx: 0
-            }
-          ]
-        };
-      }
-      hotelList.value = Object.keys(hotelMap).map((e, idx) => ({
-        ...hotelMap[e],
-        idx
-      }));
-    });
-    getMemberInfo(app.mpfId).then((res) => {
-      memberInfo = res.data || {};
-      if (res.data.travelTemp) {
-        travel.value = {
-          welType: res.data.travelTemp.welType,
-          welClasses: res.data.travelTemp.welClasses,
-          welTime: res.data.travelTemp.welTime
-            ? new Date(res.data.travelTemp.welTime).getTime()
-            : null,
-          delType: res.data.travelTemp.delType,
-          delClasses: res.data.travelTemp.delClasses,
-          delTime: res.data.travelTemp.delTime
-            ? new Date(res.data.travelTemp.delTime).getTime()
-            : null
-        };
-      }
-
-      if (res.data.forumMemberHotelTemp) {
-        const hotelIdx = hotelList.value.findIndex(
-          (e) => e.name === res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn
-        );
-        let roomIdx = null;
-        if (hotelIdx > -1) {
-          roomIdx = hotelList.value[hotelIdx].rooms.findIndex(
-            (e) => e.hotelId === res.data.forumMemberHotelTemp.forumHotel.hotelDo.id
-          );
+    if (res.data) {
+      let hotelMap = {};
+      res.data.forumHotel.forEach((e) => {
+        // 只放希尔顿酒店
+        if (e.hotelEn !== 'Hilton Ningbo Dongqian Lake') return;
+        if (hotelMap[e.hotelEn]) {
+          hotelMap[e.hotelEn].rooms.push({
+            ...e,
+            apartment: e.apartmentEn + ' ¥' + e.price,
+            idx: hotelMap[e.hotelEn].rooms.length
+          });
+        } else {
+          hotelMap[e.hotelEn] = {
+            name: e.hotelEn,
+            rooms: [
+              {
+                ...e,
+                apartment: e.apartmentEn + ' ¥' + e.price,
+                idx: 0
+              }
+            ]
+          };
         }
+        hotelList.value = Object.keys(hotelMap).map((e, idx) => ({
+          ...hotelMap[e],
+          idx
+        }));
+      });
+      getMemberInfo(app.mpfId).then((res) => {
+        if (res.data) {
+          memberInfo = res.data || {};
+          if (res.data.travelTemp) {
+            travel.value = {
+              welType: res.data.travelTemp.welType,
+              welClasses: res.data.travelTemp.welClasses,
+              welTime: res.data.travelTemp.welTime
+                ? new Date(res.data.travelTemp.welTime).getTime()
+                : null,
+              delType: res.data.travelTemp.delType,
+              delClasses: res.data.travelTemp.delClasses,
+              delTime: res.data.travelTemp.delTime
+                ? new Date(res.data.travelTemp.delTime).getTime()
+                : null
+            };
+          }
 
-        hotel.value = {
-          hotelIdx: hotelIdx > -1 ? hotelIdx : null,
-          roomIdx: roomIdx,
-          timeRange: [
-            new Date(res.data.forumMemberHotelTemp.startTime).getTime(),
-            new Date(res.data.forumMemberHotelTemp.endTime).getTime()
-          ],
-          name: res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn,
-          room: res.data.forumMemberHotelTemp.forumHotel.hotelDo.apartmentEn,
-          prize: res.data.forumMemberHotelTemp.forumHotel.price,
-          time: res.data.forumMemberHotelTemp.time
-        };
-      }
-    });
+          if (res.data.forumMemberHotelTemp) {
+            const hotelIdx = hotelList.value.findIndex(
+              (e) => e.name === res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn
+            );
+            let roomIdx = null;
+            if (hotelIdx > -1) {
+              roomIdx = hotelList.value[hotelIdx].rooms.findIndex(
+                (e) => e.hotelId === res.data.forumMemberHotelTemp.forumHotel.hotelDo.id
+              );
+            }
+
+            hotel.value = {
+              hotelIdx: hotelIdx > -1 ? hotelIdx : null,
+              roomIdx: roomIdx,
+              timeRange: [
+                new Date(res.data.forumMemberHotelTemp.startTime).getTime(),
+                new Date(res.data.forumMemberHotelTemp.endTime).getTime()
+              ],
+              name: res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn,
+              room: res.data.forumMemberHotelTemp.forumHotel.hotelDo.apartmentEn,
+              prize: res.data.forumMemberHotelTemp.forumHotel.price,
+              time: res.data.forumMemberHotelTemp.time
+            };
+          }
+        }
+      });
+    }
   });
 }
 
