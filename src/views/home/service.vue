@@ -17,9 +17,11 @@ const app = useAppStore();
 const hotelList = ref([]);
 
 const travel = ref({
+  isWelcome: 0,
   welType: '',
   welClasses: '',
   welTime: null,
+  isDelivery: 0,
   delType: '',
   delClasses: '',
   delTime: null
@@ -73,11 +75,13 @@ function getList() {
           memberInfo = res.data || {};
           if (res.data.travelTemp) {
             travel.value = {
+              isWelcome: res.data.travelTemp.isWelcome,
               welType: res.data.travelTemp.welType,
               welClasses: res.data.travelTemp.welClasses,
               welTime: res.data.travelTemp.welTime
                 ? new Date(res.data.travelTemp.welTime).getTime()
                 : null,
+              isDelivery: res.data.travelTemp.isDelivery,
               delType: res.data.travelTemp.delType,
               delClasses: res.data.travelTemp.delClasses,
               delTime: res.data.travelTemp.delTime
@@ -135,8 +139,6 @@ function submit() {
     memberForumTemp: memberInfo.memberForumTemp,
     travelTemp: {
       ...travel.value,
-      isWelcome: travel.value.welTime ? 1 : 0,
-      isDelivery: travel.value.delTime ? 1 : 0,
       mfId: memberInfo.memberForumTemp?.id,
       welTime: dayjs(travel.value.welTime).format('YYYY-MM-DD HH:mm:ss'),
       delTime: dayjs(travel.value.delTime).format('YYYY-MM-DD HH:mm:ss'),
@@ -198,6 +200,14 @@ getList();
             label-align="left"
             require-mark-placement="left"
           >
+            <n-form-item label="Require Pick-up Service" path="isWelcome">
+              <n-radio-group v-model:value="travel.isWelcome" name="isWelcome">
+                <n-space>
+                  <n-radio :value="1"> Yes </n-radio>
+                  <n-radio :value="0"> No </n-radio>
+                </n-space>
+              </n-radio-group>
+            </n-form-item>
             <n-form-item label="Travel Method" path="welType">
               <n-radio-group v-model:value="travel.welType" name="gender">
                 <n-space>
@@ -238,6 +248,14 @@ getList();
             label-align="left"
             require-mark-placement="left"
           >
+            <n-form-item label="Require Pick-up Service" path="isDelivery">
+              <n-radio-group v-model:value="travel.isDelivery" name="isDelivery">
+                <n-space>
+                  <n-radio :value="1"> Yes </n-radio>
+                  <n-radio :value="0"> No </n-radio>
+                </n-space>
+              </n-radio-group>
+            </n-form-item>
             <n-form-item label="Travel Method" path="delType">
               <n-radio-group v-model:value="travel.delType" name="gender">
                 <n-space>
