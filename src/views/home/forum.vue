@@ -50,7 +50,7 @@ function getList() {
         activity: []
       },
       {
-        listName: 'Linkage Activities',
+        listName: 'Joint Activities',
         collapse: false,
         value: [],
         type: 1,
@@ -142,6 +142,12 @@ function getList() {
           }
         });
       }
+      list[2].activity.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      });
+      list[3].activity.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      });
       forumList.value = list;
     });
   });
