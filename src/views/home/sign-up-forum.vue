@@ -221,7 +221,7 @@ function submit() {
   updateMemberInfo(data).then((result) => {
     if (result.code === '0') {
       message.success('Save success!');
-      router.push('/home/person');
+      router.push('/home/qrcode');
     }
   });
 }

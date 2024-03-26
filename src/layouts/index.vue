@@ -101,11 +101,14 @@ if (mpfId && token) {
       <img src="/images/nav-top-logo.png" class="w-16rem h-8.2rem" @click="toMpforum" />
 
       <n-drawer v-model:show="drawerShow" width="35rem" placement="left">
-        <n-drawer-content title="MPF 2024" class="bg-#16284e" header-class="color-#fff!">
+        <n-drawer-content
+          title="Welcome to MPF 2024！"
+          class="bg-#16284e"
+          header-class="color-#fff!"
+        >
           <n-menu
             v-model:value="activeKey"
             :options="menuOptions"
-            :indent="0"
             @update:value="handleUpdateMenu"
           />
         </n-drawer-content>
@@ -149,5 +152,9 @@ if (mpfId && token) {
 <style lang="scss">
 .n-menu.n-menu--horizontal .n-menu-item-content {
   padding: 0 4rem;
+}
+.n-drawer-body-content-wrapper {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 </style>

@@ -48,6 +48,7 @@ export const themeOverrides = {
     itemIconColor: '#d4ddea',
     arrowColor: '#aab9d0',
 
+    itemColorActive: '#676c75',
     itemTextColorHover: '#e96d08',
     itemTextColorActiveHover: '#e96d08',
     itemTextColorActive: '#e96d08',

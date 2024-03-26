@@ -67,8 +67,8 @@ function toMpforum() {
     <img src="/images/nav-top-logo.png" class="w-16rem h-8.2rem" @click="toMpforum" />
 
     <n-drawer v-model:show="drawerShow" width="35rem" placement="left">
-      <n-drawer-content title="MPF 2024" class="bg-#16284e" header-class="color-#fff!">
-        <n-menu value="MY MPF" :options="navList" :indent="0" @update:value="handleUpdateMenu" />
+      <n-drawer-content title="Welcome to MPF 2024！" class="bg-#16284e" header-class="color-#fff!">
+        <n-menu value="MY MPF" :options="navList" @update:value="handleUpdateMenu" />
       </n-drawer-content>
     </n-drawer>
   </div>
@@ -92,5 +92,12 @@ function toMpforum() {
   width: 100%;
   height: 10.5rem;
   padding: 0 3rem;
+}
+</style>
+
+<style lang="scss">
+.n-drawer-body-content-wrapper {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 </style>
