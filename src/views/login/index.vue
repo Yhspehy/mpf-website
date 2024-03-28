@@ -2,7 +2,7 @@
 import { useAppStore } from '@/stores';
 import { localStg } from '@/utils/storage';
 
-import { login } from '@/service/api/auth';
+import { login, sendForgetEmail } from '@/service/api/auth';
 import { getMember } from '@/service/api/mpf';
 
 defineOptions({
@@ -47,6 +47,16 @@ async function handleSubmit() {
   });
 }
 
+function forgetPwd() {
+  if (!model.email || model.email.trim() === '') {
+    return message.warning('Please fill email!');
+  }
+  sendForgetEmail(model.email).then((res) => {
+    message.success('Send success!');
+    router.push('/home/forget?email=' + model.email);
+  });
+}
+
 if (route.query.email) {
   model.email = route.query.email;
 }
@@ -65,12 +75,6 @@ if (route.query.email) {
         2024 Maritime Silk Road Port InternationaCooperation Forum
       </div>
       <main class="pt-2.4rem">
-        <div
-          v-if="app.isMobile"
-          class="text-2.6rem color-#BCBDBE line-height-2.6rem mt-4rem mb-1rem"
-        >
-          Create a profile with your email.
-        </div>
         <n-form
           :model="model"
           size="large"
@@ -96,6 +100,10 @@ if (route.query.email) {
             />
           </n-form-item>
         </n-form>
+
+        <div class="color-#0040FF text-right my-3rem cursor-pointer" @click="forgetPwd">
+          Forget Password？
+        </div>
 
         <n-button
           class="w-20rem mt-6rem <sm:mt-10rem"

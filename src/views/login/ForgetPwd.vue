@@ -1,10 +1,10 @@
 <script setup>
 import { useAppStore } from '@/stores';
 
-import { register } from '@/service/api/auth';
+import { resetPwd } from '@/service/api/auth';
 
 defineOptions({
-  name: 'RegisterView'
+  name: 'ForgetPwd'
 });
 
 const route = useRoute();
@@ -14,13 +14,8 @@ const message = useMessage();
 const model = reactive({
   email: '',
   password: '',
-  confirmPassword: ''
+  emailCode: ''
 });
-
-function handleEmail() {
-  model.password = '';
-  model.confirmPassword = '';
-}
 
 const app = useAppStore();
 
@@ -29,11 +24,16 @@ async function handleSubmit() {
   if (!model.email || model.email.trim() === '') {
     return message.warning('Please fill email!');
   }
-  if (model.password !== model.confirmPassword) {
-    return message.warning('Password is not same with confirmPassword!');
+  if (!model.password) {
+    return message.warning('Please fill password!');
   }
-  register(model.email, model.password).then(() => {
+  if (!model.emailCode) {
+    return message.warning('Please fill emailCode!');
+  }
+
+  resetPwd(model.email, model.password, model.emailCode).then(() => {
     message.success('Please go to your email to Sign In!', { duration: 10000 });
+    router.push('/login?email=' + model.email);
   });
 }
 
@@ -73,7 +73,7 @@ if (route.query.email) {
               class="h-7rem line-height-7rem mb-2rem <sm:h-8rem <sm:line-height-8rem"
               v-model:value="model.email"
               placeholder="Create a profile with your email *"
-              @update:value="handleEmail"
+              disabled
             />
           </n-form-item>
           <n-form-item path="password">
@@ -89,8 +89,8 @@ if (route.query.email) {
             <n-input
               class="h-7rem line-height-7rem mb-2rem <sm:h-8rem <sm:line-height-8rem"
               type="password"
-              v-model:value="model.confirmPassword"
-              placeholder="Confirm Password *"
+              v-model:value="model.emailCode"
+              placeholder="EmailCode *"
             />
           </n-form-item>
         </n-form>

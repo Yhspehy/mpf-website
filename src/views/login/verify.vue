@@ -63,7 +63,7 @@ async function handleSubmit() {
         </n-form>
 
         <div
-          class="color-#ABABAC text-18px mb-11rem cursor-pointer mt-2rem <sm:mb-16rem"
+          class="color-#0040FF text-1.8rem mb-11rem cursor-pointer mt-2rem <sm:mb-16rem"
           @click="router.push('/register')"
         >
           * Create a profile with your email.

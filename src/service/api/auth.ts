@@ -44,3 +44,25 @@ export function registerEmail(email, phone, sign, timestamp) {
     }
   });
 }
+
+export function sendForgetEmail(email) {
+  return request({
+    url: `/maritimeSilk/user/password/reset/send-email`,
+    method: 'post',
+    data: {
+      email
+    }
+  });
+}
+
+export function resetPwd(email, password, emailCode) {
+  return request({
+    url: `/maritimeSilk/user/password/reset`,
+    method: 'post',
+    data: {
+      email,
+      password,
+      emailCode
+    }
+  });
+}

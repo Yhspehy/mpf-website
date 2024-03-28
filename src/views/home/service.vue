@@ -169,8 +169,8 @@ function submit() {
   });
 }
 
-const start = 1718985600000;
-const end = 1719676800000;
+const start = 1719360000000;
+const end = 1722384000000;
 function dateDisabled(ts) {
   const date = new Date(ts).getTime();
   return date < start || date > end;

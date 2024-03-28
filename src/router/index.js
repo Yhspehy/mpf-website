@@ -84,6 +84,14 @@ const constantRoute = [
     }
   },
   {
+    path: '/forget',
+    name: 'ForgetPwd',
+    component: () => import('../views/login/ForgetPwd.vue'),
+    meta: {
+      title: 'Forget'
+    }
+  },
+  {
     name: '404',
     path: '/404',
     component: () => import('../views/404.vue'),
