@@ -115,7 +115,11 @@ function submit() {
 
   formIns.value?.validate((errors) => {
     if (!errors) {
-      updateMember(model.value).then((resp) => {
+      const formValue = {
+        ...model.value
+      };
+      if (formValue.unitId) delete formValue.unit;
+      updateMember(formValue).then((resp) => {
         if (resp.code !== '0') return;
         app.mpfId = model.value.id;
         // 默认参与总论坛

@@ -102,8 +102,12 @@ const app = useAppStore();
 function submit() {
   formIns.value?.validate((errors) => {
     if (!errors) {
+      const formValue = {
+        ...model.value
+      };
+      if (formValue.unitId) delete formValue.unit;
       updateMemberInSign(
-        model.value,
+        formValue,
         route.query.sign,
         route.query.timestamp,
         route.query.email
@@ -206,9 +210,9 @@ model.value.email = route.query.email || '';
           v-model:value="model.unitId"
           filterable
           clearable
+          tag
           label-field="nameEn"
           value-field="id"
-          :fallback-option="false"
           :options="unitList"
           :remote="true"
           :loading="selectLoading"
