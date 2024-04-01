@@ -173,7 +173,7 @@ function submit() {
   });
 }
 
-const start = 1719273600000;
+const start = 1717113600000;
 const end = 1722384000000;
 function dateDisabled(ts) {
   const date = new Date(ts).getTime();
@@ -231,6 +231,9 @@ getList();
                 class="w-full"
                 input-readonly
                 format="yyyy-MM-dd HH:mm"
+                :default-calendar-start-time="start"
+                :default-calendar-end-time="end"
+                :is-date-disabled="dateDisabled"
                 :time-picker-props="{
                   format: 'HH:mm'
                 }"
@@ -279,6 +282,9 @@ getList();
                 class="w-full"
                 input-readonly
                 format="yyyy-MM-dd HH:mm"
+                :default-calendar-start-time="start"
+                :default-calendar-end-time="end"
+                :is-date-disabled="dateDisabled"
                 :time-picker-props="{
                   format: 'HH:mm'
                 }"

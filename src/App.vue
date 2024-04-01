@@ -52,11 +52,11 @@ onMounted(() => {
 
   if (isMobile()) {
     appStore.isMobile = true;
-    document.querySelector('#app').classList.add('mobile');
+    document.querySelector('body').classList.add('mobile');
     docEle.style.fontSize = 100 / 75 + 'vw';
   } else {
     appStore.isMobile = false;
-    document.querySelector('#app').classList.remove('mobile');
+    document.querySelector('body').classList.remove('mobile');
     docEle.style.fontSize = 100 / 192 + 'vw';
   }
   /**

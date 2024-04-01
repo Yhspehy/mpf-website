@@ -366,3 +366,9 @@ getStatic().then((res) => {
   font-size: var(--n-label-font-size);
 }
 </style>
+
+<style lang="scss">
+.mobile .n-date-panel .n-date-panel-month-calendar .n-date-panel-month-calendar__picker-col-item {
+  font-size: 2.4rem !important;
+}
+</style>
