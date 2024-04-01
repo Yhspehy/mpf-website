@@ -1,6 +1,4 @@
 <script setup>
-import { debounce } from 'lodash-es';
-
 import { useAppStore } from '@/stores';
 import { localStg } from '@/utils/storage';
 
@@ -33,7 +31,8 @@ const model = ref({
   email: '',
   isForeign: 1,
   isContact: '0',
-  inviteType: 0
+  inviteType: 0,
+  birthday: null
 });
 const rules = {
   firstName: {
@@ -71,19 +70,23 @@ const rules = {
 };
 
 const unitList = ref([]);
-const selectLoading = ref(false);
+getUnit('').then((res) => {
+  unitList.value = res.data ? res.data.filter((e) => e.nameEn) : [];
+});
 
-/** 下拉框-异步的时候搜索函数-节流，300毫秒执行一次 */
-const handleSelectSearch = debounce((query) => {
-  handleSearch(query);
-}, 300);
-
-function handleSearch(name) {
-  selectLoading.value = true;
-  getUnit(name).then((res) => {
-    selectLoading.value = false;
-    unitList.value = res.data ? res.data.filter((e) => e.nameEn) : [];
-  });
+function createOption(label) {
+  if (unitList.value[0].id === 'extra') {
+    unitList.value[0].nameEn = label;
+  } else {
+    unitList.value.unshift({
+      nameEn: label,
+      id: 'extra'
+    });
+  }
+  return {
+    label: label,
+    value: 'extra'
+  };
 }
 
 function updateUnit(value, option) {
@@ -105,7 +108,16 @@ function submit() {
       const formValue = {
         ...model.value
       };
-      if (formValue.unitId) delete formValue.unit;
+      if (formValue.unitId) {
+        if (formValue.unitId === 'extra') {
+          formValue.unit = {
+            nameEn: model.value.unit.nameEn
+          };
+          delete formValue.unitId;
+        } else {
+          delete formValue.unit;
+        }
+      }
       updateMemberInSign(
         formValue,
         route.query.sign,
@@ -202,6 +214,16 @@ model.value.email = route.query.email || '';
           </n-space>
         </n-radio-group>
       </n-form-item>
+      <n-form-item v-if="model.inviteType === 0" label="Birth Date" path="birthday" required>
+        <n-date-picker
+          v-model:formatted-value="model.birthday"
+          type="date"
+          clearable
+          class="w-full"
+          input-readonly
+          value-format="yyyy-MM-dd"
+        />
+      </n-form-item>
       <n-form-item label="Passport Number" path="card" required>
         <n-input v-model:value="model.card" placeholder="" />
       </n-form-item>
@@ -213,12 +235,10 @@ model.value.email = route.query.email || '';
           tag
           label-field="nameEn"
           value-field="id"
+          :fallback-option="false"
           :options="unitList"
-          :remote="true"
-          :loading="selectLoading"
+          @create="createOption"
           @update:value="updateUnit"
-          @blur="() => handleSelectSearch(model.unit.nameEn)"
-          @search="handleSelectSearch"
         />
       </n-form-item>
       <n-form-item label="Position" path="jobEn" required>

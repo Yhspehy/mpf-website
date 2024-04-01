@@ -140,11 +140,15 @@ function submit() {
     travelTemp: {
       ...travel.value,
       mfId: memberInfo.memberForumTemp?.id,
-      welTime: dayjs(travel.value.welTime).format('YYYY-MM-DD HH:mm:ss'),
-      delTime: dayjs(travel.value.delTime).format('YYYY-MM-DD HH:mm:ss'),
       isDelete: 0
     }
   };
+  if (travel.value.welTime) {
+    data.travelTemp.welTime = dayjs(travel.value.welTime).format('YYYY-MM-DD HH:mm:ss');
+  }
+  if (travel.value.delTime) {
+    data.travelTemp.delTime = dayjs(travel.value.delTime).format('YYYY-MM-DD HH:mm:ss');
+  }
   if (
     hotel.value.hotelIdx !== null &&
     hotel.value.roomIdx !== null &&
@@ -169,7 +173,7 @@ function submit() {
   });
 }
 
-const start = 1719360000000;
+const start = 1719273600000;
 const end = 1722384000000;
 function dateDisabled(ts) {
   const date = new Date(ts).getTime();

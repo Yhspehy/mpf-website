@@ -1,6 +1,4 @@
 <script setup>
-import { debounce } from 'lodash-es';
-
 import { localStg } from '@/utils/storage';
 import { useAppStore } from '@/stores';
 
@@ -39,7 +37,8 @@ const model = ref({
   email: '',
   isForeign: 1,
   isContact: '0',
-  inviteType: 0
+  inviteType: 0,
+  birthday: null
 });
 
 const rules = {
@@ -78,19 +77,24 @@ const rules = {
 };
 
 const unitList = ref([]);
-const selectLoading = ref(false);
 
-/** 下拉框-异步的时候搜索函数-节流，300毫秒执行一次 */
-const handleSelectSearch = debounce((query) => {
-  handleSearch(query);
-}, 300);
+getUnit('').then((res) => {
+  unitList.value = res.data ? res.data.filter((e) => e.nameEn) : [];
+});
 
-function handleSearch(name) {
-  selectLoading.value = true;
-  getUnit(name).then((res) => {
-    selectLoading.value = false;
-    unitList.value = res.data ? res.data.filter((e) => e.nameEn) : [];
-  });
+function createOption(label) {
+  if (unitList.value[0].id === 'extra') {
+    unitList.value[0].nameEn = label;
+  } else {
+    unitList.value.unshift({
+      nameEn: label,
+      id: 'extra'
+    });
+  }
+  return {
+    label: label,
+    value: 'extra'
+  };
 }
 
 function updateUnit(value, option) {
@@ -118,7 +122,16 @@ function submit() {
       const formValue = {
         ...model.value
       };
-      if (formValue.unitId) delete formValue.unit;
+      if (formValue.unitId) {
+        if (formValue.unitId === 'extra') {
+          formValue.unit = {
+            nameEn: model.value.unit.nameEn
+          };
+          delete formValue.unitId;
+        } else {
+          delete formValue.unit;
+        }
+      }
       updateMember(formValue).then((resp) => {
         if (resp.code !== '0') return;
         app.mpfId = model.value.id;
@@ -161,7 +174,8 @@ getMember(email).then((res) => {
   model.value.lastName = nameList[1];
   model.value.isContact = '1';
   model.value.isForeign = 1;
-  handleSearch();
+  model.value.birthday = model.value.birthday || null;
+
   // 获取是否为单位联络人
   getMemberInfo(res.data.id).then((r) => {
     if (r.data.memberForumTemp) {
@@ -227,6 +241,16 @@ getStatic().then((res) => {
           </n-space>
         </n-radio-group>
       </n-form-item>
+      <n-form-item v-if="model.inviteType === 0" label="Birth Date" path="birthday" required>
+        <n-date-picker
+          v-model:formatted-value="model.birthday"
+          type="date"
+          clearable
+          class="w-full"
+          input-readonly
+          value-format="yyyy-MM-dd"
+        />
+      </n-form-item>
       <n-form-item label="Passport Number" path="card" required>
         <n-input v-model:value="model.card" placeholder="" />
       </n-form-item>
@@ -235,15 +259,13 @@ getStatic().then((res) => {
           v-model:value="model.unitId"
           filterable
           clearable
+          tag
           label-field="nameEn"
           value-field="id"
           :fallback-option="false"
           :options="unitList"
-          :remote="true"
-          :loading="selectLoading"
+          @create="createOption"
           @update:value="updateUnit"
-          @blur="() => handleSelectSearch(model.unit.nameEn)"
-          @search="handleSelectSearch"
         />
       </n-form-item>
       <n-form-item label="Position" path="jobEn" required>
@@ -292,6 +314,12 @@ getStatic().then((res) => {
       <n-form-item label="Participation Method" path="inviteType" required>
         <div class="border-b info-value">
           {{ model.inviteType === 1 ? 'Online' : 'Offline' }}
+        </div>
+      </n-form-item>
+
+      <n-form-item label="Birth Date" path="inviteType" required>
+        <div class="border-b info-value">
+          {{ model.birthday }}
         </div>
       </n-form-item>
 
