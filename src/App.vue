@@ -21,6 +21,7 @@ import { themeOverrides } from '@/config/theme';
 import { isMobile } from '@/utils/common';
 
 import { useAppStore } from '@/stores';
+import { getTranslateList } from '@/service/api/common';
 
 // 挂载naive组件的方法至window, 以便在路由钩子函数和请求函数里面调用
 function registerNaiveTools() {
@@ -47,6 +48,9 @@ let reseizeId = null;
 
 const appStore = useAppStore();
 
+getTranslateList().then((res) => {
+  window.$errorList = res;
+});
 onMounted(() => {
   const docEle = document.documentElement;
 

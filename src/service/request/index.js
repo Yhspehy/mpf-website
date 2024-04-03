@@ -64,7 +64,12 @@ service.interceptors.response.use((response) => {
     //   duration: 10000,
     //   keepAliveOnHover: true
     // });
-    window.$message?.error(response.data.message || '未知异常', { duration: 10000 });
+    let errorMsg = response.data.message || 'error';
+    const item = window.$errorList.find((e) => e.chinese === errorMsg);
+    if (item) {
+      errorMsg = item.english;
+    }
+    window.$message?.error(errorMsg, { duration: 10000 });
   }
   return response.data;
 }, handleAxiosError);

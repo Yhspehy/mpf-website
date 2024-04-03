@@ -44,35 +44,45 @@ const model = ref({
 const rules = {
   firstName: {
     required: true,
-    trigger: ['blur', 'input']
+    trigger: ['blur', 'input'],
+    message: 'First Name is required'
   },
   lastName: {
     required: true,
-    trigger: ['blur', 'input']
+    trigger: ['blur', 'input'],
+    message: 'Last Name is required'
+  },
+  birthday: {
+    required: true,
+    trigger: ['blur', 'input'],
+    message: 'Birth Date is required'
   },
   card: {
     required: true,
-    trigger: ['blur', 'input']
+    trigger: ['blur', 'input'],
+    message: 'Passport Number is required'
   },
   unit: {
     nameEn: {
       required: true,
       trigger: ['blur', 'input'],
-      message: 'organization is required'
+      message: 'Organization is required'
     }
   },
   jobEn: {
     required: true,
     trigger: ['blur', 'input'],
-    message: 'position is required'
+    message: 'Position is required'
   },
   tel: {
     required: true,
-    trigger: ['blur', 'input']
+    trigger: ['blur', 'input'],
+    message: 'Phone Number is required'
   },
   email: {
     required: true,
-    trigger: ['blur', 'input']
+    trigger: ['blur', 'input'],
+    message: 'Email is required'
   }
 };
 
@@ -272,7 +282,7 @@ getStatic().then((res) => {
         <n-input v-model:value="model.jobEn" placeholder="" />
       </n-form-item>
       <n-form-item label="Email" path="email" required>
-        <n-input v-model:value="model.email" placeholder="" />
+        <n-input v-model:value="model.email" disabled placeholder="" />
       </n-form-item>
       <n-form-item label="Phone Number" path="tel" required>
         <n-input v-model:value="model.tel" placeholder="" />
@@ -317,7 +327,7 @@ getStatic().then((res) => {
         </div>
       </n-form-item>
 
-      <n-form-item label="Birth Date" path="inviteType" required>
+      <n-form-item label="Birth Date" path="birthday" required>
         <div class="border-b info-value">
           {{ model.birthday }}
         </div>
