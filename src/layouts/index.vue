@@ -115,10 +115,6 @@ if (mpfId && token) {
       </n-drawer>
     </div>
 
-    <!-- <div class="nav-bar">
-      <nav-bar />
-    </div> -->
-
     <section
       :style="{
         height: app.isMobile ? 'calc(100% - 10.5rem)' : 'calc(100% - 8rem)'

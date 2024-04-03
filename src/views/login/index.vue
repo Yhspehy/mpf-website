@@ -101,7 +101,7 @@ if (route.query.email) {
           </n-form-item>
         </n-form>
 
-        <div class="color-#0040FF text-right my-3rem cursor-pointer" @click="forgetPwd">
+        <div class="color-#0040FF text-2rem text-right my-3rem cursor-pointer" @click="forgetPwd">
           Forget Password？
         </div>
 
@@ -109,6 +109,7 @@ if (route.query.email) {
           class="w-20rem mt-6rem <sm:mt-10rem"
           type="primary"
           size="large"
+          strong
           :block="true"
           :round="true"
           @click="handleSubmit"

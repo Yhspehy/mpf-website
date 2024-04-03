@@ -10,42 +10,44 @@ const app = useAppStore();
 const navList = [
   {
     label: 'HOME',
-    key: 'HOME'
+    key: 'HOME',
+    url: 'https://mpforum.nbse.net.cn/homepage/index_en'
   },
   {
     label: 'ABOUT',
-    key: 'ABOUT'
+    key: 'ABOUT',
+    url: 'https://mpforum.nbse.net.cn/introduce/enindex'
   },
   {
     label: 'GUIDE',
-    key: 'GUIDE'
+    key: 'GUIDE',
+    url: 'https://mpforum.nbse.net.cn/conference/enscenery'
   },
   {
     label: 'MEDIA',
-    key: 'MEDIA'
-  },
-  {
-    label: 'MY MPF',
-    key: 'MY MPF'
+    key: 'MEDIA',
+    url: 'https://mpforum.nbse.net.cn/media/picenter_en/1'
   },
   {
     label: 'MANAGEMENT',
-    key: 'MANAGEMENT'
+    key: 'MANAGEMENT',
+    url: 'https://mpforum.nbse.net.cn/company/guidanceen'
   },
   {
     label: 'CONTACT',
-    key: 'CONTACT'
+    key: 'CONTACT',
+    url: 'https://mpforum.nbse.net.cn/contact/enindex'
   }
 ];
 
 function handleUpdateMenu(_key, item) {
-  window.location.href = 'http://mpforum.nbse.net.cn/homepage/index';
+  window.location.href = item.url;
 }
 
 const drawerShow = ref(false);
 
 function toMpforum() {
-  window.location.href = 'http://mpforum.nbse.net.cn/homepage/index';
+  window.location.href = 'https://mpforum.nbse.net.cn/homepage/index_en';
 }
 </script>
 

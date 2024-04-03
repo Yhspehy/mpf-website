@@ -99,6 +99,7 @@ if (route.query.email) {
           class="w-20rem mt-6rem"
           type="primary"
           size="large"
+          strong
           :block="true"
           :round="true"
           @click="handleSubmit"

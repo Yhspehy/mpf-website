@@ -1,4 +1,6 @@
 <script setup>
+import { Icon } from '@iconify/vue';
+
 import { useAppStore } from '@/stores';
 
 import { register } from '@/service/api/auth';
@@ -8,7 +10,6 @@ defineOptions({
 });
 
 const route = useRoute();
-const router = useRouter();
 const message = useMessage();
 
 const model = reactive({
@@ -33,9 +34,12 @@ async function handleSubmit() {
     return message.warning('Password is not same with confirmPassword!');
   }
   register(model.email, model.password).then(() => {
-    message.success('Please go to your email to Sign In!', { duration: 10000 });
+    showModal.value = true;
+    // message.success('Please go to your email to Sign In!', { duration: 10000 });
   });
 }
+
+const showModal = ref(false);
 
 if (route.query.email) {
   model.email = route.query.email;
@@ -99,6 +103,7 @@ if (route.query.email) {
           class="w-20rem mt-6rem"
           type="primary"
           size="large"
+          strong
           :block="true"
           :round="true"
           @click="handleSubmit"
@@ -107,6 +112,20 @@ if (route.query.email) {
         </n-button>
       </main>
     </div>
+
+    <n-modal
+      v-model:show="showModal"
+      :auto-focus="false"
+      :close-on-esc="false"
+      :mask-closable="false"
+    >
+      <n-card class="w-60rem text-center p-3rem" :bordered="false" role="dialog" aria-modal="true">
+        <div class="text-3rem flex-center">
+          <Icon icon="material-symbols:attach-email-outline" class="mr-2rem" />
+          Please go to your email to Sign In!
+        </div>
+      </n-card>
+    </n-modal>
   </div>
 </template>
 

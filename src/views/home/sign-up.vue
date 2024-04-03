@@ -43,10 +43,6 @@ const rules = {
     required: true,
     trigger: ['blur', 'input']
   },
-  card: {
-    required: true,
-    trigger: ['blur', 'input']
-  },
   unit: {
     nameEn: {
       required: true,
@@ -224,7 +220,7 @@ model.value.email = route.query.email || '';
           value-format="yyyy-MM-dd"
         />
       </n-form-item>
-      <n-form-item label="Passport Number" path="card" required>
+      <n-form-item label="Passport Number" path="card">
         <n-input v-model:value="model.card" placeholder="" />
       </n-form-item>
       <n-form-item label="Organization" path="unitId" required>

@@ -73,6 +73,7 @@ async function handleSubmit() {
           class="w-20rem"
           type="primary"
           size="large"
+          strong
           :block="true"
           :round="true"
           @click="handleSubmit"
