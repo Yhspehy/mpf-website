@@ -85,13 +85,15 @@ function getList() {
     });
 
     res.data.memberPlay.forEach((e) => {
-      list[3].activity.push({
-        type: 'play',
-        name: e.nameEn,
-        date: e.time?.slice(0, -3) || '',
-        place: e.placeEn,
-        value: e.id
-      });
+      if (e.type === 0) {
+        list[3].activity.push({
+          type: 'play',
+          name: e.nameEn,
+          date: e.time?.slice(0, -3) || '',
+          place: e.placeEn,
+          value: e.id
+        });
+      }
     });
 
     getMemberInfo(app.mpfId).then((res) => {
@@ -133,12 +135,14 @@ function getList() {
             time: e.memberPlay.time,
             location: e.memberPlay.placeEn
           });
-          const item = list[3].activity.find((el) => el.value === e.mpId);
-          if (item) {
-            if (!expandedNames.value.includes(3)) {
-              expandedNames.value.push(3);
+          if (e.memberPlay.type === 0) {
+            const item = list[3].activity.find((el) => el.value === e.mpId);
+            if (item) {
+              if (!expandedNames.value.includes(3)) {
+                expandedNames.value.push(3);
+              }
+              list[3].value.push(e.mpId);
             }
-            list[3].value.push(e.mpId);
           }
         });
       }
@@ -153,7 +157,7 @@ function getList() {
   });
 }
 
-function handleChange(index, value, meta, disabled) {
+function handleChange(index, value, meta) {
   if (meta.actionType === 'check') {
     const timeList = [];
     forumList.value.forEach((e) => {
