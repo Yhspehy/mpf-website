@@ -57,11 +57,6 @@ const rules = {
     trigger: ['blur', 'input'],
     message: 'Birth Date is required'
   },
-  card: {
-    required: true,
-    trigger: ['blur', 'input'],
-    message: 'Passport Number is required'
-  },
   unit: {
     nameEn: {
       required: true,
@@ -259,9 +254,10 @@ getStatic().then((res) => {
           class="w-full"
           input-readonly
           value-format="yyyy-MM-dd"
+          :default-calendar-start-time="157766400000"
         />
       </n-form-item>
-      <n-form-item label="Passport Number" path="card" required>
+      <n-form-item label="Passport Number" path="card">
         <n-input v-model:value="model.card" placeholder="" />
       </n-form-item>
       <n-form-item label="Organization" path="unit.nameEn" required>

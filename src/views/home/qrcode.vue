@@ -24,13 +24,13 @@ const text = ref('text');
         <n-button
           color="#0040FF"
           class="h-5.6rem border-rd-2.8rem <sm:h-7rem <sm:border-rd-3.5rem"
-          @click="router.push('/home/forum')"
+          @click="router.push('/home/forum?type=edit')"
           >Edit Your Agenda</n-button
         >
         <n-button
           color="#0040FF"
           class="h-5.6rem border-rd-2.8rem <sm:h-7rem <sm:border-rd-3.5rem"
-          @click="router.push('/home/service')"
+          @click="router.push('/home/service?type=edit')"
           >Edit Your Pick-Up and Hotel
         </n-button>
       </div>

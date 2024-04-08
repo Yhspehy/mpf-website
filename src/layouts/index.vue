@@ -30,16 +30,30 @@ const menuOptions = ref([
     label: 'MPF SERVICE',
     key: 'service',
     url: '/home/service'
+  },
+  {
+    label: '2024MPF',
+    key: 'mpf',
+    url: 'http://mpforum.nbse.net.cn/conference/introductionEn'
+  },
+  {
+    label: 'CONTACT US',
+    key: 'contact',
+    url: 'https://mpforum.nbse.net.cn/contact/enindex'
   }
 ]);
 
 const activeKey = ref(null);
 
-function handleUpdateMenu(_key, item) {
+function handleUpdateMenu(key, item) {
   if (app.isMobile) {
     drawerShow.value = false;
   }
-  router.push(item.url);
+  if (key == 'mpf' || key === 'contact') {
+    window.location.href = item.url;
+  } else {
+    router.push(item.url);
+  }
 }
 
 watch(
@@ -64,7 +78,7 @@ if (mpfId && token) {
     if (r.data && r.data.volunteerForumTemp) {
       const item = r.data.volunteerForumTemp.find((e) => e.type == 1);
       if (item) {
-        menuOptions.value.push({
+        menuOptions.value.splice(4, 0, {
           label: 'MY ASSISTANT',
           key: 'assistant',
           url: '/home/assistant'

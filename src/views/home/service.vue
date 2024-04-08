@@ -8,6 +8,7 @@ defineOptions({
   name: 'ServicePage'
 });
 
+const route = useRoute();
 const message = useMessage();
 
 const isEdit = ref(false);
@@ -137,6 +138,7 @@ function submit() {
   const data = {
     id: app.mpfId,
     memberForumTemp: memberInfo.memberForumTemp,
+    memberForumTemps: memberInfo.memberForumTemps,
     travelTemp: {
       ...travel.value,
       mfId: memberInfo.memberForumTemp?.id,
@@ -181,6 +183,7 @@ function dateDisabled(ts) {
 }
 
 getList();
+isEdit.value = route.query.type === 'edit';
 </script>
 
 <template>
@@ -212,33 +215,35 @@ getList();
                 </n-space>
               </n-radio-group>
             </n-form-item>
-            <n-form-item label="Travel Method" path="welType">
-              <n-radio-group v-model:value="travel.welType" name="gender">
-                <n-space>
-                  <n-radio :value="1"> Plane </n-radio>
-                  <n-radio :value="0"> High-Speed Railway </n-radio>
-                </n-space>
-              </n-radio-group>
-            </n-form-item>
-            <n-form-item label="Flight / Class" path="welClasses">
-              <n-input v-model:value="travel.welClasses" />
-            </n-form-item>
-            <n-form-item label="Arrival Time" path="welTime">
-              <n-date-picker
-                v-model:value="travel.welTime"
-                type="datetime"
-                clearable
-                class="w-full"
-                input-readonly
-                format="yyyy-MM-dd HH:mm"
-                :default-calendar-start-time="start"
-                :default-calendar-end-time="end"
-                :is-date-disabled="dateDisabled"
-                :time-picker-props="{
-                  format: 'HH:mm'
-                }"
-              />
-            </n-form-item>
+            <template v-if="travel.isWelcome === 1">
+              <n-form-item label="Travel Method" path="welType">
+                <n-radio-group v-model:value="travel.welType" name="gender">
+                  <n-space>
+                    <n-radio :value="1"> Plane </n-radio>
+                    <n-radio :value="0"> High-Speed Railway </n-radio>
+                  </n-space>
+                </n-radio-group>
+              </n-form-item>
+              <n-form-item label="Flight / Class" path="welClasses">
+                <n-input v-model:value="travel.welClasses" />
+              </n-form-item>
+              <n-form-item label="Arrival Time" path="welTime">
+                <n-date-picker
+                  v-model:value="travel.welTime"
+                  type="datetime"
+                  clearable
+                  class="w-full"
+                  input-readonly
+                  format="yyyy-MM-dd HH:mm"
+                  :default-calendar-start-time="start"
+                  :default-calendar-end-time="end"
+                  :is-date-disabled="dateDisabled"
+                  :time-picker-props="{
+                    format: 'HH:mm'
+                  }"
+                />
+              </n-form-item>
+            </template>
           </n-form>
         </div>
       </div>
@@ -263,33 +268,35 @@ getList();
                 </n-space>
               </n-radio-group>
             </n-form-item>
-            <n-form-item label="Travel Method" path="delType">
-              <n-radio-group v-model:value="travel.delType" name="gender">
-                <n-space>
-                  <n-radio :value="1"> Plane </n-radio>
-                  <n-radio :value="0"> High-Speed Railway </n-radio>
-                </n-space>
-              </n-radio-group>
-            </n-form-item>
-            <n-form-item label="Flight / Class" path="delClasses">
-              <n-input v-model:value="travel.delClasses" />
-            </n-form-item>
-            <n-form-item label="Arrival Time" path="delTime">
-              <n-date-picker
-                v-model:value="travel.delTime"
-                type="datetime"
-                clearable
-                class="w-full"
-                input-readonly
-                format="yyyy-MM-dd HH:mm"
-                :default-calendar-start-time="start"
-                :default-calendar-end-time="end"
-                :is-date-disabled="dateDisabled"
-                :time-picker-props="{
-                  format: 'HH:mm'
-                }"
-              />
-            </n-form-item>
+            <template v-if="travel.isDelivery === 1">
+              <n-form-item label="Travel Method" path="delType">
+                <n-radio-group v-model:value="travel.delType" name="gender">
+                  <n-space>
+                    <n-radio :value="1"> Plane </n-radio>
+                    <n-radio :value="0"> High-Speed Railway </n-radio>
+                  </n-space>
+                </n-radio-group>
+              </n-form-item>
+              <n-form-item label="Flight / Class" path="delClasses">
+                <n-input v-model:value="travel.delClasses" />
+              </n-form-item>
+              <n-form-item label="Arrival Time" path="delTime">
+                <n-date-picker
+                  v-model:value="travel.delTime"
+                  type="datetime"
+                  clearable
+                  class="w-full"
+                  input-readonly
+                  format="yyyy-MM-dd HH:mm"
+                  :default-calendar-start-time="start"
+                  :default-calendar-end-time="end"
+                  :is-date-disabled="dateDisabled"
+                  :time-picker-props="{
+                    format: 'HH:mm'
+                  }"
+                />
+              </n-form-item>
+            </template>
           </n-form>
         </div>
       </div>

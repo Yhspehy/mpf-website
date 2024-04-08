@@ -8,6 +8,7 @@ defineOptions({
   name: 'ForumPage'
 });
 
+const route = useRoute();
 const message = useMessage();
 
 const forumList = ref([]);
@@ -244,6 +245,8 @@ function submit() {
 }
 
 getList();
+
+isEdit.value = route.query.type === 'edit';
 </script>
 
 <template>
