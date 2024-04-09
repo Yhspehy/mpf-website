@@ -53,7 +53,7 @@ function forgetPwd() {
   }
   sendForgetEmail(model.email).then((res) => {
     message.success('Send success!');
-    router.push('/home/forget?email=' + model.email);
+    router.push('/forget?email=' + model.email);
   });
 }
 
