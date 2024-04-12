@@ -14,3 +14,19 @@ export function isMobile() {
 
   return check;
 }
+
+export function verifyPwd(pwd) {
+  if (pwd.length < 8) {
+    window.$message.error('Please enter at least 8 characters!');
+    return false;
+  }
+  if (!pwd.match(/[0-9]/g)) {
+    window.$message.error('Please enter at least one number!');
+    return false;
+  }
+  if (!pwd.match(/[!+,-./:;<=>?@]/g)) {
+    window.$message.error('Please enter one special character (!+,-./:;<=>?@)');
+    return false;
+  }
+  return true;
+}

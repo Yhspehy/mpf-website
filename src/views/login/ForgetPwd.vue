@@ -1,5 +1,6 @@
 <script setup>
 import { useAppStore } from '@/stores';
+import { verifyPwd } from '@/utils/common';
 
 import { resetPwd } from '@/service/api/auth';
 
@@ -23,6 +24,9 @@ const app = useAppStore();
 async function handleSubmit() {
   if (!model.email || model.email.trim() === '') {
     return message.warning('Please fill email!');
+  }
+  if (!verifyPwd(model.password)) {
+    return;
   }
   if (!model.password) {
     return message.warning('Please fill password!');

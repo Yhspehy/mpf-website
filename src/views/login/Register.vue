@@ -2,6 +2,7 @@
 import { Icon } from '@iconify/vue';
 
 import { useAppStore } from '@/stores';
+import { verifyPwd } from '@/utils/common';
 
 import { register } from '@/service/api/auth';
 
@@ -29,6 +30,9 @@ const app = useAppStore();
 async function handleSubmit() {
   if (!model.email || model.email.trim() === '') {
     return message.warning('Please fill email!');
+  }
+  if (!verifyPwd(model.password)) {
+    return;
   }
   if (model.password !== model.confirmPassword) {
     return message.warning('Password is not same with confirmPassword!');
