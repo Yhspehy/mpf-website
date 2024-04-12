@@ -50,7 +50,7 @@ if (route.query.email) {
   <div class="wh-full bg flex-col-center login-page">
     <nav-bar />
     <div
-      class="mx-auto mt-10rem bg-#F1F1F1 w-85rem h-74rem py-8rem px-17rem box-border border-rd-2rem <sm:w-70rem <sm:px-6rem <sm:h-80rem"
+      class="mx-auto mt-10rem bg-#F1F1F1 w-85rem pt-8rem pb-6rem px-17rem box-border border-rd-2rem <sm:w-70rem <sm:px-6rem"
     >
       <div class="text-center text-10.8rem color-#0040FF line-height-11rem mb-2rem <sm:text-12rem">
         MPF 2024
@@ -82,12 +82,20 @@ if (route.query.email) {
           </n-form-item>
           <n-form-item path="password">
             <n-input
-              class="h-7rem line-height-7rem mb-2rem <sm:h-8rem <sm:line-height-8rem"
+              class="h-7rem line-height-7rem <sm:h-8rem <sm:line-height-8rem"
               type="password"
               v-model:value="model.password"
               placeholder="Create Password *"
             />
           </n-form-item>
+
+          <div class="color-#7d7d7d <sm:text-2rem mt-1rem">
+            — Please enter at least 8 characters
+          </div>
+          <div class="color-#7d7d7d <sm:text-2rem">— Please enter at least one number</div>
+          <div class="color-#7d7d7d <sm:text-2rem mb-2rem">
+            — Please enter one special character (!+,-./:;<=>?@)
+          </div>
 
           <n-form-item path="password">
             <n-input
