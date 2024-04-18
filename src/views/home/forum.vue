@@ -158,7 +158,10 @@ function getList() {
   });
 }
 
-function handleChange(index, value, meta) {
+function handleChange(index, value, meta, disabled) {
+  if (disabled) {
+    return message.warning('This activity is a directed invitation meeting.');
+  }
   if (meta.actionType === 'check') {
     const timeList = [];
     forumList.value.forEach((e) => {
@@ -270,8 +273,7 @@ isEdit.value = route.query.type === 'edit';
             name="participationMethod"
             class="flex-col"
             :value="item.value"
-            :disabled="item.disabled"
-            @update-value="(value, meta) => handleChange(index, value, meta)"
+            @update-value="(value, meta) => handleChange(index, value, meta, item.disabled)"
           >
             <n-checkbox
               v-for="act in item.activity"

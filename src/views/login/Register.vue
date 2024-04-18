@@ -39,7 +39,6 @@ async function handleSubmit() {
   }
   register(model.email, model.password).then(() => {
     showModal.value = true;
-    // message.success('Please go to your email to Sign In!', { duration: 10000 });
   });
 }
 

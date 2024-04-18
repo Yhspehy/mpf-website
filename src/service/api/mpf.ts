@@ -76,6 +76,22 @@ export function getUnit(name) {
   });
 }
 
+export function getUnitInSign(name, Sign, Timestamp, Email) {
+  return request({
+    url: '/maritimeSilk/web/proxy/getUnit',
+    method: 'post',
+    isMpf: true,
+    headers: {
+      Sign,
+      Timestamp,
+      Email
+    },
+    data: qs.stringify({
+      name
+    })
+  });
+}
+
 export function getStatic() {
   return request({
     url: '/maritimeSilk/proxy/getStatic',

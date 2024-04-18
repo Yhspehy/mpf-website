@@ -3,7 +3,12 @@ import { useAppStore } from '@/stores';
 import { localStg } from '@/utils/storage';
 
 import { registerEmail } from '@/service/api/auth';
-import { getStaticInSign, getUnit, updateMemberInSign, updateMemberInfo } from '@/service/api/mpf';
+import {
+  getStaticInSign,
+  getUnitInSign,
+  updateMemberInSign,
+  updateMemberInfo
+} from '@/service/api/mpf';
 
 defineOptions({
   name: 'SignUp'
@@ -76,7 +81,7 @@ const rules = {
 };
 
 const unitList = ref([]);
-getUnit('').then((res) => {
+getUnitInSign('', route.query.sign, route.query.timestamp, route.query.email).then((res) => {
   unitList.value = res.data ? res.data.filter((e) => e.nameEn) : [];
 });
 

@@ -135,6 +135,19 @@ function submit() {
     isEdit.value = true;
     return;
   }
+  if (
+    travel.value.isWelcome &&
+    (travel.value.welType === '' || travel.value.welClasses.trim() === '' || !travel.value.welTime)
+  ) {
+    return message.error('Please fill inbound journey info');
+  }
+
+  if (
+    travel.value.isDelivery &&
+    (travel.value.delType === '' || travel.value.delClasses.trim() === '' || !travel.value.delTime)
+  ) {
+    return message.error('Please fill back journey info');
+  }
   const data = {
     id: app.mpfId,
     memberForumTemp: memberInfo.memberForumTemp,
@@ -216,7 +229,7 @@ isEdit.value = route.query.type === 'edit';
               </n-radio-group>
             </n-form-item>
             <template v-if="travel.isWelcome === 1">
-              <n-form-item label="Travel Method" path="welType">
+              <n-form-item label="Travel Method" path="welType" required>
                 <n-radio-group v-model:value="travel.welType" name="gender">
                   <n-space>
                     <n-radio :value="1"> Plane </n-radio>
@@ -224,10 +237,10 @@ isEdit.value = route.query.type === 'edit';
                   </n-space>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="Flight / Class" path="welClasses">
+              <n-form-item label="Flight / Class" path="welClasses" required>
                 <n-input v-model:value="travel.welClasses" />
               </n-form-item>
-              <n-form-item label="Arrival Time" path="welTime">
+              <n-form-item label="Arrival Time" path="welTime" required>
                 <n-date-picker
                   v-model:value="travel.welTime"
                   type="datetime"
@@ -269,7 +282,7 @@ isEdit.value = route.query.type === 'edit';
               </n-radio-group>
             </n-form-item>
             <template v-if="travel.isDelivery === 1">
-              <n-form-item label="Travel Method" path="delType">
+              <n-form-item label="Travel Method" path="delType" required>
                 <n-radio-group v-model:value="travel.delType" name="gender">
                   <n-space>
                     <n-radio :value="1"> Plane </n-radio>
@@ -277,10 +290,10 @@ isEdit.value = route.query.type === 'edit';
                   </n-space>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="Flight / Class" path="delClasses">
+              <n-form-item label="Flight / Class" path="delClasses" required>
                 <n-input v-model:value="travel.delClasses" />
               </n-form-item>
-              <n-form-item label="Arrival Time" path="delTime">
+              <n-form-item label="Arrival Time" path="delTime" required>
                 <n-date-picker
                   v-model:value="travel.delTime"
                   type="datetime"
