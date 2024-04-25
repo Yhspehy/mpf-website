@@ -1,8 +1,8 @@
 /** 覆盖的Naive UI */
 export const themeOverrides = {
   common: {
-    primaryColor: '#0040FF',
-    primaryColorSuppl: '#0040FF',
+    primaryColor: '#044EB3',
+    primaryColorSuppl: '#044EB3',
     primaryColorHover: '#125191',
     primaryColorPressed: '#125191',
     primaryColorActive: '#2448831a',

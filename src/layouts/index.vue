@@ -91,7 +91,7 @@ if (mpfId && token) {
 
 <template>
   <div class="h-full">
-    <div v-if="!app.isMobile" class="flex-y-center bg-#16284e h-8rem">
+    <div v-if="!app.isMobile" class="pc-nav-bar">
       <img
         src="/images/nav-top-logo.png"
         class="w-12rem h-6rem ml-30rem mr-10rem"
@@ -149,9 +149,18 @@ if (mpfId && token) {
 </template>
 
 <style scoped lang="scss">
+.pc-nav-bar {
+  display: flex;
+  align-items: center;
+  background-image: url('/images/nav-top-bg.png');
+  width: 100%;
+  background-size: 100%;
+  height: 8rem;
+}
+
 .nav-bar {
   @include flex-space-between;
-  background-image: url('/images/mpf-top-bg@2x.png');
+  background-image: url('/images/nav-top-bg.png');
   background-size: 100%;
   width: 100%;
   height: 10.5rem;

@@ -84,13 +84,15 @@ function getList() {
     });
 
     res.data.memberPlay.forEach((e) => {
-      list[3].activity.push({
-        type: 'play',
-        name: e.nameEn,
-        date: e.time?.slice(0, -3) || '',
-        place: e.placeEn,
-        value: e.id
-      });
+      if (e.type === 0) {
+        list[3].activity.push({
+          type: 'play',
+          name: e.nameEn,
+          date: e.time?.slice(0, -3) || '',
+          place: e.placeEn,
+          value: e.id
+        });
+      }
     });
 
     getMemberInfo(app.mpfId).then((res) => {
@@ -132,15 +134,24 @@ function getList() {
             time: e.memberPlay.time,
             location: e.memberPlay.placeEn
           });
-          const item = list[3].activity.find((el) => el.value === e.mpId);
-          if (item) {
-            if (!expandedNames.value.includes(3)) {
-              expandedNames.value.push(3);
+          if (e.memberPlay.type === 0) {
+            const item = list[3].activity.find((el) => el.value === e.mpId);
+            if (item) {
+              if (!expandedNames.value.includes(3)) {
+                expandedNames.value.push(3);
+              }
+              list[3].value.push(e.mpId);
             }
-            list[3].value.push(e.mpId);
           }
         });
       }
+
+      list[2].activity.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      });
+      list[3].activity.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      });
       forumList.value = list;
     });
   });
@@ -230,13 +241,15 @@ getList();
 </script>
 
 <template>
-  <div class="w-full py-7rem">
-    <div class="text-5rem font-bold text-center mb-10rem">
+  <div class="relative w-full py-7rem">
+    <div class="color-#044EB3 text-5rem font-bold text-center mb-10rem">
       {{ app.isMobile ? 'Choose Your Agenda' : 'My Agenda' }}
     </div>
 
+    <img src="/images/flower.gif" class="w-24rem h-17rem absolute top-8rem right-50rem" />
+
     <div class="px-45rem <sm:px-4rem">
-      <div v-if="!app.isMobile" class="text-2.2rem color-#0040FF font-bold mb-5rem">
+      <div v-if="!app.isMobile" class="text-2.2rem color-#044EB3 font-bold mb-5rem">
         Choose Your Agenda
       </div>
       <n-collapse v-model:expanded-names="expandedNames">
@@ -270,7 +283,7 @@ getList();
 
     <div class="text-right mt-11rem pr-45rem <sm:text-center <sm:pr-0">
       <n-button
-        color="#0040FF"
+        color="#044EB3"
         class="text-2rem w-19rem h-5.6rem border-rd-2.8rem <sm:w-70rem <sm:h-7rem <sm:border-rd-3.5rem <sm:text-3.2rem"
         @click="submit"
       >
@@ -282,11 +295,11 @@ getList();
 
 <style lang="scss">
 .n-collapse-item__header-main {
-  color: #0040ff !important;
+  color: #044eb3 !important;
   font-size: 2rem;
   background-color: #f1f1f1;
   .n-collapse-item-arrow {
-    color: #0040ff !important;
+    color: #044eb3 !important;
   }
 }
 

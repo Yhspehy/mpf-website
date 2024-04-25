@@ -253,13 +253,18 @@ isEdit.value = route.query.type === 'edit';
 </script>
 
 <template>
-  <div class="w-full py-7rem">
-    <div class="text-5rem font-bold text-center mb-10rem">
+  <div class="relative w-full py-7rem">
+    <div class="color-#044EB3 text-5rem font-bold text-center mb-10rem px-4rem <sm:text-left">
       {{ app.isMobile ? 'Choose Your Agenda' : 'My Agenda' }}
     </div>
 
+    <img
+      src="/images/flower.gif"
+      class="w-24rem h-17rem absolute top-8rem right-50rem <sm:right-0"
+    />
+
     <div v-if="isEdit" class="px-45rem <sm:px-4rem">
-      <div v-if="!app.isMobile" class="text-2.2rem color-#0040FF font-bold mb-5rem">
+      <div v-if="!app.isMobile" class="text-2.2rem color-#044EB3 font-bold mb-5rem">
         Choose Your Agenda
       </div>
       <n-collapse v-model:expanded-names="expandedNames">
@@ -301,7 +306,7 @@ isEdit.value = route.query.type === 'edit';
     >
       <img src="/images/agenda-icon-title@2x.png" class="w-6.3rem h-5.6rem" alt="" />
       <div class="ml-3.4rem">
-        <div class="text-3rem color-#0040FF font-bold">{{ item.title }}</div>
+        <div class="text-3rem color-#044EB3 font-bold">{{ item.title }}</div>
         <div class="text-2.2rem color-#303030 flex-y-center" style="white-space: pre">
           <img src="/images/agenda-icon-time@2x.png" class="w-2.2rem h-2.2rem mr-0.8rem" alt="" />
           {{ item.time }}
@@ -319,7 +324,7 @@ isEdit.value = route.query.type === 'edit';
 
     <div class="text-right mt-11rem pr-45rem <sm:text-center <sm:pr-0">
       <n-button
-        color="#0040FF"
+        color="#044EB3"
         class="text-2rem w-19rem h-5.6rem border-rd-2.8rem <sm:w-70rem <sm:h-7rem <sm:border-rd-3.5rem <sm:text-3.2rem"
         @click="submit"
       >
@@ -331,11 +336,11 @@ isEdit.value = route.query.type === 'edit';
 
 <style lang="scss">
 .n-collapse-item__header-main {
-  color: #0040ff !important;
+  color: #044eb3 !important;
   font-size: 2rem;
   background-color: #f1f1f1;
   .n-collapse-item-arrow {
-    color: #0040ff !important;
+    color: #044eb3 !important;
   }
 }
 

@@ -58,18 +58,12 @@ service.interceptors.response.use((response) => {
     }
   }
   if (response.config.isMpf && response.data.code !== '0') {
-    // window.$notification.error({
-    //   content: 'Error',
-    //   meta: response.data.message || '未知异常',
-    //   duration: 10000,
-    //   keepAliveOnHover: true
-    // });
     let errorMsg = response.data.message || 'error';
     const item = window.$errorList.find((e) => e.chinese === errorMsg);
     if (item) {
       errorMsg = item.english;
     }
-    window.$message?.error(errorMsg, { duration: 10000 });
+    if (!config.hiddenError) window.$message?.error(errorMsg, { duration: 10000 });
   }
   return response.data;
 }, handleAxiosError);

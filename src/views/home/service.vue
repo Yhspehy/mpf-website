@@ -200,8 +200,12 @@ isEdit.value = route.query.type === 'edit';
 </script>
 
 <template>
-  <div class="mx-auto w-105rem py-7rem <sm:w-70rem">
-    <div class="text-5rem font-bold text-center mb-10rem">MPF Service</div>
+  <div class="relative mx-auto w-105rem py-7rem <sm:w-70rem">
+    <div class="color-#044EB3 text-5rem font-bold text-center mb-10rem <sm:text-left">
+      MPF Service
+    </div>
+
+    <img src="/images/love.gif" class="w-24rem h-20rem absolute top-8rem right-0rem" />
 
     <div v-if="isEdit">
       <div class="px-3.4rem flex w-full pt-2rem pb-5rem border-b <sm:border-t">
@@ -211,7 +215,7 @@ isEdit.value = route.query.type === 'edit';
           alt=""
         />
         <div class="ml-2rem flex-1">
-          <div class="text-2.2rem color-#0040FF font-bold <sm:text-3rem">Inbound Journey</div>
+          <div class="text-2.2rem color-#044EB3 font-bold <sm:text-3rem">Inbound Journey</div>
 
           <n-form
             class="mt-2rem"
@@ -264,7 +268,7 @@ isEdit.value = route.query.type === 'edit';
       <div class="px-3.4rem flex w-full pt-2rem pb-5rem border-b">
         <img src="/images/service-icon-trip@2x.png" class="w-4rem h-3.7rem <sm:mt-0.5rem" alt="" />
         <div class="ml-2rem flex-1">
-          <div class="text-2.2rem color-#0040FF font-bold <sm:text-3rem">Back Journey</div>
+          <div class="text-2.2rem color-#044EB3 font-bold <sm:text-3rem">Back Journey</div>
 
           <n-form
             class="mt-2rem"
@@ -321,7 +325,7 @@ isEdit.value = route.query.type === 'edit';
           alt=""
         />
         <div class="ml-2rem flex-1">
-          <div class="text-2.2rem color-#0040FF font-bold <sm:text-3rem">Hotel</div>
+          <div class="text-2.2rem color-#044EB3 font-bold <sm:text-3rem">Hotel</div>
 
           <n-form
             class="mt-2rem"
@@ -374,7 +378,7 @@ isEdit.value = route.query.type === 'edit';
           alt=""
         />
         <div class="ml-2rem flex-1">
-          <div class="text-2.2rem color-#0040FF font-bold pb-1rem <sm:text-3rem">
+          <div class="text-2.2rem color-#044EB3 font-bold pb-1rem <sm:text-3rem">
             Inbound Journey
           </div>
           <div class="flex-y-center <sm:flex-col <sm:items-start <sm:mt-2rem">
@@ -403,7 +407,7 @@ isEdit.value = route.query.type === 'edit';
       <div class="px-3.4rem flex w-full pt-3rem pb-5rem border-b text-2rem">
         <img src="/images/service-icon-trip@2x.png" class="w-4rem h-3.7rem <sm:mt-0.5rem" alt="" />
         <div class="ml-2rem flex-1">
-          <div class="text-2.2rem color-#0040FF font-bold <sm:text-3rem pb-1rem">Back Journey</div>
+          <div class="text-2.2rem color-#044EB3 font-bold <sm:text-3rem pb-1rem">Back Journey</div>
           <div class="flex-y-center <sm:flex-col <sm:items-start <sm:mt-2rem">
             <div class="w-30rem color-#303030 font-bold">Travel Method</div>
             <div class="flex-1 border-b color-#595757 py-2rem <sm:w-full">
@@ -430,7 +434,7 @@ isEdit.value = route.query.type === 'edit';
       <div class="px-3.4rem flex w-full pt-3rem pb-5rem border-b text-2rem">
         <img src="/images/service-icon-trip@2x.png" class="w-4rem h-3.7rem <sm:mt-0.5rem" alt="" />
         <div class="ml-2rem flex-1">
-          <div class="text-2.2rem color-#0040FF font-bold <sm:text-3rem pb-1rem">Hotel</div>
+          <div class="text-2.2rem color-#044EB3 font-bold <sm:text-3rem pb-1rem">Hotel</div>
           <div class="flex-y-center <sm:flex-col <sm:items-start <sm:mt-2rem">
             <div class="w-30rem color-#303030 font-bold">My Hotel</div>
             <div class="flex-1 border-b color-#595757 py-2rem <sm:w-full">
@@ -457,7 +461,7 @@ isEdit.value = route.query.type === 'edit';
 
     <div class="text-right mt-11rem <sm:text-center">
       <n-button
-        color="#0040FF"
+        color="#044EB3"
         class="text-2rem w-19rem h-5.6rem border-rd-2.8rem <sm:w-70rem <sm:h-7rem <sm:border-rd-3.5rem <sm:text-3.2rem"
         @click="submit"
       >

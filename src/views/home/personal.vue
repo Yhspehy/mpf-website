@@ -205,10 +205,14 @@ getStatic().then((res) => {
 </script>
 
 <template>
-  <div class="mx-auto w-105rem py-3rem <sm:w-70rem">
-    <div class="text-5rem font-bold text-center mb-10rem">Personal Details</div>
+  <div class="relative mx-auto w-105rem py-3rem <sm:w-70rem">
+    <div class="color-#044EB3 text-5rem font-bold text-center mb-10rem <sm:text-left">
+      Personal Details
+    </div>
 
-    <div v-if="!app.isMobile" class="color-#0040FF text-2.2rem mb-3rem font-bold border-b pb-2rem">
+    <img src="/images/ok.gif" class="w-20rem h-20rem absolute top-8rem right-0rem" />
+
+    <div v-if="!app.isMobile" class="color-#044EB3 text-2.2rem mb-3rem font-bold border-b pb-2rem">
       Your Personal Details
     </div>
 
@@ -355,7 +359,7 @@ getStatic().then((res) => {
 
     <div class="text-right mt-11rem <sm:text-center">
       <n-button
-        color="#0040FF"
+        color="#044EB3"
         class="text-2rem w-19rem h-5.6rem border-rd-2.8rem <sm:w-70rem <sm:h-7rem <sm:border-rd-3.5rem <sm:text-3.2rem"
         @click="submit"
       >

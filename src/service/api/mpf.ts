@@ -1,13 +1,14 @@
 import qs from 'qs';
 import { request } from '../request';
 
-export function getMember(email) {
+export function getMember(email, hiddenError = false) {
   return request({
     url: '/maritimeSilk/proxy/getMember',
     method: 'post',
     showLoading: true,
     appLoading: true,
     isMpf: true,
+    hiddenError,
     data: qs.stringify({
       email
     })
@@ -110,5 +111,24 @@ export function getStaticInSign(Sign, Timestamp, Email) {
       Timestamp,
       Email
     }
+  });
+}
+
+export function getMemberInSign(Sign, Timestamp, Email) {
+  return request({
+    url: '/maritimeSilk/web/proxy/getMember',
+    method: 'post',
+    showLoading: true,
+    appLoading: true,
+    isMpf: true,
+    hiddenError: true,
+    headers: {
+      Sign,
+      Timestamp,
+      Email
+    },
+    data: qs.stringify({
+      email: Email
+    })
   });
 }

@@ -4,6 +4,7 @@ import { localStg } from '@/utils/storage';
 
 import { registerEmail } from '@/service/api/auth';
 import {
+  getMemberInSign,
   getStaticInSign,
   getUnitInSign,
   updateMemberInSign,
@@ -149,13 +150,15 @@ function submit() {
           updateMemberInfo({
             id: resp.data.id,
             memberForumTemp: {
-              id: null,
+              id: memberForumTemp?.id || null,
               memberId: resp.data.id,
               forumId: forumId,
               isContact: model.value.isContact,
               isDelete: 0
             },
             memberInviteTemp: {
+              id: memberInviteTemp?.id || null,
+              mfId: memberForumTemp?.id || null,
               inviteType: model.value.inviteType,
               status: 1,
               idDelete: 0
@@ -182,15 +185,47 @@ getStaticInSign(route.query.sign, route.query.timestamp, route.query.email).then
 });
 
 model.value.email = route.query.email || '';
+
+let memberForumTemp = {};
+let memberInviteTemp = {};
+
+getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then((res) => {
+  if (res.code !== '0') return;
+  if (res.data) {
+    mpfUserInfo = res.data;
+    model.value = res.data;
+    const nameList = res.data.nameEn.split(' ');
+    model.value.firstName = nameList[0];
+    model.value.lastName = nameList[1];
+    model.value.isContact = '1';
+    model.value.isForeign = 1;
+    model.value.birthday = model.value.birthday || null;
+
+    // 获取是否为单位联络人
+    getMemberInfo(res.data.id).then((r) => {
+      if (r.data.memberForumTemp) {
+        memberForumTemp = r.data.memberForumTemp || {};
+        model.value.isContact =
+          r.data.memberForumTemp.isContact !== null ? r.data.memberForumTemp.isContact + '' : '1';
+      }
+      if (r.data.memberInviteTemp) {
+        memberInviteTemp = r.data.memberInviteTemp || {};
+        model.value.inviteType = r.data.memberInviteTemp.inviteType || 0;
+      }
+    });
+  }
+});
 </script>
 
 <template>
-  <div class="mx-auto w-105rem py-3rem <sm:w-70rem">
-    <div class="text-5rem font-bold text-center mb-10rem">Sign In</div>
+  <div class="relative mx-auto w-105rem py-3rem <sm:w-70rem">
+    <div class="color-#044EB3 text-5rem font-bold text-center mb-10rem">Sign In</div>
 
-    <div class="color-#0040FF text-2.2rem mb-3rem font-bold border-b pb-2rem">
+    <div class="color-#044EB3 text-2.2rem mb-3rem font-bold border-b pb-2rem">
       Please Put In Your Personal Details
     </div>
+
+    <img src="/images/love.gif" class="w-24rem h-20rem absolute top-8rem right-0rem" />
 
     <n-form
       class="w-full mt-2rem"
@@ -274,7 +309,7 @@ model.value.email = route.query.email || '';
 
     <div class="text-right mt-11rem <sm:text-center">
       <n-button
-        color="#0040FF"
+        color="#044EB3"
         class="text-2rem w-19rem h-5.6rem border-rd-2.8rem <sm:w-70rem <sm:h-7rem <sm:border-rd-3.5rem <sm:text-3.2rem"
         @click="submit"
       >

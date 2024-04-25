@@ -18,8 +18,12 @@ getMemberInfo(mpfId).then((res) => {
 </script>
 
 <template>
-  <div class="mx-auto w-105rem pt-7rem <sm:w-70rem">
-    <div class="text-5rem font-bold text-center mb-10rem">My Assistant</div>
+  <div class="relative mx-auto w-105rem pt-7rem <sm:w-70rem">
+    <div class="color-#044EB3 text-5rem font-bold text-center mb-10rem <sm:text-left">
+      My Assistant
+    </div>
+
+    <img src="/images/thanks.gif" class="w-20rem h-20rem absolute top-8rem right-0rem" />
 
     <div class="card">
       <div class="flex-y-center border-t <sm:border-none">
