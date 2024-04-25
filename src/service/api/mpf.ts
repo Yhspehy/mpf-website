@@ -132,3 +132,10 @@ export function getMemberInSign(Sign, Timestamp, Email) {
     })
   });
 }
+
+export function getQrCode() {
+  return request({
+    url: '/maritimeSilk/user/qr',
+    method: 'GET'
+  });
+}

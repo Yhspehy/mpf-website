@@ -48,12 +48,12 @@ export const themeOverrides = {
     itemIconColor: '#d4ddea',
     arrowColor: '#aab9d0',
 
-    itemColorActive: '#676c75',
-    itemTextColorHover: '#e96d08',
-    itemTextColorActiveHover: '#e96d08',
-    itemTextColorActive: '#e96d08',
-    itemTextColorHoverHorizontal: '#e96d08',
-    itemTextColorActiveHoverHorizontal: '#e96d08',
-    itemTextColorActiveHorizontal: '#e96d08'
+    itemColorActive: '#21d752',
+    itemTextColorHover: '#fff',
+    itemTextColorActiveHover: '#fff',
+    itemTextColorActive: '#fff',
+    itemTextColorHoverHorizontal: '#fff',
+    itemTextColorActiveHoverHorizontal: '#fff',
+    itemTextColorActiveHorizontal: '#fff'
   }
 };

@@ -318,3 +318,12 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.n-date-panel .n-date-panel-month-calendar .n-date-panel-month-calendar__picker-col-item {
+  font-size: 1.4rem !important;
+}
+.mobile .n-date-panel .n-date-panel-month-calendar .n-date-panel-month-calendar__picker-col-item {
+  font-size: 2.4rem !important;
+}
+</style>

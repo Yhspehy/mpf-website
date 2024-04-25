@@ -98,13 +98,27 @@ if (mpfId && token) {
         @click="toMpforum"
       />
 
-      <n-menu
+      <div class="flex h-full">
+        <div
+          v-for="item in menuOptions"
+          :key="item.key"
+          :class="{
+            'pc-nav-item': true,
+            active: item.key === activeKey
+          }"
+          @click="handleUpdateMenu(item.key, item)"
+        >
+          {{ item.label }}
+        </div>
+      </div>
+
+      <!-- <n-menu
         class="w-auto!"
         mode="horizontal"
         v-model:value="activeKey"
         :options="menuOptions"
         @update:value="handleUpdateMenu"
-      />
+      /> -->
     </div>
     <div v-else class="nav-bar">
       <img
@@ -155,7 +169,20 @@ if (mpfId && token) {
   background-image: url('/images/nav-top-bg.png');
   width: 100%;
   background-size: 100%;
-  height: 8rem;
+  height: 12rem;
+
+  .pc-nav-item {
+    @include flex-center;
+    height: 100%;
+    color: #fff;
+    font-size: 1.8rem;
+    padding: 0 4rem;
+    cursor: pointer;
+  }
+
+  .active {
+    background: #21d752;
+  }
 }
 
 .nav-bar {
