@@ -38,9 +38,14 @@ export const themeOverrides = {
   LoadingBar: { colorLoading: '#0052ff' },
   Input: {
     borderHover: '1px solid #8FEBE8',
-    borderFocus: '1px solid #8FEBE8'
+    borderFocus: '1px solid #8FEBE8',
+    border: '1px solid #21D752'
     // border: 'none',
     // boxShadowFocus: 'none'
+  },
+  Form: {
+    labelTextColor: '#044EB3',
+    labelFontWeight: '600'
   },
   Menu: {
     color: 'transparent',

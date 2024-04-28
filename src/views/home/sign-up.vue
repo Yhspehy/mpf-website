@@ -192,7 +192,6 @@ let memberInviteTemp = {};
 getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then((res) => {
   if (res.code !== '0') return;
   if (res.data) {
-    mpfUserInfo = res.data;
     model.value = res.data;
     const nameList = res.data.nameEn.split(' ');
     model.value.firstName = nameList[0];
@@ -200,6 +199,8 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
     model.value.isContact = '1';
     model.value.isForeign = 1;
     model.value.birthday = model.value.birthday || null;
+    model.value.sex = model.value.sex || '1';
+    model.value.inviteType = model.value.inviteType || 0;
 
     // 获取是否为单位联络人
     getMemberInfo(res.data.id).then((r) => {
@@ -221,7 +222,7 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
   <div class="relative mx-auto w-105rem py-3rem <sm:w-70rem">
     <div class="color-#044EB3 text-5rem font-bold text-center mb-10rem">Sign In</div>
 
-    <div class="color-#044EB3 text-2.2rem mb-3rem font-bold border-b pb-2rem">
+    <div class="color- text-2.2rem mb-3rem font-bold border-b pb-2rem">
       Please Put In Your Personal Details
     </div>
 

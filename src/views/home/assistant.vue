@@ -23,9 +23,12 @@ getMemberInfo(mpfId).then((res) => {
       My Assistant
     </div>
 
-    <img src="/images/thanks.gif" class="w-20rem h-20rem absolute top-8rem right-0rem" />
+    <img
+      src="/images/thanks.gif"
+      class="w-20rem h-20rem absolute top-8rem right-0rem <sm:top-4rem"
+    />
 
-    <div class="card">
+    <div class="card relative bg-#fff">
       <div class="flex-y-center border-t <sm:border-none">
         <img
           src="/images/assistant-icon-name@2x.png"

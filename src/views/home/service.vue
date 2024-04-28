@@ -47,7 +47,7 @@ function getList() {
       let hotelMap = {};
       res.data.forumHotel.forEach((e) => {
         // 只放希尔顿酒店
-        if (e.hotelEn !== 'Hilton Ningbo Dongqian Lake') return;
+        if (e.hotelEn !== 'Wanglan Hotel（Conference Hotel）') return;
         if (hotelMap[e.hotelEn]) {
           hotelMap[e.hotelEn].rooms.push({
             ...e,
@@ -205,7 +205,7 @@ isEdit.value = route.query.type === 'edit';
       MPF Service
     </div>
 
-    <img src="/images/love.gif" class="w-24rem h-20rem absolute top-8rem right-0rem" />
+    <img src="/images/love.gif" class="w-24rem h-24rem absolute top-6rem right-0rem <sm:top-0" />
 
     <div v-if="isEdit">
       <div class="px-3.4rem flex w-full pt-2rem pb-5rem border-b <sm:border-t">

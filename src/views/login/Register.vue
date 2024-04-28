@@ -50,12 +50,18 @@ if (route.query.email) {
 </script>
 
 <template>
-  <div class="wh-full bg flex-col-center login-page">
+  <div
+    class="wh-full flex-col-center login-page"
+    :class="{
+      'bg-pc': !app.isMobile,
+      'bg-mobile': app.isMobile
+    }"
+  >
     <nav-bar />
 
     <img
       src="/images/flower.gif"
-      class="w-60rem h-42rem absolute bottom-0 left-6rem <sm:w-40rem <sm:h-28rem <sm:left-24% <sm:bottom-76%"
+      class="w-60rem h-42rem absolute bottom-0 left-6rem <sm:w-40rem <sm:h-28rem <sm:static"
       alt=""
     />
     <img
@@ -67,7 +73,7 @@ if (route.query.email) {
     <img src="/images/mpf-login-bgup.png" class="absolute-br w-full" />
 
     <div
-      class="relative mx-auto mt-10rem bg-#F1F1F1 w-85rem pt-8rem pb-6rem px-17rem box-border border-rd-2rem <sm:w-70rem <sm:px-6rem"
+      class="relative mx-auto mt-10rem bg-#F1F1F1 w-85rem pt-8rem pb-6rem px-17rem box-border border-rd-2rem <sm:mt-0 <sm:w-70rem <sm:px-6rem"
     >
       <div class="mx-auto w-32rem mb-2rem">
         <img src="/images/mpf-login-logo@2x.png" class="w-32rem h-10rem" />
@@ -145,20 +151,27 @@ if (route.query.email) {
       :close-on-esc="false"
       :mask-closable="false"
     >
-      <n-card class="w-60rem text-center p-3rem" :bordered="false" role="dialog" aria-modal="true">
-        <div class="text-3rem flex-center">
-          <Icon icon="material-symbols:attach-email-outline" class="mr-2rem" />
-          Please go to your email to Sign In!
-        </div>
-      </n-card>
+      <div class="flex-center">
+        <n-card class="text-center p-3rem" :bordered="false" role="dialog" aria-modal="true">
+          <div class="text-3rem flex-center">
+            <Icon icon="material-symbols:attach-email-outline" class="mr-2rem" />
+            Please go to your email to Sign In!
+          </div>
+        </n-card>
+      </div>
     </n-modal>
   </div>
 </template>
 
 <style scoped lang="scss">
-.bg {
+.bg-pc {
   background-image: url('/images/mpf-login-bg.png');
-  background-size: 100%;
+  background-size: cover;
+}
+
+.bg-mobile {
+  background-image: url('/images/mpf-bg-mobile.png');
+  background-size: cover;
 }
 </style>
 

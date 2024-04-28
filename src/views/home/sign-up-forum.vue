@@ -88,7 +88,7 @@ function getList() {
         list[3].activity.push({
           type: 'play',
           name: e.nameEn,
-          date: e.time?.slice(0, -3) || '',
+          date: e.startTime?.slice(0, -3) || '',
           place: e.placeEn,
           value: e.id
         });
@@ -96,6 +96,7 @@ function getList() {
     });
 
     getMemberInfo(app.mpfId).then((res) => {
+      if (!res.data) return;
       // 总论坛信息，默认参与
       memberForumTemp = res.data.memberForumTemp || {};
       // 子论坛信息

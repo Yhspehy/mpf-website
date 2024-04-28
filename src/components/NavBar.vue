@@ -89,7 +89,7 @@ function toMpforum() {
 
 .nav-bar {
   @include flex-space-between;
-  background-image: url('/images/mpf-top-bg@2x.png');
+  background-image: url('/images/nav-top-bg.png');
   background-size: 100%;
   width: 100%;
   height: 10.5rem;

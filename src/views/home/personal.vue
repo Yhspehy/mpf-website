@@ -180,6 +180,8 @@ getMember(email).then((res) => {
   model.value.isContact = '1';
   model.value.isForeign = 1;
   model.value.birthday = model.value.birthday || null;
+  model.value.sex = model.value.sex || '1';
+  model.value.inviteType = model.value.inviteType || 0;
 
   // 获取是否为单位联络人
   getMemberInfo(res.data.id).then((r) => {
@@ -210,7 +212,7 @@ getStatic().then((res) => {
       Personal Details
     </div>
 
-    <img src="/images/ok.gif" class="w-20rem h-20rem absolute top-8rem right-0rem" />
+    <img src="/images/ok.gif" class="w-20rem h-20rem absolute top-6rem right-0rem <sm:top-0" />
 
     <div v-if="!app.isMobile" class="color-#044EB3 text-2.2rem mb-3rem font-bold border-b pb-2rem">
       Your Personal Details

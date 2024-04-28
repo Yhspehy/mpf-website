@@ -27,6 +27,7 @@ const expandedNames = ref([0, 1]);
 
 function getList() {
   forumSignList.value = [];
+  let forumSignArr = [];
   window.$appLoading(true);
   getStatic().then((res) => {
     const list = [
@@ -90,7 +91,7 @@ function getList() {
         list[3].activity.push({
           type: 'play',
           name: e.nameEn,
-          date: e.time?.slice(0, -3) || '',
+          date: e.startTime?.slice(0, -3) || '',
           place: e.placeEn,
           value: e.id
         });
@@ -104,8 +105,9 @@ function getList() {
       memberForumTemps = res.data.memberForumTemps || [];
       if (memberForumTemps.length > 0) {
         memberForumTemps.forEach((e) => {
-          forumSignList.value.push({
+          forumSignArr.push({
             title: e.forum.nameEn,
+            sortTime: e.forum.startTime,
             time:
               dayjs(e.forum.startTime).format('DD.MM. YYYY            HH:mm') +
               ' - ' +
@@ -131,9 +133,13 @@ function getList() {
       memberPlayForumTemp = res.data.memberPlayForumTemp || [];
       if (memberPlayForumTemp.length > 0) {
         memberPlayForumTemp.forEach((e) => {
-          forumSignList.value.push({
+          forumSignArr.push({
             title: e.memberPlay.nameEn,
-            time: e.memberPlay.time,
+            sortTime: e.memberPlay.startTime,
+            time:
+              dayjs(e.memberPlay.startTime).format('DD.MM. YYYY            HH:mm') +
+              ' - ' +
+              dayjs(e.memberPlay.endTime).format('HH:mm'),
             location: e.memberPlay.placeEn
           });
           if (e.memberPlay.type === 0) {
@@ -153,6 +159,12 @@ function getList() {
       list[3].activity.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       });
+
+      forumSignArr.sort((a, b) => {
+        return new Date(a.sortTime).getTime() - new Date(b.sortTime).getTime();
+      });
+
+      forumSignList.value = forumSignArr;
       forumList.value = list;
     });
   });
