@@ -243,11 +243,14 @@ getList();
 
 <template>
   <div class="relative w-full py-7rem">
-    <div class="color-#044EB3 text-5rem font-bold text-center mb-10rem">
+    <div class="color-#044EB3 text-5rem font-bold text-center mb-10rem px-4rem <sm:text-left">
       {{ app.isMobile ? 'Choose Your Agenda' : 'My Agenda' }}
     </div>
 
-    <img src="/images/flower.gif" class="w-24rem h-17rem absolute top-8rem right-50rem" />
+    <img
+      src="/images/flower.gif"
+      class="w-24rem h-17rem absolute top-8rem right-50rem <sm:right-0"
+    />
 
     <div class="px-45rem <sm:px-4rem">
       <div v-if="!app.isMobile" class="text-2.2rem color-#044EB3 font-bold mb-5rem">

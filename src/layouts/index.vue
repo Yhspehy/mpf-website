@@ -32,7 +32,7 @@ const menuOptions = ref([
     url: '/home/service'
   },
   {
-    label: '2024MPF',
+    label: 'MPF2024',
     key: 'mpf',
     url: 'http://mpforum.nbse.net.cn/conference/introductionEn'
   },
