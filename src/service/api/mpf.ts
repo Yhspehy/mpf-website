@@ -139,3 +139,12 @@ export function getQrCode() {
     method: 'GET'
   });
 }
+
+export function addVolunteer(data) {
+  return request({
+    url: '/maritimeSilk/proxy/addVolunteer',
+    method: 'post',
+    isMpf: true,
+    data
+  });
+}

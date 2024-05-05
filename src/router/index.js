@@ -92,6 +92,14 @@ const constantRoute = [
     }
   },
   {
+    path: '/volunteer',
+    name: 'volunteer',
+    component: () => import('@/views/volunteer/index.vue'),
+    meta: {
+      title: 'Volunteer'
+    }
+  },
+  {
     name: '404',
     path: '/404',
     component: () => import('../views/404.vue'),

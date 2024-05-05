@@ -62,6 +62,12 @@ const rules = {
       required: true,
       trigger: ['blur', 'input'],
       message: 'Organization is required'
+    },
+    secondId: {
+      required: true,
+      trigger: ['blur', 'input'],
+      message: 'Sector is required',
+      type: 'number'
     }
   },
   jobEn: {
@@ -82,6 +88,8 @@ const rules = {
 };
 
 const unitList = ref([]);
+const sectorList = ref([]);
+
 getUnitInSign('', route.query.sign, route.query.timestamp, route.query.email).then((res) => {
   unitList.value = res.data ? res.data.filter((e) => e.nameEn) : [];
 });
@@ -104,8 +112,10 @@ function createOption(label) {
 function updateUnit(value, option) {
   if (!value) {
     model.value.unit.nameEn = '';
+    model.value.unit.secondId = '';
   } else {
     model.value.unit.nameEn = option.nameEn;
+    model.value.unit.secondId = option.secondId;
   }
 }
 
@@ -121,13 +131,23 @@ function submit() {
         ...model.value
       };
       if (formValue.unitId) {
+        const sector = sectorList.value.find((e) => e.id === formValue.unit.secondId);
         if (formValue.unitId === 'extra') {
           formValue.unit = {
-            nameEn: model.value.unit.nameEn
+            nameEn: model.value.unit.nameEn,
+            isForeign: 1,
+            sectorId: sector.parentId,
+            secondId: sector.id
           };
           delete formValue.unitId;
         } else {
-          delete formValue.unit;
+          if (formValue.unit.secondId === 29) {
+            delete formValue.unit;
+          } else {
+            formValue.unit = unitList.value.find((e) => e.id === formValue.unitId);
+            formValue.unit.sectorId = sector.parentId;
+            formValue.unit.secondId = sector.id;
+          }
         }
       }
       updateMemberInSign(
@@ -181,6 +201,12 @@ let forumId = 11;
 getStaticInSign(route.query.sign, route.query.timestamp, route.query.email).then((res) => {
   if (res.data && res.data.forum) {
     forumId = res.data.forum.find((e) => e.type === 0).id;
+  }
+  if (res.data && res.data.unitSector) {
+    sectorList.value = res.data.unitSector
+      .filter((e) => e.type === 1 && e.id !== 29 && e.sectorEn)
+      .reverse()
+      .sort((a, b) => a.parentId - b.parentId);
   }
 });
 
@@ -287,6 +313,23 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
           :options="unitList"
           @create="createOption"
           @update:value="updateUnit"
+        />
+      </n-form-item>
+      <n-form-item
+        v-if="model.unit && model.unit.secondId !== 29"
+        label="Sector"
+        path="unit.secondId"
+        required
+      >
+        <n-select
+          v-model:value="model.unit.secondId"
+          filterable
+          clearable
+          tag
+          label-field="sectorEn"
+          value-field="id"
+          :fallback-option="false"
+          :options="sectorList"
         />
       </n-form-item>
       <n-form-item label="Position" path="jobEn" required>
