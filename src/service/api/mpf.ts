@@ -133,6 +133,25 @@ export function getMemberInSign(Sign, Timestamp, Email) {
   });
 }
 
+export function getMemberInfoInSign(id, Sign, Timestamp, Email) {
+  return request({
+    url: '/maritimeSilk/web/proxy/getInfo',
+    method: 'post',
+    showLoading: true,
+    appLoading: true,
+    isMpf: true,
+    hiddenError: true,
+    headers: {
+      Sign,
+      Timestamp,
+      Email
+    },
+    data: qs.stringify({
+      id
+    })
+  });
+}
+
 export function getQrCode() {
   return request({
     url: '/maritimeSilk/user/qr',

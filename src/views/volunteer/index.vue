@@ -120,6 +120,10 @@ const rules = {
     required: true,
     trigger: ['blur', 'input'],
     message: '爱好特长是必填的'
+  },
+  personalPhoto: {
+    required: true,
+    message: '个人照片是必填的'
   }
 };
 
@@ -127,14 +131,11 @@ const app = useAppStore();
 function submit() {
   formIns.value?.validate(async (errors) => {
     if (!errors) {
-      // let base64Str = '';
-      // if (fileList.value.length) {
-      //   base64Str = await changeFileIntoBase64(fileList.value[0].file);
+      // if (fileList.value.length === 0) {
+      //   return message.error('个人照片是必填的');
       // }
-      addVolunteer({
-        ...model.value,
-        personalPhoto: base64Str
-      }).then((res) => {
+      // let base64Str = btoa(fileList.value[0].url);
+      addVolunteer(model.value).then((res) => {
         if (res.code === '0') {
           message.success(res.message);
         }
@@ -143,16 +144,16 @@ function submit() {
   });
 }
 
-function changeFileIntoBase64(file) {
-  return new Promise((resolve, reject) => {
-    const fr = new FileReader();
-    fr.readAsDataURL(file);
-    fr.onload = (result) => {
-      const base64Str = result.currentTarget.result;
-      resolve(base64Str);
-    };
-  });
-}
+watch(
+  () => fileList.value,
+  (val) => {
+    if (val.length === 0) {
+      model.value.personalPhoto = '';
+    } else {
+      model.value.personalPhoto = btoa(val[0].url);
+    }
+  }
+);
 </script>
 
 <template>
@@ -161,7 +162,7 @@ function changeFileIntoBase64(file) {
 
     <div class="color- text-2.2rem mb-3rem font-bold border-b pb-2rem">请输入志愿者个人信息</div>
 
-    <img src="/images/love.gif" class="w-24rem h-20rem absolute top-8rem right-0rem" />
+    <img src="/images/love.gif" class="w-20rem h-20rem absolute top-8rem right-0rem" />
 
     <n-form
       class="w-full mt-2rem"
@@ -234,7 +235,13 @@ function changeFileIntoBase64(file) {
         <n-input v-model:value="model.hobbies" />
       </n-form-item>
       <n-form-item label="个人照片" path="personalPhoto">
-        <n-upload accept="image/*" list-type="image-card" :max="1" v-model:file-list="fileList" />
+        <n-upload
+          accept="image/*"
+          list-type="image-card"
+          :max="1"
+          v-model:file-list="fileList"
+          :custom-request="handleUpload"
+        />
       </n-form-item>
     </n-form>
 

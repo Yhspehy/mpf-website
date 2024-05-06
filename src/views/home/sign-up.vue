@@ -5,6 +5,7 @@ import { localStg } from '@/utils/storage';
 import { registerEmail } from '@/service/api/auth';
 import {
   getMemberInSign,
+  getMemberInfoInSign,
   getStaticInSign,
   getUnitInSign,
   updateMemberInSign,
@@ -27,7 +28,7 @@ const model = ref({
   nameEn: '',
   cardType: '1',
   card: '',
-  sex: '1',
+  sex: 1,
   unit: {
     nameEn: ''
   },
@@ -157,7 +158,8 @@ function submit() {
         route.query.email
       ).then((resp) => {
         if (resp.code !== '0') return;
-        localStg.set('mpfId', resp.data.id);
+        const id = formValue.id || resp.data.id;
+        localStg.set('mpfId', id);
         registerEmail(
           model.value.email,
           model.value.tel,
@@ -166,12 +168,12 @@ function submit() {
         ).then((auth) => {
           localStg.set('email', model.value.email);
           localStg.set('token', auth.token);
-          app.mpfId = resp.data.id;
+          app.mpfId = id;
           updateMemberInfo({
-            id: resp.data.id,
+            id: id,
             memberForumTemp: {
               id: memberForumTemp?.id || null,
-              memberId: resp.data.id,
+              memberId: id,
               forumId: forumId,
               isContact: model.value.isContact,
               isDelete: 0
@@ -225,11 +227,17 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
     model.value.isContact = '1';
     model.value.isForeign = 1;
     model.value.birthday = model.value.birthday || null;
-    model.value.sex = model.value.sex || '1';
+    model.value.sex =
+      model.value.sex === undefined || model.value.sex === null ? 1 : model.value.sex;
     model.value.inviteType = model.value.inviteType || 0;
 
     // 获取是否为单位联络人
-    getMemberInfo(res.data.id).then((r) => {
+    getMemberInfoInSign(
+      res.data.id,
+      route.query.sign,
+      route.query.timestamp,
+      route.query.email
+    ).then((r) => {
       if (r.data.memberForumTemp) {
         memberForumTemp = r.data.memberForumTemp || {};
         model.value.isContact =
@@ -252,7 +260,7 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
       Please Put In Your Personal Details
     </div>
 
-    <img src="/images/love.gif" class="w-24rem h-20rem absolute top-8rem right-0rem" />
+    <img src="/images/love.gif" class="w-20rem h-20rem absolute top-8rem right-0rem" />
 
     <n-form
       class="w-full mt-2rem"
@@ -274,8 +282,8 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
       <n-form-item label="Gender" path="sex" required>
         <n-radio-group v-model:value="model.sex" name="gender">
           <n-space>
-            <n-radio value="1"> Male </n-radio>
-            <n-radio value="0"> Female </n-radio>
+            <n-radio :value="1"> Male </n-radio>
+            <n-radio :value="0"> Female </n-radio>
           </n-space>
         </n-radio-group>
       </n-form-item>

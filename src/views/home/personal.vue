@@ -207,7 +207,6 @@ getMember(email).then((res) => {
   model.value.isContact = '1';
   model.value.isForeign = 1;
   model.value.birthday = model.value.birthday || null;
-  model.value.sex = model.value.sex || '1';
   model.value.inviteType = model.value.inviteType || 0;
 
   // 获取是否为单位联络人
