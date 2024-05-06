@@ -9,6 +9,7 @@ defineOptions({
   name: 'VolunteerPage'
 });
 
+const dialog = useDialog();
 const message = useMessage();
 const { handleUpload, fileList } = useUpload();
 
@@ -131,10 +132,6 @@ const app = useAppStore();
 function submit() {
   formIns.value?.validate(async (errors) => {
     if (!errors) {
-      // if (fileList.value.length === 0) {
-      //   return message.error('个人照片是必填的');
-      // }
-      // let base64Str = btoa(fileList.value[0].url);
       addVolunteer(model.value).then((res) => {
         if (res.code === '0') {
           message.success(res.message);
@@ -154,6 +151,13 @@ watch(
     }
   }
 );
+
+dialog.info({
+  title: '志愿者报名',
+  content: '海丝论坛志愿者招募，仅对浙江海港集团员工开放',
+  negativeText: '取消',
+  positiveText: '确定'
+});
 </script>
 
 <template>
@@ -176,19 +180,19 @@ watch(
       size="medium"
     >
       <n-form-item label="单位简称" path="unit">
-        <n-input v-model:value="model.unit" />
+        <n-input v-model:value="model.unit" class="ignore-input" />
       </n-form-item>
       <n-form-item label="所在团组织" path="groupOrganization">
-        <n-input v-model:value="model.groupOrganization" />
+        <n-input v-model:value="model.groupOrganization" class="ignore-input" />
       </n-form-item>
       <n-form-item label="姓名" path="name">
-        <n-input v-model:value="model.name" />
+        <n-input v-model:value="model.name" class="ignore-input" />
       </n-form-item>
       <n-form-item label="身份证号" path="idCard">
-        <n-input v-model:value="model.idCard" />
+        <n-input v-model:value="model.idCard" class="ignore-input" />
       </n-form-item>
       <n-form-item label="年龄" path="age">
-        <n-input v-model:value="model.age" />
+        <n-input v-model:value="model.age" class="ignore-input" />
       </n-form-item>
       <n-form-item label="性别" path="gender" required>
         <n-radio-group v-model:value="model.gender" name="gender">
@@ -199,40 +203,40 @@ watch(
         </n-radio-group>
       </n-form-item>
       <n-form-item label="工作单位" path="workUnit">
-        <n-input v-model:value="model.workUnit" />
+        <n-input v-model:value="model.workUnit" class="ignore-input" />
       </n-form-item>
       <n-form-item label="部门" path="department">
-        <n-input v-model:value="model.department" />
+        <n-input v-model:value="model.department" class="ignore-input" />
       </n-form-item>
       <n-form-item label="职务" path="position">
-        <n-input v-model:value="model.position" />
+        <n-input v-model:value="model.position" class="ignore-input" />
       </n-form-item>
       <n-form-item label="政治面貌" path="politicalStatus">
-        <n-input v-model:value="model.politicalStatus" />
+        <n-input v-model:value="model.politicalStatus" class="ignore-input" />
       </n-form-item>
       <n-form-item label="最高学历" path="highestEducation">
-        <n-input v-model:value="model.highestEducation" />
+        <n-input v-model:value="model.highestEducation" class="ignore-input" />
       </n-form-item>
       <n-form-item label="英语水平" path="englishLevel">
-        <n-input v-model:value="model.englishLevel" />
+        <n-input v-model:value="model.englishLevel" class="ignore-input" />
       </n-form-item>
       <n-form-item label="EXCEL掌握程度" path="excelSkill">
-        <n-input v-model:value="model.excelSkill" />
+        <n-input v-model:value="model.excelSkill" class="ignore-input" />
       </n-form-item>
       <n-form-item label="会务接待经验" path="receptionExperience">
-        <n-input v-model:value="model.receptionExperience" />
+        <n-input v-model:value="model.receptionExperience" class="ignore-input" />
       </n-form-item>
       <n-form-item label="志愿服务经验" path="volunteerExperience">
-        <n-input v-model:value="model.volunteerExperience" />
+        <n-input v-model:value="model.volunteerExperience" class="ignore-input" />
       </n-form-item>
       <n-form-item label="联系方式" path="tel">
-        <n-input v-model:value="model.tel" />
+        <n-input v-model:value="model.tel" class="ignore-input" />
       </n-form-item>
       <n-form-item label="家庭住址" path="homeAddress">
-        <n-input v-model:value="model.homeAddress" />
+        <n-input v-model:value="model.homeAddress" class="ignore-input" />
       </n-form-item>
       <n-form-item label="爱好特长" path="hobbies">
-        <n-input v-model:value="model.hobbies" />
+        <n-input v-model:value="model.hobbies" class="ignore-input" />
       </n-form-item>
       <n-form-item label="个人照片" path="personalPhoto">
         <n-upload
@@ -256,3 +260,9 @@ watch(
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.ignore-input {
+  height: 34px;
+}
+</style>

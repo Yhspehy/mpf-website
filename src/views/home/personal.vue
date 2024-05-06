@@ -263,10 +263,10 @@ getStatic().then((res) => {
       size="medium"
     >
       <n-form-item label="First Name" path="firstName" required>
-        <n-input v-model:value="model.firstName" placeholder="" />
+        <n-input v-model:value="model.firstName" placeholder="" class="ignore-input" />
       </n-form-item>
       <n-form-item label="Last Name" path="lastName" required>
-        <n-input v-model:value="model.lastName" placeholder="" />
+        <n-input v-model:value="model.lastName" placeholder="" class="ignore-input" />
       </n-form-item>
       <n-form-item label="Gender" path="sex" required>
         <n-radio-group v-model:value="model.sex" name="gender">
@@ -296,7 +296,7 @@ getStatic().then((res) => {
         />
       </n-form-item>
       <n-form-item label="Passport Number" path="card">
-        <n-input v-model:value="model.card" placeholder="" />
+        <n-input v-model:value="model.card" placeholder="" class="ignore-input" />
       </n-form-item>
       <n-form-item label="Organization" path="unit.nameEn" required>
         <n-select
@@ -330,13 +330,13 @@ getStatic().then((res) => {
         />
       </n-form-item>
       <n-form-item label="Position" path="jobEn" required>
-        <n-input v-model:value="model.jobEn" placeholder="" />
+        <n-input v-model:value="model.jobEn" placeholder="" class="ignore-input" />
       </n-form-item>
       <n-form-item label="Email" path="email" required>
-        <n-input v-model:value="model.email" disabled placeholder="" />
+        <n-input v-model:value="model.email" disabled placeholder="" class="ignore-input" />
       </n-form-item>
       <n-form-item label="Phone Number" path="tel" required>
-        <n-input v-model:value="model.tel" placeholder="" />
+        <n-input v-model:value="model.tel" placeholder="" class="ignore-input" />
       </n-form-item>
       <n-form-item label="Contact person of Organization" path="isContact" required>
         <n-radio-group v-model:value="model.isContact" name="isContact">
@@ -439,5 +439,11 @@ getStatic().then((res) => {
 }
 .mobile .n-date-panel .n-date-panel-month-calendar .n-date-panel-month-calendar__picker-col-item {
   font-size: 2.4rem !important;
+}
+</style>
+
+<style scoped lang="scss">
+.ignore-input {
+  height: 34px;
 }
 </style>
