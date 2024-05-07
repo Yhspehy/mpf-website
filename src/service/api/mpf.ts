@@ -164,6 +164,8 @@ export function addVolunteer(data) {
     url: '/maritimeSilk/proxy/addVolunteer',
     method: 'post',
     isMpf: true,
+    showLoading: true,
+    appLoading: true,
     data
   });
 }

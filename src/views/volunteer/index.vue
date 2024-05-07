@@ -138,12 +138,22 @@ const rules = {
 };
 
 const app = useAppStore();
+const disabledSubmit = ref(false);
 function submit() {
+  if (disabledSubmit.value) {
+    return message.success('志愿者已报名成功，请勿重复提交', { duration: 10000 });
+  }
   formIns.value?.validate(async (errors) => {
     if (!errors) {
       addVolunteer(model.value).then((res) => {
         if (res.code === '0') {
-          message.success('志愿者报名成功，请勿重复提交',  { duration: 10000 });
+          dialog.success({
+            title: '志愿者报名成功',
+            content: '志愿者报名成功，请勿重复提交',
+            negativeText: '关闭',
+            positiveText: '确定'
+          });
+          disabledSubmit.value = true;
         }
       });
     }

@@ -238,14 +238,16 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
       route.query.timestamp,
       route.query.email
     ).then((r) => {
-      if (r.data.memberForumTemp) {
-        memberForumTemp = r.data.memberForumTemp || {};
-        model.value.isContact =
-          r.data.memberForumTemp.isContact !== null ? r.data.memberForumTemp.isContact + '' : '1';
-      }
-      if (r.data.memberInviteTemp) {
-        memberInviteTemp = r.data.memberInviteTemp || {};
-        model.value.inviteType = r.data.memberInviteTemp.inviteType || 0;
+      if (r.data) {
+        if (r.data.memberForumTemp) {
+          memberForumTemp = r.data.memberForumTemp || {};
+          model.value.isContact =
+            r.data.memberForumTemp.isContact !== null ? r.data.memberForumTemp.isContact + '' : '1';
+        }
+        if (r.data.memberInviteTemp) {
+          memberInviteTemp = r.data.memberInviteTemp || {};
+          model.value.inviteType = r.data.memberInviteTemp.inviteType || 0;
+        }
       }
     });
   }
