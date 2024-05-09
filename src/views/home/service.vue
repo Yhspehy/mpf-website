@@ -46,8 +46,6 @@ function getList() {
     if (res.data) {
       let hotelMap = {};
       res.data.forumHotel.forEach((e) => {
-        // 只放希尔顿酒店
-        if (e.hotelEn !== 'Wanglan Hotel（Conference Hotel）') return;
         if (hotelMap[e.hotelEn]) {
           hotelMap[e.hotelEn].rooms.push({
             ...e,

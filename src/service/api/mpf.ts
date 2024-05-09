@@ -152,9 +152,9 @@ export function getMemberInfoInSign(id, Sign, Timestamp, Email) {
   });
 }
 
-export function getQrCode() {
+export function getQrCode(id = '') {
   return request({
-    url: '/maritimeSilk/user/qr',
+    url: '/maritimeSilk/user/qr?id=' + id,
     method: 'GET'
   });
 }

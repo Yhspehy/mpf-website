@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/mpf/",
+    "build:test": "vite build --base=/mpf/ --mode=test",
     "preview": "vite preview"
   },
   "dependencies": {

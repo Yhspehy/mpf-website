@@ -21,7 +21,7 @@ let memberPlayForumTemp = [];
 
 const app = useAppStore();
 
-const expandedNames = ref([0, 1]);
+const expandedNames = ref([0]);
 
 function getList() {
   forumSignList.value = [];
@@ -31,13 +31,6 @@ function getList() {
       {
         listName: '2024 MPF Main Forum',
         collapse: true,
-        value: [],
-        activity: []
-      },
-      {
-        listName: 'MPF High-level Roundtable Meeting',
-        collapse: true,
-        disabled: true,
         value: [],
         activity: []
       },
@@ -65,15 +58,8 @@ function getList() {
           place: e.placeEn,
           value: e.id
         });
-      } else if (e.id === 13) {
+      } else if (e.id !== 11 && e.id !== 13 && e.isOpen === 1) {
         list[1].activity.push({
-          type: 'forum',
-          date: e.startTime?.slice(0, -3) || '',
-          place: e.placeEn,
-          value: e.id
-        });
-      } else if (e.id !== 11) {
-        list[2].activity.push({
           type: 'forum',
           name: e.nameEn,
           date: e.startTime?.slice(0, -3) || '',
@@ -85,7 +71,7 @@ function getList() {
 
     res.data.memberPlay.forEach((e) => {
       if (e.type === 0) {
-        list[3].activity.push({
+        list[2].activity.push({
           type: 'play',
           name: e.nameEn,
           date: e.startTime?.slice(0, -3) || '',
@@ -101,6 +87,7 @@ function getList() {
       memberForumTemp = res.data.memberForumTemp || {};
       // 子论坛信息
       memberForumTemps = res.data.memberForumTemps || [];
+      memberInviteTemp = res.data.memberInviteTemp || {};
       if (memberForumTemps.length > 0) {
         memberForumTemps.forEach((e) => {
           forumSignList.value.push({
@@ -113,15 +100,13 @@ function getList() {
           });
           if (e.forumId === 12) {
             list[0].value.push(e.forumId);
-          } else if (e.forumId === 13) {
-            list[1].value.push(e.forumId);
           } else {
-            const item = list[2].activity.find((el) => el.value === e.forumId);
+            const item = list[1].activity.find((el) => el.value === e.forumId);
             if (item) {
-              if (!expandedNames.value.includes(2)) {
-                expandedNames.value.push(2);
+              if (!expandedNames.value.includes(1)) {
+                expandedNames.value.push(1);
               }
-              list[2].value.push(e.forumId);
+              list[1].value.push(e.forumId);
             }
           }
         });
@@ -136,21 +121,21 @@ function getList() {
             location: e.memberPlay.placeEn
           });
           if (e.memberPlay.type === 0) {
-            const item = list[3].activity.find((el) => el.value === e.mpId);
+            const item = list[2].activity.find((el) => el.value === e.mpId);
             if (item) {
-              if (!expandedNames.value.includes(3)) {
-                expandedNames.value.push(3);
+              if (!expandedNames.value.includes(2)) {
+                expandedNames.value.push(2);
               }
-              list[3].value.push(e.mpId);
+              list[2].value.push(e.mpId);
             }
           }
         });
       }
 
-      list[2].activity.sort((a, b) => {
+      list[1].activity.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       });
-      list[3].activity.sort((a, b) => {
+      list[2].activity.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       });
       forumList.value = list;
@@ -184,7 +169,7 @@ function submit() {
   const playId = [];
   forumList.value.forEach((e, idx) => {
     e.value.forEach((el) => {
-      if (idx < 3) {
+      if (idx < 2) {
         forumId.push(el);
       } else {
         playId.push(el);
@@ -193,7 +178,11 @@ function submit() {
   });
   const data = {
     id: app.mpfId,
-    memberForumTemp: memberForumTemp
+    memberForumTemp: memberForumTemp,
+    memberInviteTemp: {
+      ...memberInviteTemp,
+      status: memberInviteTemp?.status == 6 ? 6 : 1
+    }
   };
 
   if (forumId.length > 0 || memberForumTemps.length > 0) {

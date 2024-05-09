@@ -182,7 +182,6 @@ function submit() {
               id: memberInviteTemp?.id || null,
               mfId: memberForumTemp?.id || null,
               inviteType: model.value.inviteType,
-              status: 1,
               idDelete: 0
             }
           }).then((result) => {

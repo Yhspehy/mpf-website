@@ -10,11 +10,13 @@ const router = useRouter();
 const app = useAppStore();
 
 const qrcodeUrl = ref('');
-getQrCode().then((res) => {
-  if (res) {
-    qrcodeUrl.value = res;
-  }
-});
+if (app.mpfId) {
+  getQrCode(app.mpfId).then((res) => {
+    if (res) {
+      qrcodeUrl.value = res;
+    }
+  });
+}
 </script>
 
 <template>
