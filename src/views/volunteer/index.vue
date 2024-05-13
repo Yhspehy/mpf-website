@@ -3,7 +3,7 @@ import { zhCN } from 'naive-ui';
 
 import { useAppStore } from '@/stores';
 
-import { addVolunteer } from '@/service/api/mpf';
+// import { addVolunteer } from '@/service/api/mpf';
 
 import useUpload from './use-upload';
 import { orgList, politicsList, eduList, excelList } from './dict';
@@ -138,26 +138,27 @@ const rules = {
 };
 
 const app = useAppStore();
-const disabledSubmit = ref(false);
+// const disabledSubmit = ref(false);
 function submit() {
-  if (disabledSubmit.value) {
-    return message.success('志愿者已报名成功，请勿重复提交', { duration: 10000 });
-  }
-  formIns.value?.validate(async (errors) => {
-    if (!errors) {
-      addVolunteer(model.value).then((res) => {
-        if (res.code === '0') {
-          dialog.success({
-            title: '志愿者报名成功',
-            content: '志愿者报名成功，请勿重复提交',
-            negativeText: '关闭',
-            positiveText: '确定'
-          });
-          disabledSubmit.value = true;
-        }
-      });
-    }
-  });
+  return message.warning('志愿者活动已经结束！');
+  // if (disabledSubmit.value) {
+  //   return message.success('志愿者已报名成功，请勿重复提交', { duration: 10000 });
+  // }
+  // formIns.value?.validate(async (errors) => {
+  //   if (!errors) {
+  //     addVolunteer(model.value).then((res) => {
+  //       if (res.code === '0') {
+  //         dialog.success({
+  //           title: '志愿者报名成功',
+  //           content: '志愿者报名成功，请勿重复提交',
+  //           negativeText: '关闭',
+  //           positiveText: '确定'
+  //         });
+  //         disabledSubmit.value = true;
+  //       }
+  //     });
+  //   }
+  // });
 }
 
 watch(
@@ -173,7 +174,7 @@ watch(
 
 dialog.info({
   title: '志愿者报名',
-  content: '海丝论坛志愿者招募，仅对浙江海港集团员工开放',
+  content: '志愿者活动已经结束!',
   negativeText: '取消',
   positiveText: '确定'
 });

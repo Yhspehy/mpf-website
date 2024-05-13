@@ -54,9 +54,10 @@ function getList() {
     ];
 
     res.data.forum.forEach((e) => {
-      if (e.id === 12) {
+      if (e.id === 12 || e.id === 27) {
         list[0].activity.push({
           type: 'forum',
+          name: e.nameEn,
           date: e.startTime?.slice(0, -3) || '',
           place: e.placeEn,
           value: e.id
