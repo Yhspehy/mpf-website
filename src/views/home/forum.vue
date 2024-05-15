@@ -19,6 +19,7 @@ const isEdit = ref(false);
 
 let memberForumTemp = {};
 let memberForumTemps = [];
+let memberInviteTemp = {};
 let memberPlayForumTemp = [];
 
 const app = useAppStore();

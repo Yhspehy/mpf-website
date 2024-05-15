@@ -17,6 +17,7 @@ const forumSignList = ref([]);
 
 let memberForumTemp = {};
 let memberForumTemps = [];
+let memberInviteTemp = {};
 let memberPlayForumTemp = [];
 
 const app = useAppStore();

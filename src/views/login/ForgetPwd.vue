@@ -58,13 +58,13 @@ if (route.query.email) {
 
     <img
       src="/images/flower.gif"
-      class="w-60rem h-42rem absolute bottom-0 left-6rem <sm:w-40rem <sm:h-28rem <sm:static"
+      class="w-60rem h-42rem fixed bottom-0 left-6rem <sm:w-40rem <sm:h-28rem <sm:static"
       alt=""
     />
     <img
       v-if="!app.isMobile"
       src="/images/rest.gif"
-      class="w-80rem h-66rem absolute bottom--14rem right--6rem"
+      class="w-80rem h-66rem fixed bottom--14rem right--6rem"
       alt=""
     />
     <img src="/images/mpf-login-bgup.png" class="absolute-br w-full" />
