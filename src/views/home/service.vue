@@ -46,6 +46,7 @@ function getList() {
     if (res.data) {
       let hotelMap = {};
       res.data.forumHotel.forEach((e) => {
+        // if (e.hotelEn !== 'Wanglan Hotel（Conference Hotel）') return;
         if (hotelMap[e.hotelEn]) {
           hotelMap[e.hotelEn].rooms.push({
             ...e,
@@ -55,6 +56,7 @@ function getList() {
         } else {
           hotelMap[e.hotelEn] = {
             name: e.hotelEn,
+            disabled: e.hotelEn !== 'Wanglan Hotel（Conference Hotel）',
             rooms: [
               {
                 ...e,
@@ -64,11 +66,15 @@ function getList() {
             ]
           };
         }
-        hotelList.value = Object.keys(hotelMap).map((e, idx) => ({
-          ...hotelMap[e],
-          idx
-        }));
       });
+
+      hotelList.value = Object.keys(hotelMap).map((e, idx) => ({
+        ...hotelMap[e],
+        idx
+      }));
+
+      console.log(hotelList.value);
+
       getMemberInfo(app.mpfId).then((res) => {
         if (res.data) {
           memberInfo = res.data || {};

@@ -14,29 +14,29 @@ const navList = [
     url: 'https://mpforum.nbse.net.cn/homepage/index_en'
   },
   {
-    label: 'ABOUT',
+    label: 'ABOUT MPF',
     key: 'ABOUT',
     url: 'https://mpforum.nbse.net.cn/introduce/enindex'
   },
   {
-    label: 'GUIDE',
+    label: '2024 MPF',
     key: 'GUIDE',
-    url: 'https://mpforum.nbse.net.cn/conference/enscenery'
+    url: 'https://mpforum.nbse.net.cn/conference/introductionEn'
   },
   {
-    label: 'MEDIA',
+    label: 'REVIEW',
     key: 'MEDIA',
     url: 'https://mpforum.nbse.net.cn/media/picenter_en/1'
   },
   {
-    label: 'MANAGEMENT',
-    key: 'MANAGEMENT',
-    url: 'https://mpforum.nbse.net.cn/company/guidanceen'
-  },
-  {
-    label: 'CONTACT',
+    label: 'CONTACT US',
     key: 'CONTACT',
     url: 'https://mpforum.nbse.net.cn/contact/enindex'
+  },
+  {
+    label: '中文',
+    key: 'CHINESE',
+    url: 'https://mpforum.nbse.net.cn/homepage/index'
   }
 ];
 

@@ -31,7 +31,7 @@ const model = ref({
   unit: {
     nameEn: ''
   },
-  unitId: '',
+  unitId: 0,
   jobEn: '',
   tel: '',
   email: '',

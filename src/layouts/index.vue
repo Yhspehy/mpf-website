@@ -121,11 +121,12 @@ if (mpfId && token) {
       /> -->
     </div>
     <div v-else class="nav-bar">
-      <img
+      <!-- <img
         src="/images/mpf-top-nav@2x.png"
         class="w-3.6rem h-3.6rem"
         @click="drawerShow = !drawerShow"
-      />
+      /> -->
+      <div class="color-#fff text-3.5rem" @click="drawerShow = !drawerShow">More</div>
       <img src="/images/nav-top-logo.png" class="w-16rem h-8.2rem" @click="toMpforum" />
 
       <n-drawer v-model:show="drawerShow" width="35rem" placement="left">

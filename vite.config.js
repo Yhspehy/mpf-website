@@ -80,7 +80,7 @@ export default defineConfig(() => {
       open: true,
       proxy: {
         '/api': {
-          target: 'https://mpfapp.nbse.net.cn',
+          target: 'https://testmpfapp.nbse.net.cn',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         }
