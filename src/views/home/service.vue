@@ -178,8 +178,8 @@ function submit() {
     data.forumMemberHotelTemp = {
       mhId: room.id,
       mfId: memberInfo.memberForumTemp?.id,
-      startTime: dayjs(hotel.value.timeRange[0]).format('YYYY-MM-DD HH:mm:ss'),
-      endTime: dayjs(hotel.value.timeRange[1]).format('YYYY-MM-DD HH:mm:ss'),
+      startTime: dayjs(hotel.value.timeRange[0]).format('YYYY-MM-DD'),
+      endTime: dayjs(hotel.value.timeRange[1]).format('YYYY-MM-DD'),
       isDelete: 0
     };
   }
