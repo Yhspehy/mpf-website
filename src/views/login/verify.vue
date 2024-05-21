@@ -78,6 +78,7 @@ async function handleSubmit() {
               class="h-7rem line-height-7rem mb-2rem <sm:h-8rem <sm:line-height-8rem"
               v-model:value="model.email"
               placeholder="E-mail"
+              @update:value="(val) => (model.email = val.toLocaleLowerCase())"
             />
           </n-form-item>
         </n-form>

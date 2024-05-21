@@ -19,7 +19,8 @@ const model = reactive({
 
 const app = useAppStore();
 
-function handleEmail() {
+function handleEmail(val) {
+  model.email = val.toLocaleLowerCase();
   model.password = '';
 }
 

@@ -19,7 +19,8 @@ const model = reactive({
   confirmPassword: ''
 });
 
-function handleEmail() {
+function handleEmail(val) {
+  model.email = val.toLocaleLowerCase();
   model.password = '';
   model.confirmPassword = '';
 }

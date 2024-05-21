@@ -99,6 +99,7 @@ if (route.query.email) {
               v-model:value="model.email"
               placeholder="Create a profile with your email *"
               disabled
+              @update:value="(val) => (model.email = val.toLocaleLowerCase())"
             />
           </n-form-item>
           <n-form-item path="password">

@@ -192,10 +192,14 @@ function submit() {
   });
 }
 
-const start = 1717113600000;
-const end = 1722384000000;
-function dateDisabled(ts) {
+const travelStart = 1719187200000;
+const travelEnd = 1719532800000;
+const hotelStart = 1718755200000;
+const hotelEnd = 1720137600000;
+function dateDisabled(ts, type) {
   const date = new Date(ts).getTime();
+  const start = type === 1 ? hotelStart : travelStart;
+  const end = type === 1 ? hotelEnd : travelEnd;
   return date < start || date > end;
 }
 
@@ -256,9 +260,9 @@ isEdit.value = route.query.type === 'edit';
                   class="w-full"
                   input-readonly
                   format="yyyy-MM-dd HH:mm"
-                  :default-calendar-start-time="start"
-                  :default-calendar-end-time="end"
-                  :is-date-disabled="dateDisabled"
+                  :default-calendar-start-time="travelStart"
+                  :default-calendar-end-time="travelEnd"
+                  :is-date-disabled="(ts) => dateDisabled(ts, 0)"
                   :time-picker-props="{
                     format: 'HH:mm'
                   }"
@@ -309,9 +313,9 @@ isEdit.value = route.query.type === 'edit';
                   class="w-full"
                   input-readonly
                   format="yyyy-MM-dd HH:mm"
-                  :default-calendar-start-time="start"
-                  :default-calendar-end-time="end"
-                  :is-date-disabled="dateDisabled"
+                  :default-calendar-start-time="travelStart"
+                  :default-calendar-end-time="travelEnd"
+                  :is-date-disabled="(ts) => dateDisabled(ts, 0)"
                   :time-picker-props="{
                     format: 'HH:mm'
                   }"
@@ -364,9 +368,9 @@ isEdit.value = route.query.type === 'edit';
                 start-placeholder="Check In"
                 end-placeholder="Check Out"
                 :bind-calendar-months="true"
-                :default-calendar-start-time="start"
-                :default-calendar-end-time="end"
-                :is-date-disabled="dateDisabled"
+                :default-calendar-start-time="hotelStart"
+                :default-calendar-end-time="hotelEnd"
+                :is-date-disabled="(ts) => dateDisabled(ts, 1)"
               />
             </n-form-item>
           </n-form>
