@@ -56,7 +56,7 @@ function getList() {
         } else {
           hotelMap[e.hotelEn] = {
             name: e.hotelEn,
-            disabled: e.hotelEn !== 'Wanglan Hotel（Conference Hotel）',
+            disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）',
             rooms: [
               {
                 ...e,

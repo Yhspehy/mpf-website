@@ -59,7 +59,7 @@ service.interceptors.response.use((response) => {
   }
   if (response.config.isMpf && response.data.code !== '0') {
     let errorMsg = response.data.message || 'error';
-    const item = window.$errorList.find((e) => e.chinese === errorMsg);
+    const item = window.$errorList.find((e) => errorMsg.includes(e.chinese));
     if (item) {
       errorMsg = item.english;
     }
