@@ -36,7 +36,7 @@ if (app.mpfId) {
     <div class="relative mx-auto w-64rem text-center">
       <div class="text-2.3rem font-bold">Thank You for Your Registration!</div>
       <div class="text-2.3rem font-bold mb-10rem">
-        Please Use this QR Code for Venue and Meal Check-In.
+        Please SAVE this QR Code for Venue and Meal Check-In.
       </div>
 
       <img :src="qrcodeUrl" class="w-26rem h-26rem" style="-webkit-touch-callout: default" />
