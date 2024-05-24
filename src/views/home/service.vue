@@ -42,16 +42,17 @@ let memberInfo = {};
 
 function getList() {
   window.$appLoading(true);
-  getStatic().then((res) => {
-    if (res.data) {
+  getStatic().then((result) => {
+    if (result.data) {
       let hotelMap = {};
-      res.data.forumHotel.forEach((e) => {
-        // if (e.hotelEn !== 'Wanglan Hotel（Conference Hotel）') return;
+      result.data.forumHotel.forEach((e) => {
+        if (e.hotelEn !== 'Wonderland Hotel（Conference Hotel）') return;
         if (hotelMap[e.hotelEn]) {
           hotelMap[e.hotelEn].rooms.push({
             ...e,
             apartment: e.apartmentEn + ' ¥' + e.price,
-            idx: hotelMap[e.hotelEn].rooms.length
+            idx: hotelMap[e.hotelEn].rooms.length,
+            disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）'
           });
         } else {
           hotelMap[e.hotelEn] = {
@@ -61,7 +62,8 @@ function getList() {
               {
                 ...e,
                 apartment: e.apartmentEn + ' ¥' + e.price,
-                idx: 0
+                idx: 0,
+                disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）'
               }
             ]
           };
@@ -72,8 +74,6 @@ function getList() {
         ...hotelMap[e],
         idx
       }));
-
-      console.log(hotelList.value);
 
       getMemberInfo(app.mpfId).then((res) => {
         if (res.data) {
@@ -96,6 +96,41 @@ function getList() {
           }
 
           if (res.data.forumMemberHotelTemp) {
+            if (
+              res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn !==
+              'Wonderland Hotel（Conference Hotel）'
+            ) {
+              result.data.forumHotel.forEach((e) => {
+                if (e.hotelEn !== res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn) return;
+                if (hotelMap[e.hotelEn]) {
+                  hotelMap[e.hotelEn].rooms.push({
+                    ...e,
+                    apartment: e.apartmentEn + ' ¥' + e.price,
+                    idx: hotelMap[e.hotelEn].rooms.length,
+                    disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）'
+                  });
+                } else {
+                  hotelMap[e.hotelEn] = {
+                    name: e.hotelEn,
+                    disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）',
+                    rooms: [
+                      {
+                        ...e,
+                        apartment: e.apartmentEn + ' ¥' + e.price,
+                        idx: 0,
+                        disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）'
+                      }
+                    ]
+                  };
+                }
+              });
+            }
+
+            hotelList.value = Object.keys(hotelMap).map((e, idx) => ({
+              ...hotelMap[e],
+              idx
+            }));
+
             const hotelIdx = hotelList.value.findIndex(
               (e) => e.name === res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn
             );
@@ -194,8 +229,8 @@ function submit() {
 
 const travelStart = 1719187200000;
 const travelEnd = 1719532800000;
-const hotelStart = 1718755200000;
-const hotelEnd = 1720137600000;
+const hotelStart = 1719100800000;
+const hotelEnd = 1719532800000;
 function dateDisabled(ts, type) {
   const date = new Date(ts).getTime();
   const start = type === 1 ? hotelStart : travelStart;
@@ -305,7 +340,7 @@ isEdit.value = route.query.type === 'edit';
               <n-form-item label="Flight / Class" path="delClasses" required>
                 <n-input v-model:value="travel.delClasses" />
               </n-form-item>
-              <n-form-item label="Arrival Time" path="delTime" required>
+              <n-form-item label="Departure Time" path="delTime" required>
                 <n-date-picker
                   v-model:value="travel.delTime"
                   type="datetime"
@@ -348,6 +383,7 @@ isEdit.value = route.query.type === 'edit';
                 :options="hotelList"
                 label-field="name"
                 value-field="idx"
+                @update:value="hotel.roomIdx = null"
               />
             </n-form-item>
             <n-form-item label="Room Type" path="delClasses">
@@ -431,7 +467,7 @@ isEdit.value = route.query.type === 'edit';
             </div>
           </div>
           <div class="flex-y-center <sm:flex-col <sm:items-start <sm:mt-2rem">
-            <div class="w-30rem color-#303030 font-bold">Arrival Time</div>
+            <div class="w-30rem color-#303030 font-bold">Departure Time</div>
             <div class="flex-1 color-#595757 py-2rem <sm:w-full">
               {{ travel.delTime ? dayjs(travel.delTime).format('DD / MM / YYYY HH:mm') : '' }}
             </div>

@@ -98,7 +98,7 @@ const currentSector = computed(() => {
 });
 
 getUnit('').then((res) => {
-  unitList.value = res.data ? res.data.filter((e) => e.nameEn) : [];
+  unitList.value = res.data ? res.data.filter((e) => e.nameEn && e.nameEn !== '-') : [];
 });
 
 function createOption(label) {
@@ -205,7 +205,6 @@ getMember(email).then((res) => {
   model.value.firstName = nameList[0];
   model.value.lastName = nameList[1];
   model.value.isContact = '1';
-  model.value.isForeign = 1;
   model.value.birthday = model.value.birthday || null;
   model.value.inviteType = model.value.inviteType || 0;
 

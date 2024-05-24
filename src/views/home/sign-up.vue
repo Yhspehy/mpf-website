@@ -32,7 +32,7 @@ const model = ref({
   unit: {
     nameEn: ''
   },
-  unitId: '',
+  unitId: 0,
   jobEn: '',
   tel: '',
   email: '',
@@ -92,7 +92,7 @@ const unitList = ref([]);
 const sectorList = ref([]);
 
 getUnitInSign('', route.query.sign, route.query.timestamp, route.query.email).then((res) => {
-  unitList.value = res.data ? res.data.filter((e) => e.nameEn) : [];
+  unitList.value = res.data ? res.data.filter((e) => e.nameEn && e.nameEn !== '-') : [];
 });
 
 function createOption(label) {
@@ -224,7 +224,6 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
     model.value.firstName = nameList[0];
     model.value.lastName = nameList[1];
     model.value.isContact = '1';
-    model.value.isForeign = 1;
     model.value.birthday = model.value.birthday || null;
     model.value.sex =
       model.value.sex === undefined || model.value.sex === null ? 1 : model.value.sex;
