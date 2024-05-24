@@ -117,7 +117,6 @@ function createOption(label) {
 }
 
 function updateUnit(value, option) {
-  console.log(option);
   if (!value) {
     model.value.unit.nameEn = '';
     model.value.unit.secondId = '';
@@ -125,6 +124,11 @@ function updateUnit(value, option) {
     model.value.unit.nameEn = option.nameEn;
     model.value.unit.secondId = option.secondId;
   }
+}
+
+function filterFn(pattern, option) {
+  const p = pattern.trim().toLowerCase();
+  return option.nameEn && option.nameEn.toLowerCase().startsWith(p);
 }
 
 watchEffect(() => {
@@ -301,6 +305,7 @@ getStatic().then((res) => {
         <n-select
           v-model:value="model.unitId"
           filterable
+          :filter="filterFn"
           clearable
           tag
           label-field="nameEn"

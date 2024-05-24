@@ -120,6 +120,11 @@ function updateUnit(value, option) {
   }
 }
 
+function filterFn(pattern, option) {
+  const p = pattern.trim().toLowerCase();
+  return option.nameEn && option.nameEn.toLowerCase().startsWith(p);
+}
+
 watchEffect(() => {
   model.value.nameEn = model.value.firstName + ' ' + model.value.lastName;
 });
@@ -313,6 +318,7 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
         <n-select
           v-model:value="model.unitId"
           filterable
+          :filter="filterFn"
           clearable
           tag
           label-field="nameEn"
