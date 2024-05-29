@@ -233,6 +233,7 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
     model.value.sex =
       model.value.sex === undefined || model.value.sex === null ? 1 : model.value.sex;
     model.value.inviteType = model.value.inviteType || 0;
+    model.value.email = route.query.email || '';
 
     // 获取是否为单位联络人
     getMemberInfoInSign(
