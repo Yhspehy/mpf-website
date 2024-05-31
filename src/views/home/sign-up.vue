@@ -187,6 +187,7 @@ function submit() {
               id: memberInviteTemp?.id || null,
               mfId: memberForumTemp?.id || null,
               inviteType: model.value.inviteType,
+              status: memberInviteTemp?.status == 6 ? 6 : 1,
               idDelete: 0
             }
           }).then((result) => {
@@ -232,7 +233,7 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
     model.value.birthday = model.value.birthday || null;
     model.value.sex =
       model.value.sex === undefined || model.value.sex === null ? 1 : model.value.sex;
-    model.value.inviteType = model.value.inviteType || 0;
+    model.value.inviteType = 0;
     model.value.email = route.query.email || '';
 
     // 获取是否为单位联络人
@@ -250,7 +251,6 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
         }
         if (r.data.memberInviteTemp) {
           memberInviteTemp = r.data.memberInviteTemp || {};
-          model.value.inviteType = r.data.memberInviteTemp.inviteType || 0;
         }
       }
     });
@@ -293,15 +293,7 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
           </n-space>
         </n-radio-group>
       </n-form-item>
-      <n-form-item label="Participation Method" path="participationMethod" required>
-        <n-radio-group v-model:value="model.inviteType" name="participationMethod">
-          <n-space>
-            <n-radio :value="0"> Offline </n-radio>
-            <n-radio :value="1"> Online </n-radio>
-          </n-space>
-        </n-radio-group>
-      </n-form-item>
-      <n-form-item v-if="model.inviteType === 0" label="Birth Date" path="birthday" required>
+      <n-form-item label="Birth Date" path="birthday" required>
         <n-date-picker
           v-model:formatted-value="model.birthday"
           type="date"
