@@ -98,20 +98,22 @@ const currentSector = computed(() => {
 });
 
 getUnit('').then((res) => {
-  unitList.value = res.data ? res.data.filter((e) => e.nameEn && e.nameEn !== '-') : [];
+  unitList.value = res.data
+    ? res.data.filter((e) => e.nameEn && e.nameEn.trim() && e.nameEn !== '-')
+    : [];
 });
 
 function createOption(label) {
   if (unitList.value[0].id === 'extra') {
-    unitList.value[0].nameEn = label;
+    unitList.value[0].nameEn = label.trim();
   } else {
     unitList.value.unshift({
-      nameEn: label,
+      nameEn: label.trim(),
       id: 'extra'
     });
   }
   return {
-    label: label,
+    label: label.trim(),
     value: 'extra'
   };
 }
@@ -132,7 +134,7 @@ function filterFn(pattern, option) {
 }
 
 watchEffect(() => {
-  model.value.nameEn = model.value.firstName + ' ' + model.value.lastName;
+  model.value.nameEn = model.value.firstName.trim() + ' ' + model.value.lastName.trim();
 });
 
 const app = useAppStore();
