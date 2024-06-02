@@ -228,7 +228,7 @@ function submit() {
 }
 
 const travelStart = 1719187200000;
-const travelEnd = 1719532800000;
+const travelEnd = 1719590399000;
 const hotelStart = 1719100800000;
 const hotelEnd = 1719532800000;
 function dateDisabled(ts, type) {
