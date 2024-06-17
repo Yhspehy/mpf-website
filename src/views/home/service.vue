@@ -46,27 +46,28 @@ function getList() {
     if (result.data) {
       let hotelMap = {};
       result.data.forumHotel.forEach((e) => {
-        if (e.hotelEn !== 'Wonderland Hotel（Conference Hotel）') return;
-        if (hotelMap[e.hotelEn]) {
-          hotelMap[e.hotelEn].rooms.push({
-            ...e,
-            apartment: e.apartmentEn + ' ¥' + e.price,
-            idx: hotelMap[e.hotelEn].rooms.length,
-            disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）'
-          });
-        } else {
-          hotelMap[e.hotelEn] = {
-            name: e.hotelEn,
-            disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）',
-            rooms: [
-              {
-                ...e,
-                apartment: e.apartmentEn + ' ¥' + e.price,
-                idx: 0,
-                disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）'
-              }
-            ]
-          };
+        if (
+          e.hotelEn === 'Wonderland Hotel（Conference Hotel）' ||
+          (e.hotelEn === 'CORDIS Dongqian Lake' && e.price === 4600)
+        ) {
+          if (hotelMap[e.hotelEn]) {
+            hotelMap[e.hotelEn].rooms.push({
+              ...e,
+              apartment: e.apartmentEn + ' ¥' + e.price,
+              idx: hotelMap[e.hotelEn].rooms.length
+            });
+          } else {
+            hotelMap[e.hotelEn] = {
+              name: e.hotelEn,
+              rooms: [
+                {
+                  ...e,
+                  apartment: e.apartmentEn + ' ¥' + e.price,
+                  idx: 0
+                }
+              ]
+            };
+          }
         }
       });
 
@@ -98,27 +99,29 @@ function getList() {
           if (res.data.forumMemberHotelTemp) {
             if (
               res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn !==
-              'Wonderland Hotel（Conference Hotel）'
+                'Wonderland Hotel（Conference Hotel）' &&
+              !(
+                res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn ===
+                  'CORDIS Dongqian Lake' && res.data.forumMemberHotelTemp.forumHotel.price === 4600
+              )
             ) {
               result.data.forumHotel.forEach((e) => {
                 if (e.hotelEn !== res.data.forumMemberHotelTemp.forumHotel.hotelDo.nameEn) return;
+                if (e.hotelEn === 'CORDIS Dongqian Lake' && e.price === 4600) return;
                 if (hotelMap[e.hotelEn]) {
                   hotelMap[e.hotelEn].rooms.push({
                     ...e,
                     apartment: e.apartmentEn + ' ¥' + e.price,
-                    idx: hotelMap[e.hotelEn].rooms.length,
-                    disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）'
+                    idx: hotelMap[e.hotelEn].rooms.length
                   });
                 } else {
                   hotelMap[e.hotelEn] = {
                     name: e.hotelEn,
-                    disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）',
                     rooms: [
                       {
                         ...e,
                         apartment: e.apartmentEn + ' ¥' + e.price,
-                        idx: 0,
-                        disabled: e.hotelEn !== 'Wonderland Hotel（Conference Hotel）'
+                        idx: 0
                       }
                     ]
                   };
