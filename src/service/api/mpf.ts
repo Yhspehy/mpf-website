@@ -169,3 +169,10 @@ export function addVolunteer(data) {
     data
   });
 }
+
+export function getGlobalConfig() {
+  return request({
+    url: '/maritimeSilk/global-config/canSignUp',
+    method: 'get'
+  });
+}

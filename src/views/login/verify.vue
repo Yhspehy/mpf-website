@@ -1,6 +1,7 @@
 <script setup>
 import { useAppStore } from '@/stores';
 import { verify } from '@/service/api/auth';
+
 defineOptions({
   name: 'VerifyView'
 });
@@ -11,6 +12,7 @@ const model = reactive({
 });
 
 const app = useAppStore();
+const notification = useNotification();
 
 /** 登录 */
 async function handleSubmit() {
@@ -25,6 +27,11 @@ async function handleSubmit() {
     }
   });
 }
+
+notification.warning({
+  title: 'Reminder',
+  content: 'The registration channel will be closed at 20:00 on June 20'
+});
 </script>
 
 <template>

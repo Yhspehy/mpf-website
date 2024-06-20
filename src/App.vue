@@ -2,7 +2,7 @@
   <n-config-provider :theme-overrides="themeOverrides" class="h-full">
     <n-loading-bar-provider>
       <n-dialog-provider>
-        <n-notification-provider>
+        <n-notification-provider placement="top">
           <n-message-provider>
             <n-spin :show="loading" id="app-spin">
               <router-view />

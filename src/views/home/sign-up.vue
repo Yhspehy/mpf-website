@@ -19,6 +19,7 @@ defineOptions({
 const router = useRouter();
 const message = useMessage();
 const route = useRoute();
+const notification = useNotification();
 
 const formIns = ref(null);
 const model = ref({
@@ -133,6 +134,12 @@ watchEffect(() => {
 
 const app = useAppStore();
 function submit() {
+  if (Date.now() > 1718884800000) {
+    return notification.warning({
+      title: 'Reminder',
+      content: 'The registration channel is closed, thank you for your attention!'
+    });
+  }
   formIns.value?.validate((errors) => {
     if (!errors) {
       const formValue = {
@@ -258,6 +265,13 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
     });
   }
 });
+
+if (Date.now() > 1718884800000) {
+  notification.warning({
+    title: 'Reminder',
+    content: 'The registration channel is closed, thank you for your attention!'
+  });
+}
 </script>
 
 <template>

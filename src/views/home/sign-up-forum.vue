@@ -78,7 +78,8 @@ function getList() {
           name: e.nameEn,
           date: e.startTime?.slice(0, -3) || '',
           place: e.placeEn,
-          value: e.id
+          value: e.id,
+          disabled: true
         });
       }
     });
@@ -128,6 +129,7 @@ function getList() {
               if (!expandedNames.value.includes(2)) {
                 expandedNames.value.push(2);
               }
+              item.disabled = false;
               list[2].value.push(e.mpId);
             }
           }
@@ -265,6 +267,7 @@ getList();
               v-for="act in item.activity"
               :key="act.value"
               :value="act.value"
+              :disabled="act.disabled"
               class="mb-1rem"
             >
               <div class="font-bold text-2rem color-#303030">{{ act.name }}</div>
