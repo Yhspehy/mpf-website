@@ -129,7 +129,8 @@ function filterFn(pattern, option) {
 }
 
 watchEffect(() => {
-  model.value.nameEn = model.value.firstName.trim() + ' ' + model.value.lastName.trim();
+  model.value.nameEn =
+    (model.value.firstName?.trim() || '') + ' ' + (model.value.lastName?.trim() || '');
 });
 
 const app = useAppStore();
@@ -236,8 +237,8 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
   if (res.data) {
     model.value = res.data;
     const nameList = res.data.nameEn.split(' ');
-    model.value.firstName = nameList[0];
-    model.value.lastName = nameList[1];
+    model.value.firstName = nameList[0] || '';
+    model.value.lastName = nameList[1] || '';
     model.value.isContact = '1';
     model.value.birthday = model.value.birthday || null;
     model.value.sex =

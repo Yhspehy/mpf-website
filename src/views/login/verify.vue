@@ -23,15 +23,21 @@ async function handleSubmit() {
     if (res) {
       router.push('/login?email=' + model.email);
     } else {
-      router.push('/register?email=' + model.email);
+      notification.warning({
+        title: 'Reminder',
+        content: 'The registration channel is closed, thank you for your attention!'
+      });
+      // router.push('/register?email=' + model.email);
     }
   });
 }
 
-notification.warning({
-  title: 'Reminder',
-  content: 'The registration channel will be closed at 20:00 on June 20'
-});
+if (Date.now() < 1718884800000) {
+  notification.warning({
+    title: 'Reminder',
+    content: 'The registration channel will be closed at 20:00 on June 20'
+  });
+}
 </script>
 
 <template>
@@ -90,10 +96,7 @@ notification.warning({
           </n-form-item>
         </n-form>
 
-        <div
-          class="color-#ABABAC text-1.8rem mb-11rem cursor-pointer mt-2rem <sm:mb-16rem"
-          @click="router.push('/register')"
-        >
+        <div class="color-#ABABAC text-1.8rem mb-11rem cursor-pointer mt-2rem <sm:mb-16rem">
           * Create a profile with your email.
         </div>
 
