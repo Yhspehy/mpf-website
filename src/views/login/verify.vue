@@ -23,19 +23,18 @@ async function handleSubmit() {
     if (res) {
       router.push('/login?email=' + model.email);
     } else {
-      notification.warning({
-        title: 'Reminder',
-        content: 'The registration channel is closed, thank you for your attention!'
-      });
-      // router.push('/register?email=' + model.email);
+      router.push('/register?email=' + model.email);
+      // if (route.query.canSignUp === 'A' || route.query.canSignUp === 'a') {
+      //   localStorage.set('canSignUp', 'A');
+      //   router.push('/register?email=' + model.email);
+      // } else {
+      //   localStorage.set('canSignUp', '');
+      //   notification.warning({
+      //     title: 'Reminder',
+      //     content: 'The registration channel is closed, thank you for your attention!'
+      //   });
+      // }
     }
-  });
-}
-
-if (Date.now() < 1718884800000) {
-  notification.warning({
-    title: 'Reminder',
-    content: 'The registration channel will be closed at 20:00 on June 20'
   });
 }
 </script>
@@ -96,7 +95,10 @@ if (Date.now() < 1718884800000) {
           </n-form-item>
         </n-form>
 
-        <div class="color-#ABABAC text-1.8rem mb-11rem cursor-pointer mt-2rem <sm:mb-16rem">
+        <div
+          class="color-#ABABAC text-1.8rem mb-11rem cursor-pointer mt-2rem <sm:mb-16rem"
+          @click="router.push('/register')"
+        >
           * Create a profile with your email.
         </div>
 

@@ -43,6 +43,8 @@ const model = ref({
   birthday: null
 });
 
+// const canSignUp = localStorage.get('canSignUp');
+
 const rules = {
   firstName: {
     required: true,
@@ -135,12 +137,12 @@ watchEffect(() => {
 
 const app = useAppStore();
 function submit() {
-  if (Date.now() > 1718884800000) {
-    return notification.warning({
-      title: 'Reminder',
-      content: 'The registration channel is closed, thank you for your attention!'
-    });
-  }
+  // if (canSignUp !== 'A' && canSignUp !== 'a' && Date.now() > 1718884800000) {
+  //   return notification.warning({
+  //     title: 'Reminder',
+  //     content: 'The registration channel is closed, thank you for your attention!'
+  //   });
+  // }
   formIns.value?.validate((errors) => {
     if (!errors) {
       const formValue = {
@@ -267,12 +269,12 @@ getMemberInSign(route.query.sign, route.query.timestamp, route.query.email).then
   }
 });
 
-if (Date.now() > 1718884800000) {
-  notification.warning({
-    title: 'Reminder',
-    content: 'The registration channel is closed, thank you for your attention!'
-  });
-}
+// if (canSignUp !== 'A' && canSignUp !== 'a' && Date.now() > 1718884800000) {
+//   notification.warning({
+//     title: 'Reminder',
+//     content: 'The registration channel is closed, thank you for your attention!'
+//   });
+// }
 </script>
 
 <template>
