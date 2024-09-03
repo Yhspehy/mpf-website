@@ -5,100 +5,108 @@ const constantRoute = [
   {
     path: '/',
     name: 'root',
-    redirect: '/verify'
+    redirect: '/mpf/info'
   },
   {
-    path: '/home',
-    name: 'home',
-    redirect: '/home/person',
-    component: () => import('@/layouts/index.vue'),
-    children: [
-      {
-        path: '/home/person',
-        name: 'person',
-        component: () => import('@/views/home/personal.vue')
-      },
-      {
-        path: '/home/qrcode',
-        name: 'qrcode',
-        component: () => import('@/views/home/qrcode.vue')
-      },
-      {
-        path: '/home/forum',
-        name: 'forum',
-        component: () => import('@/views/home/forum.vue')
-      },
-      {
-        path: '/home/service',
-        name: 'service',
-        component: () => import('@/views/home/service.vue')
-      },
-      {
-        path: '/home/assistant',
-        name: 'assistant',
-        component: () => import('@/views/home/assistant.vue')
-      }
-    ],
+    path: '/mpf/info',
+    name: 'MpfInfo',
+    component: () => import('../views/mpf/Info.vue'),
     meta: {
-      title: 'Home'
+      title: 'MpfInfo'
     }
   },
-  {
-    path: '/signup',
-    name: 'signup',
-    component: () => import('@/views/home/sign-up.vue'),
-    meta: {
-      title: 'SignUp'
-    }
-  },
-  {
-    path: '/signup/forum',
-    name: 'signupForum',
-    component: () => import('@/views/home/sign-up-forum.vue'),
-    meta: {
-      title: 'SignUpForum'
-    }
-  },
-  {
-    path: '/verify',
-    name: 'verify',
-    component: () => import('../views/login/verify.vue'),
-    meta: {
-      title: 'Verify'
-    }
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/login/index.vue'),
-    meta: {
-      title: 'Login'
-    }
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: () => import('../views/login/Register.vue'),
-    meta: {
-      title: 'Register'
-    }
-  },
-  {
-    path: '/forget',
-    name: 'ForgetPwd',
-    component: () => import('../views/login/ForgetPwd.vue'),
-    meta: {
-      title: 'Forget'
-    }
-  },
-  {
-    path: '/volunteer',
-    name: 'volunteer',
-    component: () => import('@/views/volunteer/index.vue'),
-    meta: {
-      title: 'Volunteer'
-    }
-  },
+  // {
+  //   path: '/home',
+  //   name: 'home',
+  //   redirect: '/home/person',
+  //   component: () => import('@/layouts/index.vue'),
+  //   children: [
+  //     {
+  //       path: '/home/person',
+  //       name: 'person',
+  //       component: () => import('@/views/home/personal.vue')
+  //     },
+  //     {
+  //       path: '/home/qrcode',
+  //       name: 'qrcode',
+  //       component: () => import('@/views/home/qrcode.vue')
+  //     },
+  //     {
+  //       path: '/home/forum',
+  //       name: 'forum',
+  //       component: () => import('@/views/home/forum.vue')
+  //     },
+  //     {
+  //       path: '/home/service',
+  //       name: 'service',
+  //       component: () => import('@/views/home/service.vue')
+  //     },
+  //     {
+  //       path: '/home/assistant',
+  //       name: 'assistant',
+  //       component: () => import('@/views/home/assistant.vue')
+  //     }
+  //   ],
+  //   meta: {
+  //     title: 'Home'
+  //   }
+  // },
+  // {
+  //   path: '/signup',
+  //   name: 'signup',
+  //   component: () => import('@/views/home/sign-up.vue'),
+  //   meta: {
+  //     title: 'SignUp'
+  //   }
+  // },
+  // {
+  //   path: '/signup/forum',
+  //   name: 'signupForum',
+  //   component: () => import('@/views/home/sign-up-forum.vue'),
+  //   meta: {
+  //     title: 'SignUpForum'
+  //   }
+  // },
+  // {
+  //   path: '/verify',
+  //   name: 'verify',
+  //   component: () => import('../views/login/verify.vue'),
+  //   meta: {
+  //     title: 'Verify'
+  //   }
+  // },
+  // {
+  //   path: '/login',
+  //   name: 'login',
+  //   component: () => import('../views/login/index.vue'),
+  //   meta: {
+  //     title: 'Login'
+  //   }
+  // },
+  // {
+  //   path: '/register',
+  //   name: 'register',
+  //   component: () => import('../views/login/Register.vue'),
+  //   meta: {
+  //     title: 'Register'
+  //   }
+  // },
+  // {
+  //   path: '/forget',
+  //   name: 'ForgetPwd',
+  //   component: () => import('../views/login/ForgetPwd.vue'),
+  //   meta: {
+  //     title: 'Forget'
+  //   }
+  // },
+  // {
+  //   path: '/volunteer',
+  //   name: 'volunteer',
+  //   component: () => import('@/views/volunteer/index.vue'),
+  //   meta: {
+  //     title: 'Volunteer'
+  //   }
+  // },
   {
     name: '404',
     path: '/404',

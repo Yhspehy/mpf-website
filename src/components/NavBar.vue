@@ -54,25 +54,26 @@ function toMpforum() {
 <template>
   <div v-if="!app.isMobile" class="w-full color-#fff flex-y-center h-120px pl-170px absolute-lt">
     <img src="/images/nav-top-logo.png" class="w-160px h-82px" />
-    <div class="nav-list">
+    <!-- <div class="nav-list">
       <div v-for="item in navList" :key="item.key" class="cursor-pointer" @click="toMpforum">
         {{ item.label }}
       </div>
-    </div>
+    </div> -->
   </div>
   <div v-else class="nav-bar absolute-lt">
-    <img
+    <div></div>
+    <!-- <img
       src="/images/mpf-top-nav@2x.png"
       class="w-3.6rem h-3.6rem"
       @click="drawerShow = !drawerShow"
-    />
+    /> -->
     <img src="/images/nav-top-logo.png" class="w-16rem h-8.2rem" @click="toMpforum" />
 
-    <n-drawer v-model:show="drawerShow" width="35rem" placement="left">
+    <!-- <n-drawer v-model:show="drawerShow" width="35rem" placement="left">
       <n-drawer-content title="Welcome to MPF 2024！" class="bg-#16284e" header-class="color-#fff!">
         <n-menu value="MY MPF" :options="navList" @update:value="handleUpdateMenu" />
       </n-drawer-content>
-    </n-drawer>
+    </n-drawer> -->
   </div>
 </template>
 

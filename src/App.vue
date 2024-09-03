@@ -48,9 +48,9 @@ let reseizeId = null;
 
 const appStore = useAppStore();
 
-getTranslateList().then((res) => {
-  window.$errorList = res;
-});
+// getTranslateList().then((res) => {
+//   window.$errorList = res;
+// });
 onMounted(() => {
   const docEle = document.documentElement;
 
