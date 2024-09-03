@@ -18,7 +18,9 @@ const app = useAppStore();
   >
     <nav-bar />
 
-    <img
+    <img src="/images/forum-info-all.webp" class="wh-full" />
+
+    <!-- <img
       src="/images/flower.gif"
       class="w-60rem h-42rem fixed bottom-0 left-6rem <sm:w-40rem <sm:h-28rem <sm:static"
       alt=""
@@ -52,7 +54,7 @@ const app = useAppStore();
       <div class="text-16px">
         论坛积极弘扬“和平合作，开放包容，互学互鉴，互利互赢”的丝路精神，坚持“平等、合作、互利、共赢”的宗旨，遵循“共商、共建、共享”的原则。
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -60,7 +62,7 @@ const app = useAppStore();
 .bg-pc {
   background-image: url('/images/mpf-login-bg.png');
   background-size: cover;
-  padding-top: 10rem;
+  padding-top: 120px;
 }
 
 .bg-mobile {
