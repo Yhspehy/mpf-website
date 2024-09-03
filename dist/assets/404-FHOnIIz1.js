@@ -1,1 +1,0 @@
-import{f as e,o as t,c as s,_ as c}from"./index-i9lfEhfp.js";const a={src:"https://pic.imgdb.cn/item/65b84f05871b83018a523238.gif",class:"img",alt:"404"},_=e({name:"404Page",__name:"404",setup(o){return(n,r)=>(t(),s("img",a))}}),p=c(_,[["__scopeId","data-v-52711040"],["__file","D:/project/trade-center-website/src/views/404.vue"]]);export{p as default};
