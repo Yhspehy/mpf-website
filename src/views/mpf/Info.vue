@@ -1,7 +1,11 @@
 <script setup>
+import { useAppStore } from '@/stores';
+
 defineOptions({
   name: 'MpfInfo'
 });
+
+const app = useAppStore();
 
 const p2 = `清风徐徐，荷韵悠悠，期待与您在“书藏古今、港通天下”的滨海宁波相会，共襄港航盛事！`;
 const p3 = `联系人：
@@ -11,7 +15,13 @@ const p3 = `联系人：
 </script>
 
 <template>
-  <div class="w-full min-h-100vh pb-20px px-20px flex-col items-center login-page bg-mobile">
+  <div
+    class="w-full min-h-100vh pb-20px px-20px flex-col items-center login-page"
+    :class="{
+      'bg-pc': !app.isMobile,
+      'bg-mobile': app.isMobile
+    }"
+  >
     <nav-bar />
 
     <div class="card">
@@ -165,18 +175,17 @@ const p3 = `联系人：
         <img
           src="https://pic.imgdb.cn/item/66d7023ad9c307b7e9a17ad8.jpg"
           alt=""
-          class="h-65px object-contain"
-          style="flex: 2"
+          class="w-50% object-contain"
         />
         <img
           src="https://pic.imgdb.cn/item/66d70207d9c307b7e9a14ed7.jpg"
           alt=""
-          class="w-83px h-65px object-cover rd-10px mx-4px"
+          class="w-24% object-cover rd-10px mx-4px"
         />
         <img
           src="https://pic.imgdb.cn/item/66d70208d9c307b7e9a14f8c.jpg"
           alt=""
-          class="w-83px h-65px object-cover rd-10px"
+          class="w-24% object-cover rd-10px"
         />
       </div>
 
@@ -194,12 +203,12 @@ const p3 = `联系人：
         <img
           src="https://pic.imgdb.cn/item/66d7023ad9c307b7e9a17a94.jpg"
           alt=""
-          class="w-166px object-contain rd-10px"
+          class="w-50% object-contain rd-10px"
         />
         <img
           src="https://pic.imgdb.cn/item/66d7023ad9c307b7e9a17b04.jpg"
           alt=""
-          class="w-166px object-contain rd-10px mr-4px"
+          class="w-50% object-contain rd-10px mr-4px"
         />
       </div>
 
@@ -221,12 +230,12 @@ const p3 = `联系人：
         <img
           src="https://pic.imgdb.cn/item/66d70214d9c307b7e9a159d1.jpg"
           alt=""
-          class="w-166px object-contain rd-10px"
+          class="w-50% object-contain rd-10px"
         />
         <img
           src="https://pic.imgdb.cn/item/66d7021ad9c307b7e9a1607b.jpg"
           alt=""
-          class="w-166px object-contain rd-10px mr-4px"
+          class="w-50% object-contain rd-10px mr-4px"
         />
       </div>
 
@@ -243,12 +252,12 @@ const p3 = `联系人：
         <img
           src="https://pic.imgdb.cn/item/66d70215d9c307b7e9a15a54.jpg"
           alt=""
-          class="w-166px object-contain rd-10px"
+          class="w-50% object-contain rd-10px"
         />
         <img
           src="https://pic.imgdb.cn/item/66d70215d9c307b7e9a15aa7.jpg"
           alt=""
-          class="w-166px object-contain rd-10px mr-4px"
+          class="w-50% object-contain rd-10px mr-4px"
         />
       </div>
     </div>
@@ -256,6 +265,12 @@ const p3 = `联系人：
 </template>
 
 <style scoped lang="scss">
+.bg-pc {
+  background-image: url('/images/mpf-login-bg.png');
+  background-size: cover;
+  padding-top: 120px;
+}
+
 .bg-mobile {
   background-image: url('/images/mpf-bg-mobile.png');
   background-size: cover;
